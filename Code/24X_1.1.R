@@ -127,9 +127,8 @@ HBBclean %>%
   geom_smooth(method="lm")+
   geom_point(aes(color = Plot)) +
   facet_wrap(~Horizon)
-
-
-
+ggsave(file = paste0("./Output/HBEF_C_allHorizons_", Sys.Date(), ".jpeg"),
+       width = 12, height = 6)
 
 HBBclean %>% 
   ggplot() +
