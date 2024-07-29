@@ -1,13 +1,13 @@
 #Load packages
 library(tidyverse)
-install.packages("writexl")
+# install.packages("writexl")
 library(writexl)
 
 #Create primary df
-HBBMaster <- read.csv("HBBMaster.csv")
+HBBMaster <- read.csv("./Data/HBBMaster.csv")
 HBBclean <- HBBMaster %>% filter(!is.na(C))
 
-HBBHistoric <- read.csv("Historic.csv") %>% 
+HBBHistoric <- read.csv("./Data/Historic.csv") %>% 
   filter(Year>=1997) %>% 
   filter(PerCentN > 0) %>%
   filter(Plot>=159)
