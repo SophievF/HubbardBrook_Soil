@@ -1,5 +1,7 @@
 #Load packages
 library(tidyverse)
+install.packages("writexl")
+library(writexl)
 
 #Create primary df
 HBBMaster <- read.csv("HBBMaster.csv")
@@ -53,74 +55,74 @@ Historicyearavgs_m <- Historic_m %>%
 
 #Graph average values - These are bad, ignore
 avgC_A <- ggplot() +
-  geom_smooth(data=HBByearavgs_A, aes(x=Year, y=avgC), color="lightcoral", fill="pink")+
+  geom_smooth(data=HBByearavgs_A, aes(x=Year, y=avgC), color="lightcoral", fill="pink", method="lm")+
   geom_point(data=HBByearavgs_A, aes(x=Year, y=avgC), color="tomato3") +
   labs(title="Mean Percentage Carbon in Oa/A Horizon
        at Hubbard Brook Watershed Six Low Elevation", y="Percentage C")
 
 avgN_A <- ggplot() +
-  geom_smooth(data=HBByearavgs_A, aes(x=Year, y=avgN), color="midnightblue", fill="lightskyblue")+
+  geom_smooth(data=HBByearavgs_A, aes(x=Year, y=avgN), color="midnightblue", fill="lightskyblue", method="lm")+
   geom_point(data=HBByearavgs_A, aes(x=Year, y=avgN), color="skyblue4")+
   labs(title="Mean Percentage Nitrogen in Oa/A Horizon 
        at Hubbard Brook Watershed Six Low Elevation", y="Percentage N")
 
 avgC_i <- ggplot() +
-  geom_smooth(data=HBByearavgs_i, aes(x=Year, y=avgC), color="lightcoral", fill="pink")+
+  geom_smooth(data=HBByearavgs_i, aes(x=Year, y=avgC), color="lightcoral", fill="pink", method="lm")+
   geom_point(data=HBByearavgs_i, aes(x=Year, y=avgC), color="tomato3")+
   labs(title="Mean Percentage Carbon in Oi/Oe Horizon 
        at Hubbard Brook Watershed Six Low Elevation", y="Percentage C")
 
 avgN_i <- ggplot() +
-  geom_smooth(data=HBByearavgs_i, aes(x=Year, y=avgN), color="midnightblue", fill="lightskyblue")+
+  geom_smooth(data=HBByearavgs_i, aes(x=Year, y=avgN), color="midnightblue", fill="lightskyblue", method="lm")+
   geom_point(data=HBByearavgs_i, aes(x=Year, y=avgN), color="skyblue4")+
   labs(title="Mean Percentage Nitrogen in Oi/Oe Horizon 
        at Hubbard Brook Watershed Six Low Elevation", y="Percentage N")
 
 avgC_m <- ggplot() +
-  geom_smooth(data=HBByearavgs_m, aes(x=Year, y=avgC), color="lightcoral", fill="pink")+
+  geom_smooth(data=HBByearavgs_m, aes(x=Year, y=avgC), color="lightcoral", fill="pink", method="lm")+
   geom_point(data=HBByearavgs_m, aes(x=Year, y=avgC), color="tomato3")+
   labs(title="Mean Percentage Carbon in Mineral Horizon 
        at Hubbard Brook Watershed Six Low Elevation", y="Percentage C")
 
 avgN_m <- ggplot() +
-  geom_smooth(data=HBByearavgs_m, aes(x=Year, y=avgN), color="midnightblue", fill="lightskyblue")+
+  geom_smooth(data=HBByearavgs_m, aes(x=Year, y=avgN), color="midnightblue", fill="lightskyblue", method="lm")+
   geom_point(data=HBByearavgs_m, aes(x=Year, y=avgN), color="skyblue4") +
   labs(title="Mean Percentage Nitrogen in Mineral Horizon 
        at Hubbard Brook Watershed Six Low Elevation", y="Percentage N")
 
 #Same thing but with the og data set to reduce the ribbon size
 C_A <- ggplot() +
-  geom_smooth(data=HBB_A, aes(x=Year, y=C), color="lightcoral", fill="pink")+
+  geom_smooth(data=HBB_A, aes(x=Year, y=C), color="lightcoral", fill="pink", method="lm")+
   geom_point(data=HBB_A, aes(x=Year, y=C), color="tomato3")+
   labs(title="Mean Percentage Carbon in Oa/A Horizon 
        at Hubbard Brook Watershed Six Low Elevation", y="Percentage C")
 
 N_A <- ggplot() +
-  geom_smooth(data=HBB_A, aes(x=Year, y=N), color="midnightblue", fill="lightskyblue")+
+  geom_smooth(data=HBB_A, aes(x=Year, y=N), color="midnightblue", fill="lightskyblue", method="lm")+
   geom_point(data=HBB_A, aes(x=Year, y=N), color="skyblue4")+
   labs(title="Mean Percentage Nitrogen in Oa/A Horizon 
        at Hubbard Brook Watershed Six Low Elevation", y="Percentage N")
 
 C_i <- ggplot() +
-  geom_smooth(data=HBB_i, aes(x=Year, y=C), color="lightcoral", fill="pink")+
-  geom_point(data=HBB_i, aes(x=Year, y=C), color="tomato3")+
+  geom_smooth(data=HBB_i, aes(x=Year, y=C), color="darkorchid4", fill="orchid2", method="lm")+
+  geom_point(data=HBB_i, aes(x=Year, y=C), color="darkorchid1")+
   labs(title="Mean Percentage Carbon in Oi/Oe Horizon 
-       at Hubbard Brook Watershed Six Low Elevation", y="Percentage C")
+       at Hubbard Brook West of Watershed Six Low Elevation", y="Percentage C")
 
 N_i <- ggplot() +
-  geom_smooth(data=HBB_i, aes(x=Year, y=N), color="midnightblue", fill="lightskyblue")+
-  geom_point(data=HBB_i, aes(x=Year, y=N), color="skyblue4")+
+  geom_smooth(data=HBB_i, aes(x=Year, y=N), color="midnightblue", fill="lightskyblue", method="lm")+
+  geom_point(data=HBB_i, aes(x=Year, y=N), color="skyblue3")+
   labs(title="Mean Percentage Nitrogen in Oi/Oe Horizon 
-       at Hubbard Brook Watershed Six Low Elevation", y="Percentage N")
+       at Hubbard Brook West of Watershed Six Low Elevation", y="Percentage N")
 
 C_m <- ggplot() +
-  geom_smooth(data=HBB_m, aes(x=Year, y=C), color="lightcoral", fill="pink")+
+  geom_smooth(data=HBB_m, aes(x=Year, y=C), color="lightcoral", fill="pink", method="lm")+
   geom_point(data=HBB_m, aes(x=Year, y=C), color="tomato3")+
   labs(title="Mean Percentage Carbon in Mineral Horizon 
        at Hubbard Brook Watershed Six Low Elevation", y="Percentage C")
 
 N_m <- ggplot() +
-  geom_smooth(data=HBB_m, aes(x=Year, y=N), color="midnightblue", fill="lightskyblue")+
+  geom_smooth(data=HBB_m, aes(x=Year, y=N), color="midnightblue", fill="lightskyblue", method="lm")+
   geom_point(data=HBB_m, aes(x=Year, y=N), color="skyblue4")+
   labs(title="Mean Percentage Nitrogen in Mineral Horizon 
        at Hubbard Brook Watershed Six Low Elevation", y="Percentage N")
@@ -169,4 +171,5 @@ compareN_m <- ggplot() +
   labs(title="Percentage Nitrogen in Mineral Horizon 
        at Hubbard Brook Watershed Six Low Elevation", y="Percentage N")
   
-
+#Write data frame to excel file
+write_xlsx(HBB_i, "C:HBB_i.xlsx")
