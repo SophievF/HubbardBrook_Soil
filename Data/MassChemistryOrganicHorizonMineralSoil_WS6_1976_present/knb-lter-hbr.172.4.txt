@@ -1,0 +1,2562 @@
+
+   
+      
+         uid=HBR,o=EDI,dc=edirepository,dc=org
+         all
+      
+      
+         public
+         read
+      
+   
+   
+      doi:10.6073/pasta/ab29c15538e75cafd4a43a30d8033cecMass and Chemistry of Organic Horizons and Surface Mineral Soils on Watershed 6 at the Hubbard Brook Experimental Forest, 1976 - present
+      
+         Chris Johnson
+         Syracuse University
+         			Dept. of Civil and Environmental Engineering
+			151 Link Hall
+			Syracuse, NY 13244  USA
+         cejohns@syr.edu
+         https://orcid.org/0000-0001-9079-813X
+         https://ror.org/025r5qe02
+      
+      
+         Steven Hamburg
+         Environmental Defense Fund
+         Collaborator
+      
+      
+         Mary Margaret Koppers
+         Syracuse University
+         Associated Party
+      
+      
+         Ellen Denny
+         National Phenology Network
+         Associated Party
+      
+      
+         Matthew Vadeboncoeur
+         University of New Hampshire
+         			8 College Rd
+			Durham, NH 03824  USA
+         matthew.vadeboncoeur@unh.edu
+         https://orcid.org/0000-0002-3724-9753
+         https://ror.org/01rmh9n78
+         Associated Party
+      
+      
+         Thomas Siccama
+         Yale School of Forestry and Environmental Studies
+         Dataset originator
+      
+      2024-03-15
+      
+         The forest floor of Watershed 6 was first sampled in 1969-70. These data include forest floor thickness, soil mass, organic matter content, and major-element composition for samples collected since 1976. Watershed 6 has been resampled at intervals varying from one to ten years. Sampling at five to ten year intervals is expected to continue.
+         These data were gathered as part of the Hubbard Brook Ecosystem Study (HBES). The HBES is a collaborative effort at the Hubbard Brook Experimental Forest, which is operated and maintained by the USDA Forest Service, Northern Research Station.
+      
+      
+         HBR
+         Hubbard Brook LTER
+         Hubbard Brook Experimental Forest
+         Hubbard Brook Ecosystem Study
+         HBES
+         HBEF
+         New Hampshire
+         NH
+         White Mountain National Forest
+         base cations
+         trace minerals
+         HBES Vocabulary
+      
+      
+         climatologyMeteorologyAtmosphere
+         ISO 19115 Topic Category
+      
+      
+         ecosystems
+         forests
+         watersheds
+         calcium
+         soil
+         soil organic matter
+         cations
+         soil horizons
+         carbon
+         nitrogen
+         LTER Controlled Vocabulary
+      
+      
+         inorganic nutrients
+         organic matter
+         disturbance patterns
+         LTER Core Research Area
+      
+      
+         Climate change
+         Climate change effects
+         Ecology, Ecosystems, & Environment
+         National Research & Development Taxonomy
+      
+      
+         This information is released under the Creative Commons license - Attribution - CC BY (https://creativecommons.org/licenses/by/4.0/). The consumer of these data ("Data User" herein) is required to cite it appropriately in any publication that results from its use. The Data User should realize that these data may be actively used by others for ongoing research and that coordination may be necessary to prevent duplicate publication. The Data User is urged to contact the authors of these data if any questions about methodology or results occur. Where appropriate, the Data User is encouraged to consider collaboration or co-authorship with the authors. The Data User should realize that misinterpretation of data may occur if used out of context of the original study. While substantial efforts are made to ensure the accuracy of data and associated documentation, complete accuracy of data sets cannot be guaranteed. All data are made available "as is." The Data User should be aware, however, that data are updated periodically and it is the responsibility of the Data User to check for new versions of the data. The data authors and the repository where these data were obtained shall not be liable for damages resulting from any use or misinterpretation of the data. Thank you.
+      
+      https://doi.org/10.6073/pasta/ab29c15538e75cafd4a43a30d8033cec
+         
+            Hubbard Brook Experimental Forest
+            
+               -71.8062
+               -71.7022
+               43.959
+               43.914
+            
+         
+         
+            Watershed 6 is a 13.23 ha watershed extending from the weir at 560 m to the ridge at 790 m.
+            
+               -71.743
+               -71.735
+               43.9571
+               43.95
+            
+         
+         
+            
+               
+                  1976-06-01
+               
+               
+                  2018-09-30
+               
+            
+         
+      
+      
+         
+            knb-lter-hbr.172.4: Addition forest floor percent carbon and percent nitrogen data table; addition of QUDT unit annotation
+            Data have been collected at varying intervals and are anticipated now at 5 to 10 year intervals.
+         
+         irregular
+      
+      
+         Hubbard Brook Ecosystem Study
+         hbr-im@lternet.edu
+      
+      
+         Environmental Data Initiative
+         info@edirepository.org
+         https://edirepository.org
+         0330j0z60
+      
+      Environmental Data Initiative
+      
+         
+            
+               SITE DESCRIPTION
+               Samples were collected in Watershed 6 of the Hubbard Brook Experimental Forest. Watershed 6 is forested by typical northern hardwood species (sugar maple, beech and yellow birch) on the lower 90% of its area and by a montane boreal transition forest of red spruce, balsam fir and white birch on the highest 10%. Hydrology and stream water chemistry have been monitored since 1963. A grid system of 208 plots, each 25 x 25 m square, was created in Watershed 6 in 1965. More detailed information on the elevation zones and plot layout can be found under the 'watershed/research site' tab on https://hubbardbrook.org.
+               
+               SAMPLING DESIGN
+               From 1976 to 2002, each row of the Watershed 6 grid system of 25 x 25 m plots was considered a stratified sampling set and one or more plots was randomly chosen from these lines as plots to be sampled. Some rows are short, with only 1 to 4 plots, and others are longer, up to 10 plots across. The longer rows may have 2 or 3 plots sampled. The short rows may not have any plots sampled. After 2002, a random number generator was used to identify 100 plots over the entire watershed to sample. The location of the sampling site within each plot was determined by selecting two random integers between 0 and 24 ("x" and "y") and navigating to the selected coordinates from the northwest corner of the 25 x 25 m plot. The target number of samples changed year by year, and the number of plots sampled varies from 58 to 101.
+               
+               FIELD COLLECTION PROCEDURES
+               Once a sampling point was located by taping or pacing, a 15 x 15 cm template was placed on the forest floor and 4 nails were inserted through pre-drilled holes, one on each corner. The nails hold the template in place on the forest floor and retain the forest floor material within the sample area beneath the template. A keyhole saw, pruning shears and a trowel were used to make a clean cut around the template, thus isolating a block of forest floor. The surrounding forest floor material was scraped back from the block leaving it as a pedestal. This block was then undercut in the mineral soil with a saw or trowel to sever any roots. Using a trowel inserted beneath the block and hands on top, the block was carefully picked up and turned over such as to rest on the template. Any remaining mineral soil was carefully scraped away "up" to the bottom of the Oa layer of the forest floor. After all mineral soil was removed, the thickness of the block was measured at the highest and lowest point on each of the 4 sides (1976-1982) or at 5 cm intervals along each of the four sides (1987 onward) for a total of 8 measurements. Beginning in 2002, the total thickness and the thickness of the combined Oi and Oe horizons (referred to in this data set as "Oie") were measured at each point. The average thickness of the Oa horizon could then be determined by subtraction of the average Oie thickness from the average total thickness for each block. In 1976, 1977, and 1982, the entire block was returned to the laboratory for analysis. In 1978, the sample was split into Oi, Oe, and Oa horizons in the field. From 1987 on, the block was separated into Oie and Oa horizons in the field. Each horizon was placed in a separate plastic bag for return to the laboratory.
+               Beginning in 1997, the upper 10 cm of the mineral soil was sampled by coring. After sampling the O horizons, a stainless steel corer (diameter 1.362 inches 1997-2002, diameter 1.374 inches 2013 onward) was inserted in the soil below the forest floor. If the core length exceeded 10 cm, the core was cut to 10 cm and bagged. If the core length was less than 10 cm, usually due to refusal by stones, the entire core was bagged. Two full 10-cm cores, or up to four partial cores, were collected at each site, unless mineral soil was absent.
+               
+               LABORATORY PROCEDURES
+               The whole sample (1976, 1977, and 1982), all horizons (1978 and 1987), or Oie samples only (1992 onward) were oven dried at 80oC to a constant weight, and ground in a Wiley mill to pass a 2-mm screen. Large solid sticks and roots larger than the size of a pencil and obviously alive or fresh material were removed and weighed. These were not ground and were not included in the mass calculations.
+               The Oa horizon was air dried (1992 onward), weighed and then sieved through a 5-mm stainless steel screen. Sticks, roots and debris (coarse fraction) not passing through the screen with mild pressure were weighed. Stones, which were rarely present in the Oa, were also included in the coarse fraction. Material passing through the screen was weighed and rebagged. A subsample of this air dry screened soil was weighed, oven dried at 80oC, and weighed again. An air dry to oven dry conversion factor was determined in order to express the total Oa soil mass on an oven dry weight basis.
+               The mineral soils (1997 onward) were air dried, weighed, and passed through a 2-mm stainless steel screen. Material passing through the screen was weighed and rebagged. Material not passing through the screen, including sticks, roots, and stones, was weighed. A subsample of this air dry screened soil was weighed, oven dried at 80oC, and weighed again. An air dry to oven dry conversion factor was determined in order to express the total mineral soil mass on an oven dry weight basis.
+               Samples of the ground/screened Oie, Oa, and mineral soils were put in 4 oz. glass jars for long-term preservation in the Hubbard Brook archives.
+               For determination of organic content and acid-extractable metals determination, a known mass of the oven dry ground material was placed in a pre-weighed crucible and ashed overnight at 450-500oC. The ashed material was cooled and weighed. The loss-on-ignition was computed and used as a measure of organic matter content. The ash was eluted with 10 ml of 6N HNO3 and heated for a few minutes (to a simmer) on a hot plate. The hot extract solution was poured into a filter paper (Whatman # 41 ashless) in a funnel and into a 50 ml volumetric flask. The crucible and the material on the filter paper were rinsed several times with distilled deionized water. The volume in the flask was brought up to 50 ml with distilled deionized water. The 50 ml of extract solution was stored at room temperature until chemical analysis. The mass of sample, analytes measured, and instrument used each year are listed below. Analysis of plant tissue standard reference materials (e.g. apple leaves, pine needles) has consistently yielded near-100% recoveries, indicating that this digestion procedure is effective for digesting organic matter. However, digestion of Oa horizon and mineral soil samples is incomplete, as evidenced by residual mineral matter on the filter paper. It is therefore safest to refer to the results as "acid-extractable" rather than "total" element content.
+               Total carbon and nitrogen were determined using oven-dried ground material on a CHN analyzer.
+               
+               CALCULATIONS
+               For organic horizons, total mass is the sieved mass of soil for the horizon multiplied by the ratio of oven dry soil to air dry soil masses and divided by the area of the template used for sampling (15 x 15 cm). For the mineral horizon, total mass is the average sieved mass of soil in the cores multiplied by the ratio of oven dry soil to air dry soil masses and divided by the diameter of the soil corer. Organic mass is the total mass of soil in the horizon multiplied by the loss on ignition for the horizon. Concentrations of elements in the forest floor were calculated on an oven dry weight basis. Total amounts of the elements were estimated on a per square meter basis by extrapolating up from the 15 x 15 cm sample mass. 
+               INSTRUMENTATION
+               Sample analysis varied between years in the mass of soil used, analytes measured and instrumentatation used for each element.
+               Year_______Soil mass (g)__Analytes__Instrument
+               1976-1978____2.0_________Zn, Pb, Cu: AA
+               1976-1978____0.5_________Ca, Mg: ICP (analyzed in 1995)
+               1982_________2.0_________Zn, Pb, Cu: AA *
+               1982_________0.5_________Ca, Mg, K, P, Mg, Cu, Pb, Zn: ICP (analyzed in 1998)
+               1987_________2.0_________Zn, Pb, Cu: AA
+               1987_________0.5_________Ca, Mg: ICP
+               1992_________0.5_________Ca, Mg, K, P, Mn, Zn, Pb, Cu: ICP
+               1997_________0.5_________Ca, Mg, K, P, Mn, Zn, Pb, Cu: ICP
+               2002_________0.5_________Ca, Mg, K, P, Mn, Zn, Pb, Cu: ICP
+               2013_________0.6_________Mg, K, P, Mn, Zn, Pb, Cu: ICP-MS
+               2013_________0.6_________Ca: AA
+               2018_________0.6_________Ca, Mg, K, P, Mn, Al, Fe: ICP; Cu, Pb, Zn: ICP-MS
+               * All data included in the data table are from ICP analysis, except plot 27 which had insufficient volume available for reanalysis.
+               NOTES
+               The primary objectives of the forest floor samplings in 1976-1978 were 1) the determination of the amount of lead (Pb) in the forest floor, 2) monitoring the total mass of the forest floor over time and 3) development of a field collection methodology that was efficient and easily implemented. It was determined that separation of the forest floor at least into Oie and Oa horizons, would have been better than no separation whatsoever, so this procedure was implemented from 1987 onwards. It was also determined that air drying the Oa horizon would have been preferable to oven drying. Air drying makes possible the determination of exchangeable nutrients, whereas oven drying may alter the cation exchange complex. Air drying of the Oa horizon samples was implemented from 1992 onward.
+               The forest floor of Watershed 6 was sampled twice in 1969 and once in 1970. Since sampling technique differed significantly from the sampling technique used from 1976 onward, the earlier data are not included in this dataset. They may be requested in hard copy format from Chris Johnson at Syracuse University.
+            
+         
+      
+      
+         Hubbard Brook Experimental Forest: Long term soil studies
+         
+            Chris Johnson
+            Syracuse University
+            			Dept. of Civil and Environmental Engineering
+			151 Link Hall
+			Syracuse, NY 13244  USA
+            cejohns@syr.edu
+            https://orcid.org/0000-0001-9079-813X
+            https://ror.org/025r5qe02
+            
+         
+         
+            National Science Foundation
+            https://ror.org/021nxhr62
+            1637685
+            LTER: Long Term Ecological Research at the Hubbard Brook Experimental Forest (2016)
+            https://www.nsf.gov/awardsearch/showAward?AWD_ID=1637685
+         
+         
+            National Science Foundation
+            https://ror.org/021nxhr62
+            1633026
+            LTER: Long-Term Ecological Research at the Hubbard Brook Experimental Forest (2016b)
+            https://www.nsf.gov/awardsearch/showAward?AWD_ID=1633026
+         
+         
+            National Science Foundation
+            https://ror.org/021nxhr62
+            1114804
+            LTER: Long-Term Ecological Research at Hubbard Brook Experimental Forest (2010)
+            https://www.nsf.gov/awardsearch/showAward?AWD_ID=1114804
+         
+         
+            National Science Foundation
+            https://ror.org/021nxhr62
+            0423259
+            Long-Term Ecological Research (LTER) at Hubbard Brook Experimental Forest (HBR-LTER) (2005)
+            https://www.nsf.gov/awardsearch/showAward?AWD_ID=0423259
+         
+         
+            National Science Foundation
+            https://ror.org/021nxhr62
+            9810221
+            LTER: Hubbard Brook Experimental Forest (1998)
+            https://www.nsf.gov/awardsearch/showAward?AWD_ID=9810221
+         
+         
+            National Science Foundation
+            https://ror.org/021nxhr62
+            9211768
+            LTER: Long-term Ecological Research at the Hubbard Brook Experimental Forest (1992)
+            https://www.nsf.gov/awardsearch/showAward?AWD_ID=9211768
+         
+         
+            National Science Foundation
+            https://ror.org/021nxhr62
+            8702331
+            Long-Term Ecological Research at Hubbard Brook Experimental Forest (1988)
+            https://www.nsf.gov/awardsearch/showAward?AWD_ID=8702331
+         
+         
+            National Science Foundation
+            https://ror.org/021nxhr62
+            8717570
+            Collaborative Research: Reorganization of Nutrient Capital in a Northern Hardwood Forest After a Whole-Tree Harvest
+            https://www.nsf.gov/awardsearch/showAward?AWD_ID=8717570
+         
+         
+            Long-term Ecological Research (LTER) at the Hubbard Brook Experimental Forest (1992)
+            
+               Timothy Fahey
+               Cornell University
+               tjf5@cornell.edu
+               https://orcid.org/0000-0003-1283-1162
+               Principal Investigator
+            
+            National Science Foundation (NSF) 9211768
+         
+         
+            LTER: Hubbard Brook Experimental Forest (1998)
+            
+               Timothy Fahey
+               Cornell University
+               tjf5@cornell.edu
+               https://orcid.org/0000-0003-1283-1162
+               Principal Investigator
+            
+            National Science Foundation (NSF) 9810221
+         
+         
+            Long-Term Ecological Research (LTER) at Hubbard Brook Experimental Forest (HBR-LTER) (2005)
+            
+               Timothy Fahey
+               Cornell University
+               tjf5@cornell.edu
+               https://orcid.org/0000-0003-1283-1162
+               Principal Investigator
+            
+            National Science Foundation (NSF) 0423259
+         
+         
+            Long-Term Ecological Research at Hubbard Brook Experimental Forest (2010)
+            
+               Timothy Fahey
+               Cornell University
+               tjf5@cornell.edu
+               https://orcid.org/0000-0003-1283-1162
+               Principal Investigator
+            
+            National Science Foundation (NSF) 1114804
+         
+         
+            LTER: Long Term Ecological Research at the Hubbard Brook Experimental Forest (2016)
+            
+               Peter Groffman
+               Cary Institute of Ecosystem Studies
+               groffmanp@caryinstitute.org
+               https://orcid.org/0000-0001-8371-6255
+               Principal Investigator
+            
+            National Science Foundation (NSF) 1637685
+         
+         
+            Collaborative Research: Reorganization of Nutrient Capital in a Northern Hardwood Forest After a Whole-Tree Harvest
+            
+               Chris Johnson
+               Syracuse University
+               cejohns@syr.edu
+               https://orcid.org/0000-0001-9079-813X
+               Principal Investigator
+            
+            National Science Foundation 8717570
+         
+      
+      
+         HubbardBrook_ForestFloor_SiteInfo_W6
+         Hubbard Brook Forest Floor Data, Watershed 6. Field data and measurements for 15x15 cm excavated organic horizon soil blocks; exact number of samples varies by sampling year.
+         
+            HubbardBrook_ForestFloor_SiteInfo_W6.csv
+            104245
+            78d209c6523a4bb394b70da40781458b
+            
+               
+                  1
+                  \r\n
+                  column
+                  
+                     ,
+                     "
+                  
+               
+            
+            
+               
+                  https://pasta.lternet.edu/package/data/eml/knb-lter-hbr/172/4/16f1fab6db79c79440fbb4c3ff2e7ed7
+               
+            
+         
+         
+            
+               Year
+               Sample year
+               date
+               
+                  
+                     YYYY
+                     
+                  
+               
+            
+            
+               Plot
+               Plot number
+               string
+               
+                  
+                     
+                        
+                           text
+                        
+                     
+                  
+               
+            
+            
+               E_Code
+               E horizon development intensity
+               string
+               
+                  
+                     
+                        
+                           
+                              0
+                              absent
+                           
+                           
+                              1
+                              weak salt and pepper
+                           
+                           
+                              1.5
+                              moderate
+                           
+                           
+                              2
+                              good, clearly present
+                           
+                           
+                              3
+                              excellent, deep and well-developed
+                           
+                        
+                     
+                  
+               
+               
+                  -9999
+                  not available
+               
+            
+            
+               Sp_1
+               One of the three most important canopy tree species over the plot
+               string
+               
+                  
+                     
+                        
+                           
+                              ABBA
+                              Abies balsamea (Balsam fir)
+                           
+                           
+                              ACSA3
+                              Acer saccharum (Sugar Maple)
+                           
+                           
+                              ACSP2
+                              Acer spicatum (Mountain maple)
+                           
+                           
+                              ACPE
+                              Acer pensylvanicum (Striped maple or moose wood)
+                           
+                           
+                              ACRU
+                              Acer rubrum (Red maple)
+                           
+                           
+                              BEAL2
+                              Betula alleghaniensis (Yellow birch)
+                           
+                           
+                              BEPA
+                              Betula papyrifera (White or paper birch)
+                           
+                           
+                              FAGR
+                              Fagus grandifolia (American beech)
+                           
+                           
+                              FRAM2
+                              Fraxinus americana (White ash)
+                           
+                           
+                              PIRU
+                              Picea rubens (Red spruce)
+                           
+                           
+                              SOAM3
+                              Sorbus americana (Mountain ash)
+                           
+                        
+                     
+                  
+               
+               
+                  -9999
+                  not available
+               
+            
+            
+               Sp_2
+               One of the three most important canopy tree species over the plot
+               string
+               
+                  
+                     
+                        
+                           
+                              ABBA
+                              Abies balsamea (Balsam fir)
+                           
+                           
+                              ACSA3
+                              Acer saccharum (Sugar Maple)
+                           
+                           
+                              ACSP2
+                              Acer spicatum (Mountain maple)
+                           
+                           
+                              ACPE
+                              Acer pensylvanicum (Striped maple or moose wood)
+                           
+                           
+                              ACRU
+                              Acer rubrum (Red maple)
+                           
+                           
+                              BEAL2
+                              Betula alleghaniensis (Yellow birch)
+                           
+                           
+                              BEPA
+                              Betula papyrifera (White or paper birch)
+                           
+                           
+                              FAGR
+                              Fagus grandifolia (American beech)
+                           
+                           
+                              FRAM2
+                              Fraxinus americana (White ash)
+                           
+                           
+                              PIRU
+                              Picea rubens (Red spruce)
+                           
+                           
+                              SOAM3
+                              Sorbus americana (Mountain ash)
+                           
+                        
+                     
+                  
+               
+               
+                  -9999
+                  not available
+               
+            
+            
+               Sp_3
+               One of the three most important canopy tree species over the plot
+               string
+               
+                  
+                     
+                        
+                           
+                              ABBA
+                              Abies balsamea (Balsam fir)
+                           
+                           
+                              ACSA3
+                              Acer saccharum (Sugar Maple)
+                           
+                           
+                              ACSP2
+                              Acer spicatum (Mountain maple)
+                           
+                           
+                              ACPE
+                              Acer pensylvanicum (Striped maple or moose wood)
+                           
+                           
+                              ACRU
+                              Acer rubrum (Red maple)
+                           
+                           
+                              BEAL2
+                              Betula alleghaniensis (Yellow birch)
+                           
+                           
+                              BEPA
+                              Betula papyrifera (White or paper birch)
+                           
+                           
+                              FAGR
+                              Fagus grandifolia (American beech)
+                           
+                           
+                              FRAM2
+                              Fraxinus americana (White ash)
+                           
+                           
+                              PIRU
+                              Picea rubens (Red spruce)
+                           
+                           
+                              SOAM3
+                              Sorbus americana (Mountain ash)
+                           
+                        
+                     
+                  
+               
+               
+                  -9999
+                  not available
+               
+            
+            
+               FF_Thickness1
+               One of eight measures of thickness of forest floor block (in centimeters)
+               float
+               
+                  
+                     
+                        centimeter
+                     
+                     
+                        real
+                        
+                           0
+                           96
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  Data not available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/CentiM
+               
+            
+            
+               FF_Thickness2
+               One of eight measures of thickness of forest floor block (in centimeters)
+               float
+               
+                  
+                     
+                        centimeter
+                     
+                     
+                        real
+                        
+                           0
+                           34
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  Data not available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/CentiM
+               
+            
+            
+               FF_Thickness3
+               One of eight measures of thickness of forest floor block (in centimeters)
+               float
+               
+                  
+                     
+                        centimeter
+                     
+                     
+                        real
+                        
+                           0
+                           33
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  Data not available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/CentiM
+               
+            
+            
+               FF_Thickness4
+               One of eight measures of thickness of forest floor block (in centimeters)
+               float
+               
+                  
+                     
+                        centimeter
+                     
+                     
+                        real
+                        
+                           0
+                           34.5
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  Data not available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/CentiM
+               
+            
+            
+               FF_Thickness5
+               One of eight measures of thickness of forest floor block (in centimeters)
+               float
+               
+                  
+                     
+                        centimeter
+                     
+                     
+                        real
+                        
+                           0
+                           35
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  Data not available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/CentiM
+               
+            
+            
+               FF_Thickness6
+               One of eight measures of thickness of forest floor block (in centimeters)
+               float
+               
+                  
+                     
+                        centimeter
+                     
+                     
+                        real
+                        
+                           0
+                           34
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  Data not available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/CentiM
+               
+            
+            
+               FF_Thickness7
+               One of eight measures of thickness of forest floor block (in centimeters)
+               float
+               
+                  
+                     
+                        centimeter
+                     
+                     
+                        real
+                        
+                           0
+                           30
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  Data not available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/CentiM
+               
+            
+            
+               FF_Thickness8
+               One of eight measures of thickness of forest floor block (in centimeters)
+               float
+               
+                  
+                     
+                        centimeter
+                     
+                     
+                        real
+                        
+                           0
+                           36
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  Data not available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/CentiM
+               
+            
+            
+               Oie_Thickness1
+               One of eight measures of thickness of Oie (in centimeters)
+               float
+               
+                  
+                     
+                        centimeter
+                     
+                     
+                        real
+                        
+                           0
+                           10
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  Data not available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/CentiM
+               
+            
+            
+               Oie_Thickness2
+               One of eight measures of thickness of Oie (in centimeters)
+               float
+               
+                  
+                     
+                        centimeter
+                     
+                     
+                        real
+                        
+                           0
+                           12.4
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  Data not available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/CentiM
+               
+            
+            
+               Oie_Thickness3
+               One of eight measures of thickness of Oie (in centimeters)
+               float
+               
+                  
+                     
+                        centimeter
+                     
+                     
+                        real
+                        
+                           0
+                           10.3
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  Data not available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/CentiM
+               
+            
+            
+               Oie_Thickness4
+               One of eight measures of thickness of Oie (in centimeters)
+               float
+               
+                  
+                     
+                        centimeter
+                     
+                     
+                        real
+                        
+                           0
+                           8.5
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  Data not available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/CentiM
+               
+            
+            
+               Oie_Thickness5
+               One of eight measures of thickness of Oie (in centimeters)
+               float
+               
+                  
+                     
+                        centimeter
+                     
+                     
+                        real
+                        
+                           0
+                           10.5
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  Data not available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/CentiM
+               
+            
+            
+               Oie_Thickness6
+               One of eight measures of thickness of Oie (in centimeters)
+               float
+               
+                  
+                     
+                        centimeter
+                     
+                     
+                        real
+                        
+                           0
+                           11
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  Data not available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/CentiM
+               
+            
+            
+               Oie_Thickness7
+               One of eight measures of thickness of Oie (in centimeters)
+               float
+               
+                  
+                     
+                        centimeter
+                     
+                     
+                        real
+                        
+                           0
+                           9.5
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  Data not available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/CentiM
+               
+            
+            
+               Oie_Thickness8
+               One of eight measures of thickness of Oie (in centimeters)
+               float
+               
+                  
+                     
+                        centimeter
+                     
+                     
+                        real
+                        
+                           0
+                           9.7
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  Data not available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/CentiM
+               
+            
+            
+               Core_1
+               Core depth for one of four possible mineral soil cores collected.
+               float
+               
+                  
+                     
+                        centimeter
+                     
+                     
+                        real
+                        
+                           1
+                           19
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  Data not available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/CentiM
+               
+            
+            
+               Core_2
+               Core depth for one of four possible mineral soil cores collected.
+               float
+               
+                  
+                     
+                        centimeter
+                     
+                     
+                        real
+                        
+                           2.5
+                           15
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  Data not available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/CentiM
+               
+            
+            
+               Core_3
+               Core depth for one of four possible mineral soil cores collected.
+               float
+               
+                  
+                     
+                        centimeter
+                     
+                     
+                        real
+                        
+                           2
+                           10
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  Data not available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/CentiM
+               
+            
+            
+               Core_4
+               Core depth for one of four possible mineral soil cores collected.
+               float
+               
+                  
+                     
+                        centimeter
+                     
+                     
+                        real
+                        
+                           1.5
+                           7.6
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  Data not available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/CentiM
+               
+            
+         
+         no
+         763
+      
+      
+         HubbardBrook_ForestFloor_PlotLoc_W6
+         Sampling date and location for each forest floor sampled in W6
+         
+            HubbardBrook_ForestFloor_PlotLoc_W6.csv
+            19900
+            23d8880bb7e07fd471ee0b5dfb360d25
+            
+               
+                  1
+                  \r\n
+                  column
+                  
+                     ,
+                     "
+                  
+               
+            
+            
+               
+                  https://pasta.lternet.edu/package/data/eml/knb-lter-hbr/172/4/50d1e45dc7c0f5769e42f6d972e86f12
+               
+            
+         
+         
+            
+               SurveyYear
+               Sampling Year
+               date
+               
+                  
+                     YYYY
+                     
+                  
+               
+            
+            
+               Plot
+               The number associated with the 25m^2 plot where the sample was taken
+               string
+               
+                  
+                     
+                        
+                           text
+                        
+                     
+                  
+               
+            
+            
+               Samp_Date
+               Sample date
+               date
+               
+                  
+                     YYYY-MM-DD
+                     
+                  
+               
+               
+                  NA
+                  date unknown
+               
+            
+            
+               Plot_down
+               Number of meters into the plot, down from the NW corner post
+               float
+               
+                  
+                     
+                        meter
+                     
+                     
+                        whole
+                        
+                           0
+                           99
+                        
+                     
+                  
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/M
+               
+            
+            
+               Plot_Over
+               Number of meters into the plot, over from the NW corner post
+               float
+               
+                  
+                     
+                        meter
+                     
+                     
+                        whole
+                        
+                           0
+                           99
+                        
+                     
+                  
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/M
+               
+            
+         
+         763
+      
+      
+         HubbardBrook_ForestFloor_MetPool_W6
+         Hubbard Brook Forest Floor Data, Watershed 6. Element amounts measured in 15x15 cm excavated organic horizon soil blocks; exact number of samples varies by sampling year.
+         
+            HubbardBrook_ForestFloor_MetPool_W6.csv
+            130291
+            fef896d330944e555869405b64921078
+            
+               
+                  1
+                  \r\n
+                  column
+                  
+                     ,
+                     "
+                  
+               
+            
+            
+               
+                  https://pasta.lternet.edu/package/data/eml/knb-lter-hbr/172/4/382acf1fdcb69da1cca6674929f5ad6b
+               
+            
+         
+         
+            
+               Sample_ID
+               Site ID consists of the sample's year collected, watershed, plot, and horizon
+               string
+               
+                  
+                     
+                        
+                           text
+                        
+                     
+                  
+               
+            
+            
+               Year
+               Sample year
+               date
+               
+                  
+                     YYYY
+                     
+                  
+               
+            
+            
+               Watershed
+               Watershed number
+               string
+               
+                  
+                     
+                        
+                           text
+                        
+                     
+                  
+               
+            
+            
+               Plot
+               Plot number
+               string
+               
+                  
+                     
+                        
+                           text
+                        
+                     
+                  
+               
+            
+            
+               Horizon
+               Horizon
+               string
+               
+                  
+                     
+                        
+                           
+                              Oie
+                              Oie horizon
+                           
+                           
+                              Oa
+                              Oa horizon
+                           
+                           
+                              Oie+a
+                              Oie + Oa horizon
+                           
+                           
+                              min
+                              mineral horizon
+                           
+                        
+                     
+                  
+               
+            
+            
+               Ca_g_m2
+               Calcium amount in horizon
+               float
+               
+                  
+                     
+                        gramPerMeterSquared
+                     
+                     
+                        real
+                        
+                           0
+                           246.43
+                        
+                     
+                  
+               
+               
+                  -9999.99
+                  Data not available
+               
+               
+                  -8888.88
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/GM-PER-M2
+               
+            
+            
+               Mg_g_m2
+               Magnesium amount in horizon
+               float
+               
+                  
+                     
+                        gramPerMeterSquared
+                     
+                     
+                        real
+                        
+                           0
+                           225.87
+                        
+                     
+                  
+               
+               
+                  -9999.99
+                  Data not available
+               
+               
+                  -8888.88
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/GM-PER-M2
+               
+            
+            
+               K_g_m2
+               Potassium amount in horizon
+               float
+               
+                  
+                     
+                        gramPerMeterSquared
+                     
+                     
+                        real
+                        
+                           0
+                           246.94
+                        
+                     
+                  
+               
+               
+                  -9999.99
+                  Data not available
+               
+               
+                  -8888.88
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/GM-PER-M2
+               
+            
+            
+               P_g_m2
+               Phosphorus amount in horizon
+               float
+               
+                  
+                     
+                        gramPerMeterSquared
+                     
+                     
+                        real
+                        
+                           0
+                           112.69
+                        
+                     
+                  
+               
+               
+                  -9999.99
+                  Data not available
+               
+               
+                  -8888.88
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/GM-PER-M2
+               
+            
+            
+               Mn_g_m2
+               Manganese amount in horizon
+               float
+               
+                  
+                     
+                        gramPerMeterSquared
+                     
+                     
+                        real
+                        
+                           0
+                           163.49
+                        
+                     
+                  
+               
+               
+                  -9999.99
+                  Data not available
+               
+               
+                  -8888.88
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/GM-PER-M2
+               
+            
+            
+               Cu_g_m2
+               Copper amount in horizon
+               float
+               
+                  
+                     
+                        gramPerMeterSquared
+                     
+                     
+                        real
+                        
+                           0
+                           5.71
+                        
+                     
+                  
+               
+               
+                  -9999.99
+                  Data not available
+               
+               
+                  -8888.88
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/GM-PER-M2
+               
+            
+            
+               Zn_g_m2
+               Zinc amount in horizon
+               float
+               
+                  
+                     
+                        gramPerMeterSquared
+                     
+                     
+                        real
+                        
+                           0
+                           5.8
+                        
+                     
+                  
+               
+               
+                  -9999.99
+                  Data not available
+               
+               
+                  -8888.88
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/GM-PER-M2
+               
+            
+            
+               Pb_g_m2
+               Lead amount in horizon
+               float
+               
+                  
+                     
+                        gramPerMeterSquared
+                     
+                     
+                        real
+                        
+                           0
+                           4.63
+                        
+                     
+                  
+               
+               
+                  -9999.99
+                  Data not available
+               
+               
+                  -8888.88
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/GM-PER-M2
+               
+            
+            
+               Al_g_m2
+               Aluminum amount in horizon
+               float
+               
+                  
+                     
+                        gramPerMeterSquared
+                     
+                     
+                        real
+                        
+                           0
+                           891.32
+                        
+                     
+                  
+               
+               
+                  -9999.99
+                  Data not available
+               
+               
+                  -8888.88
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/GM-PER-M2
+               
+            
+            
+               Fe_g_m2
+               Iron amount in horizon
+               float
+               
+                  
+                     
+                        gramPerMeterSquared
+                     
+                     
+                        real
+                        
+                           0
+                           2762.41
+                        
+                     
+                  
+               
+               
+                  -9999.99
+                  Data not available
+               
+               
+                  -8888.88
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/GM-PER-M2
+               
+            
+         
+         no
+         1517
+      
+      
+         HubbardBrook_ForestFloor_MetConc_W6
+         Hubbard Brook Forest Floor Data, Watershed 6. Element concentrations measured in 15x15 cm excavated organic horizon soil blocks; exact number of samples varies by sampling year.
+         
+            HubbardBrook_ForestFloor_MetConc_W6.csv
+            137590
+            84a58d33d37f357284d89f6b05e4dd2d
+            
+               
+                  1
+                  \r\n
+                  column
+                  
+                     ,
+                     "
+                  
+               
+            
+            
+               
+                  https://pasta.lternet.edu/package/data/eml/knb-lter-hbr/172/4/0ff5d3e2ca711915795b03770f6e9608
+               
+            
+         
+         
+            
+               Sample_ID
+               Site ID consists of the sample's year collected, watershed, plot, and horizon
+               string
+               
+                  
+                     
+                        
+                           text
+                        
+                     
+                  
+               
+            
+            
+               Year
+               Sample year
+               date
+               
+                  
+                     YYYY
+                     
+                  
+               
+            
+            
+               Watershed
+               Watershed number
+               string
+               
+                  
+                     
+                        
+                           text
+                        
+                     
+                  
+               
+            
+            
+               Plot
+               Plot number
+               string
+               
+                  
+                     
+                        
+                           text
+                        
+                     
+                  
+               
+            
+            
+               Horizon
+               Horizon
+               string
+               
+                  
+                     
+                        
+                           
+                              Oie
+                              Oie horizon
+                           
+                           
+                              Oa
+                              Oa horizon
+                           
+                           
+                              Oie+a
+                              Oie + Oa horizon
+                           
+                           
+                              min
+                              mineral horizon
+                           
+                        
+                     
+                  
+               
+            
+            
+               Ca_mg_kg
+               Calcium concentration by horizon as ppm of oven dry sample
+               float
+               
+                  
+                     
+                        milligramPerKilogram
+                     
+                     
+                        real
+                        
+                           24.3
+                           10065.2
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  No data available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/MilliGM-PER-KiloGM
+               
+            
+            
+               Mg_mg_kg
+               Magnesium concentration by horizon as ppm of oven dry sample
+               float
+               
+                  
+                     
+                        milligramPerKilogram
+                     
+                     
+                        real
+                        
+                           27.1
+                           4614
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  No data available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/MilliGM-PER-KiloGM
+               
+            
+            
+               K_mg_kg
+               Potassium concentration by horizon as ppm of oven dry sample
+               float
+               
+                  
+                     
+                        milligramPerKilogram
+                     
+                     
+                        real
+                        
+                           0
+                           3991.6
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  No data available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/MilliGM-PER-KiloGM
+               
+            
+            
+               P_mg_kg
+               Phosphorous concentration by horizon as ppm of oven dry sample
+               float
+               
+                  
+                     
+                        milligramPerKilogram
+                     
+                     
+                        real
+                        
+                           0
+                           3143
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  No data available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/MilliGM-PER-KiloGM
+               
+            
+            
+               Mn_mg_kg
+               Manganese concentration by horizon as ppm of oven dry sample
+               float
+               
+                  
+                     
+                        milligramPerKilogram
+                     
+                     
+                        real
+                        
+                           4.8
+                           7879.9
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  No data available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/MilliGM-PER-KiloGM
+               
+            
+            
+               Cu_mg_kg
+               Copper concentration by horizon as ppm of oven dry sample
+               float
+               
+                  
+                     
+                        milligramPerKilogram
+                     
+                     
+                        real
+                        
+                           0
+                           177.5
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  No data available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/MilliGM-PER-KiloGM
+               
+            
+            
+               Zn_mg_kg
+               Zinc concentration by horizon as ppm of oven dry sample
+               float
+               
+                  
+                     
+                        milligramPerKilogram
+                     
+                     
+                        real
+                        
+                           0
+                           245.9
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  No data available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/MilliGM-PER-KiloGM
+               
+            
+            
+               Pb_mg_kg
+               Lead concentration by horizon as ppm of oven dry sample
+               float
+               
+                  
+                     
+                        milligramPerKilogram
+                     
+                     
+                        real
+                        
+                           0
+                           220.5
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  No data available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/MilliGM-PER-KiloGM
+               
+            
+            
+               Al_mg_kg
+               Aluminum concentration by horizon as ppm of oven dry sample
+               float
+               
+                  
+                     
+                        milligramPerKilogram
+                     
+                     
+                        real
+                        
+                           149.4
+                           25512.1
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  No data available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/MilliGM-PER-KiloGM
+               
+            
+            
+               Fe_mg_kg
+               Iron concentration by horizon as ppm of oven dry sample
+               float
+               
+                  
+                     
+                        milligramPerKilogram
+                     
+                     
+                        real
+                        
+                           157.9
+                           56429.8
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  No data available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/MilliGM-PER-KiloGM
+               
+            
+         
+         no
+         1517
+      
+      
+         HubbardBrook_ForestFloor_SoilMass_W6
+         Hubbard Brook Forest Floor Data, Watershed 6. Mass data for 15x15 cm excavated organic horizon soil blocks; exact number of samples varies by sampling year.
+         
+            HubbardBrook_ForestFloor_SoilMass_W6.csv
+            69989
+            1adba92eafc245213cdd4af1f7f43795
+            
+               
+                  1
+                  \r\n
+                  column
+                  
+                     ,
+                     "
+                  
+               
+            
+            
+               
+                  https://pasta.lternet.edu/package/data/eml/knb-lter-hbr/172/4/775e243b7a2b67c0047498533bf5b9d1
+               
+            
+         
+         
+            
+               Sample_ID
+               Site ID consists of the sample's year collected, watershed, plot, and horizon
+               string
+               
+                  
+                     
+                        
+                           text
+                        
+                     
+                  
+               
+            
+            
+               Year
+               Sample year
+               date
+               
+                  
+                     YYYY
+                     
+                  
+               
+            
+            
+               Watershed
+               Watershed number
+               string
+               
+                  
+                     
+                        
+                           text
+                        
+                     
+                  
+               
+            
+            
+               Plot
+               Plot number
+               string
+               
+                  
+                     
+                        
+                           text
+                        
+                     
+                  
+               
+            
+            
+               Horizon
+               Horizon
+               string
+               
+                  
+                     
+                        
+                           
+                              Oie
+                              Oie horizon
+                           
+                           
+                              Oa
+                              Oa horizon
+                           
+                           
+                              Oie+a
+                              Oie + Oa horizon
+                           
+                           
+                              min
+                              mineral horizon
+                           
+                        
+                     
+                  
+               
+            
+            
+               OM_TM
+               Oven dry wt of total mass of horizon (kg/m2)
+               float
+               
+                  
+                     
+                        kilogramPerMeterSquared
+                     
+                     
+                        real
+                        
+                           0
+                           137.66
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  Data not available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/KiloGM-PER-M2
+               
+            
+            
+               OM_OM
+               Oven dry wt of organic matter mass of horizon (kg/m2)
+               float
+               
+                  
+                     
+                        kilogramPerMeterSquared
+                     
+                     
+                        real
+                        
+                           0
+                           38.16
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  Data not available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/KiloGM-PER-M2
+               
+            
+            
+               OM_LOI
+               Loss on ignition (percent)
+               float
+               
+                  
+                     
+                        percent
+                     
+                     
+                        real
+                        
+                           2.98
+                           97.56
+                        
+                     
+                  
+               
+               
+                  -9999.9
+                  Data not available
+               
+               
+                  -8888.8
+                  Sample not collected
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/PERCENT
+               
+            
+         
+         no
+         1517
+      
+      
+         HubbardBrook_ForestFloor_CN_W6
+         Forest Floor percent carbon and percent nitrogen data table
+         
+            HubbardBrook_ForestFloor_CN_W6.csv
+            70761
+            556d87536034e2cb85e7dfb4e2dc4dd1
+            
+               
+                  1
+                  \r\n
+                  column
+                  
+                     ,
+                     "
+                  
+               
+            
+            
+               
+                  https://pasta.lternet.edu/package/data/eml/knb-lter-hbr/172/4/f25fc11474e2b787cecc67949ecd0028
+               
+            
+         
+         
+            
+               Site_ID
+               Site_ID
+               site ID
+               string
+               
+                  
+                     
+                        
+                           text
+                        
+                     
+                  
+               
+            
+            
+               Year
+               Year
+               Sampling year
+               dateTime
+               
+                  
+                     YYYY
+                     
+                  
+               
+            
+            
+               Plot
+               Plot
+               Plot ID
+               string
+               
+                  
+                     
+                        
+                           text
+                        
+                     
+                  
+               
+            
+            
+               Horizon
+               Horizon
+               soil horizon
+               string
+               
+                  
+                     
+                        
+                           
+                              min
+                              mineral horizon
+                           
+                           
+                              Oa
+                              Oa horizon
+                           
+                           
+                              Oie
+                              Oie horizon
+                           
+                           
+                              Oie+a
+                              Oie and Oa horizons
+                           
+                        
+                     
+                  
+               
+            
+            
+               Watershed
+               Watershed
+               Watershed
+               string
+               
+                  
+                     
+                        
+                           
+                              6
+                              Watershed 6
+                           
+                        
+                     
+                  
+               
+            
+            
+               PerCentN
+               PerCentN
+               percent nitrogen
+               float
+               
+                  
+                     
+                        percent
+                     
+                     
+                        real
+                     
+                  
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/PERCENT
+               
+            
+            
+               PerCentC
+               PerCentC
+               percent carbon
+               float
+               
+                  
+                     
+                        percent
+                     
+                     
+                        real
+                     
+                  
+               
+               
+                  http://qudt.org/schema/qudt/hasUnit
+                  http://qudt.org/vocab/unit/PERCENT
+               
+            
+         
+         no
+         1704
+      
+   
+   
+      
+         
+      
+   
+   
+      
+         
+      
+   
+   
+      
+         
+      
+   

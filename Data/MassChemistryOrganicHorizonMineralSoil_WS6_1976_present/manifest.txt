@@ -1,0 +1,10 @@
+Manifest file for knb-lter-hbr.172.4.zip created on Tue Jun 18 21:48:50 UTC 2024
+HubbardBrook_ForestFloor_SiteInfo_W6.csv (104245 bytes)
+HubbardBrook_ForestFloor_PlotLoc_W6.csv (19900 bytes)
+HubbardBrook_ForestFloor_MetPool_W6.csv (130291 bytes)
+HubbardBrook_ForestFloor_MetConc_W6.csv (137590 bytes)
+HubbardBrook_ForestFloor_SoilMass_W6.csv (69989 bytes)
+HubbardBrook_ForestFloor_CN_W6.csv (70761 bytes)
+knb-lter-hbr.172.4.xml (141800 bytes)
+knb-lter-hbr.172.4.txt (79258 bytes)
+knb-lter-hbr.172.4.report.xml (133938 bytes)

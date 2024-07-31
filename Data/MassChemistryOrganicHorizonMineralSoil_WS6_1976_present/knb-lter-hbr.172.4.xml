@@ -1,0 +1,2963 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eml:eml packageId="knb-lter-hbr.172.4"
+  system="https://pasta.edirepository.org"
+  xmlns:eml="https://eml.ecoinformatics.org/eml-2.2.0"
+  xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.2"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://eml.ecoinformatics.org/eml-2.2.0 https://eml.ecoinformatics.org/eml-2.2.0/eml.xsd">
+   <access
+    authSystem="https://pasta.edirepository.org/authentication"
+    order="allowFirst" scope="document"
+      system="https://pasta.edirepository.org">
+      <allow>
+         <principal>uid=HBR,o=EDI,dc=edirepository,dc=org</principal>
+         <permission>all</permission>
+      </allow>
+      <allow>
+         <principal>public</principal>
+         <permission>read</permission>
+      </allow>
+   </access>
+   <dataset>
+      <alternateIdentifier
+        system="https://doi.org">doi:10.6073/pasta/ab29c15538e75cafd4a43a30d8033cec</alternateIdentifier><title>Mass and Chemistry of Organic Horizons and Surface Mineral Soils on Watershed 6 at the Hubbard Brook Experimental Forest, 1976 - present</title>
+      <creator>
+         <individualName>
+            <givenName>Chris</givenName>
+            <givenName>E</givenName>
+            <surName>Johnson</surName>
+         </individualName>
+         <organizationName>Syracuse University</organizationName>
+         <address>
+            <deliveryPoint>Dept. of Civil and Environmental Engineering</deliveryPoint>
+            <deliveryPoint>151 Link Hall</deliveryPoint>
+            <city>Syracuse</city>
+            <administrativeArea>NY</administrativeArea>
+            <postalCode>13244</postalCode>
+            <country>USA</country>
+         </address>
+         <electronicMailAddress>cejohns@syr.edu</electronicMailAddress>
+         <userId
+        directory="https://orcid.org">https://orcid.org/0000-0001-9079-813X</userId>
+         <userId
+        directory="https://ror.org/">https://ror.org/025r5qe02</userId>
+      </creator>
+      <associatedParty>
+         <individualName>
+            <givenName>Steven</givenName>
+            <surName>Hamburg</surName>
+         </individualName>
+         <organizationName>Environmental Defense Fund</organizationName>
+         <role>Collaborator</role>
+      </associatedParty>
+      <associatedParty>
+         <individualName>
+            <givenName>Mary Margaret</givenName>
+            <surName>Koppers</surName>
+         </individualName>
+         <organizationName>Syracuse University</organizationName>
+         <role>Associated Party</role>
+      </associatedParty>
+      <associatedParty>
+         <individualName>
+            <givenName>Ellen</givenName>
+            <surName>Denny</surName>
+         </individualName>
+         <organizationName>National Phenology Network</organizationName>
+         <role>Associated Party</role>
+      </associatedParty>
+      <associatedParty>
+         <individualName>
+            <givenName>Matthew</givenName>
+            <givenName>A</givenName>
+            <surName>Vadeboncoeur</surName>
+         </individualName>
+         <organizationName>University of New Hampshire</organizationName>
+         <address>
+            <deliveryPoint>8 College Rd</deliveryPoint>
+            <city>Durham</city>
+            <administrativeArea>NH</administrativeArea>
+            <postalCode>03824</postalCode>
+            <country>USA</country>
+         </address>
+         <electronicMailAddress>matthew.vadeboncoeur@unh.edu</electronicMailAddress>
+         <userId
+        directory="https://orcid.org">https://orcid.org/0000-0002-3724-9753</userId>
+         <userId
+      directory="https://ror.org/">https://ror.org/01rmh9n78</userId>
+         <role>Associated Party</role>
+      </associatedParty>
+      <associatedParty>
+         <individualName>
+            <givenName>Thomas</givenName>
+            <surName>Siccama</surName>
+         </individualName>
+         <organizationName>Yale School of Forestry and Environmental Studies</organizationName>
+         <role>Dataset originator</role>
+      </associatedParty>
+      <pubDate>2024-03-15</pubDate>
+      <abstract>
+         <para>The forest floor of Watershed 6 was first sampled in 1969-70. These data include forest floor thickness, soil mass, organic matter content, and major-element composition for samples collected since 1976. Watershed 6 has been resampled at intervals varying from one to ten years. Sampling at five to ten year intervals is expected to continue.</para>
+         <para>These data were gathered as part of the Hubbard Brook Ecosystem Study (HBES). The HBES is a collaborative effort at the Hubbard Brook Experimental Forest, which is operated and maintained by the USDA Forest Service, Northern Research Station.</para>
+      </abstract>
+      <keywordSet>
+         <keyword>HBR</keyword>
+         <keyword>Hubbard Brook LTER</keyword>
+         <keyword>Hubbard Brook Experimental Forest</keyword>
+         <keyword>Hubbard Brook Ecosystem Study</keyword>
+         <keyword>HBES</keyword>
+         <keyword>HBEF</keyword>
+         <keyword>New Hampshire</keyword>
+         <keyword>NH</keyword>
+         <keyword>White Mountain National Forest</keyword>
+         <keyword>base cations</keyword>
+         <keyword>trace minerals</keyword>
+         <keywordThesaurus>HBES Vocabulary</keywordThesaurus>
+      </keywordSet>
+      <keywordSet>
+         <keyword>climatologyMeteorologyAtmosphere</keyword>
+         <keywordThesaurus>ISO 19115 Topic Category</keywordThesaurus>
+      </keywordSet>
+      <keywordSet>
+         <keyword>ecosystems</keyword>
+         <keyword>forests</keyword>
+         <keyword>watersheds</keyword>
+         <keyword>calcium</keyword>
+         <keyword>soil</keyword>
+         <keyword>soil organic matter</keyword>
+         <keyword>cations</keyword>
+         <keyword>soil horizons</keyword>
+         <keyword>carbon</keyword>
+         <keyword>nitrogen</keyword>
+         <keywordThesaurus>LTER Controlled Vocabulary</keywordThesaurus>
+      </keywordSet>
+      <keywordSet>
+         <keyword>inorganic nutrients</keyword>
+         <keyword>organic matter</keyword>
+         <keyword>disturbance patterns</keyword>
+         <keywordThesaurus>LTER Core Research Area</keywordThesaurus>
+      </keywordSet>
+      <keywordSet>
+         <keyword>Climate change</keyword>
+         <keyword>Climate change effects</keyword>
+         <keyword>Ecology, Ecosystems, &amp; Environment</keyword>
+         <keywordThesaurus>National Research &amp; Development Taxonomy</keywordThesaurus>
+      </keywordSet>
+      <intellectualRights>
+         <para>This information is released under the Creative Commons license - Attribution - CC BY (https://creativecommons.org/licenses/by/4.0/). The consumer of these data ("Data User" herein) is required to cite it appropriately in any publication that results from its use. The Data User should realize that these data may be actively used by others for ongoing research and that coordination may be necessary to prevent duplicate publication. The Data User is urged to contact the authors of these data if any questions about methodology or results occur. Where appropriate, the Data User is encouraged to consider collaboration or co-authorship with the authors. The Data User should realize that misinterpretation of data may occur if used out of context of the original study. While substantial efforts are made to ensure the accuracy of data and associated documentation, complete accuracy of data sets cannot be guaranteed. All data are made available "as is." The Data User should be aware, however, that data are updated periodically and it is the responsibility of the Data User to check for new versions of the data. The data authors and the repository where these data were obtained shall not be liable for damages resulting from any use or misinterpretation of the data. Thank you.</para>
+      </intellectualRights>
+      <distribution
+      id="10.6073/pasta/ab29c15538e75cafd4a43a30d8033cec" scope="system"
+          system="https://pasta.edirepository.org"><online><url
+        function="information">https://doi.org/10.6073/pasta/ab29c15538e75cafd4a43a30d8033cec</url></online></distribution><coverage>
+         <geographicCoverage>
+            <geographicDescription>Hubbard Brook Experimental Forest</geographicDescription>
+            <boundingCoordinates>
+               <westBoundingCoordinate>-71.8062</westBoundingCoordinate>
+               <eastBoundingCoordinate>-71.7022</eastBoundingCoordinate>
+               <northBoundingCoordinate>43.959</northBoundingCoordinate>
+               <southBoundingCoordinate>43.914</southBoundingCoordinate>
+            </boundingCoordinates>
+         </geographicCoverage>
+         <geographicCoverage>
+            <geographicDescription>Watershed 6 is a 13.23 ha watershed extending from the weir at 560 m to the ridge at 790 m.</geographicDescription>
+            <boundingCoordinates>
+               <westBoundingCoordinate>-71.743</westBoundingCoordinate>
+               <eastBoundingCoordinate>-71.735</eastBoundingCoordinate>
+               <northBoundingCoordinate>43.9571</northBoundingCoordinate>
+               <southBoundingCoordinate>43.95</southBoundingCoordinate>
+            </boundingCoordinates>
+         </geographicCoverage>
+         <temporalCoverage>
+            <rangeOfDates>
+               <beginDate>
+                  <calendarDate>1976-06-01</calendarDate>
+               </beginDate>
+               <endDate>
+                  <calendarDate>2018-09-30</calendarDate>
+               </endDate>
+            </rangeOfDates>
+         </temporalCoverage>
+      </coverage>
+      <maintenance>
+         <description>
+            <para>knb-lter-hbr.172.4: Addition forest floor percent carbon and percent nitrogen data table; addition of QUDT unit annotation</para>
+            <para>Data have been collected at varying intervals and are anticipated now at 5 to 10 year intervals.</para>
+         </description>
+         <maintenanceUpdateFrequency>irregular</maintenanceUpdateFrequency>
+      </maintenance>
+      <contact>
+         <organizationName>Hubbard Brook Ecosystem Study</organizationName>
+         <electronicMailAddress>hbr-im@lternet.edu</electronicMailAddress>
+      </contact>
+      <publisher>
+         <organizationName>Environmental Data Initiative</organizationName>
+         <electronicMailAddress>info@edirepository.org</electronicMailAddress>
+         <onlineUrl>https://edirepository.org</onlineUrl>
+         <userId
+          directory="https://ror.org">0330j0z60</userId>
+      </publisher>
+      <pubPlace>Environmental Data Initiative</pubPlace>
+      <methods>
+         <methodStep>
+            <description>
+               <para>SITE DESCRIPTION</para>
+               <para>Samples were collected in Watershed 6 of the Hubbard Brook Experimental Forest. Watershed 6 is forested by typical northern hardwood species (sugar maple, beech and yellow birch) on the lower 90% of its area and by a montane boreal transition forest of red spruce, balsam fir and white birch on the highest 10%. Hydrology and stream water chemistry have been monitored since 1963. A grid system of 208 plots, each 25 x 25 m square, was created in Watershed 6 in 1965. More detailed information on the elevation zones and plot layout can be found under the 'watershed/research site' tab on https://hubbardbrook.org.</para>
+               <para/>
+               <para>SAMPLING DESIGN</para>
+               <para>From 1976 to 2002, each row of the Watershed 6 grid system of 25 x 25 m plots was considered a stratified sampling set and one or more plots was randomly chosen from these lines as plots to be sampled. Some rows are short, with only 1 to 4 plots, and others are longer, up to 10 plots across. The longer rows may have 2 or 3 plots sampled. The short rows may not have any plots sampled. After 2002, a random number generator was used to identify 100 plots over the entire watershed to sample. The location of the sampling site within each plot was determined by selecting two random integers between 0 and 24 ("x" and "y") and navigating to the selected coordinates from the northwest corner of the 25 x 25 m plot. The target number of samples changed year by year, and the number of plots sampled varies from 58 to 101.</para>
+               <para/>
+               <para>FIELD COLLECTION PROCEDURES</para>
+               <para>Once a sampling point was located by taping or pacing, a 15 x 15 cm template was placed on the forest floor and 4 nails were inserted through pre-drilled holes, one on each corner. The nails hold the template in place on the forest floor and retain the forest floor material within the sample area beneath the template. A keyhole saw, pruning shears and a trowel were used to make a clean cut around the template, thus isolating a block of forest floor. The surrounding forest floor material was scraped back from the block leaving it as a pedestal. This block was then undercut in the mineral soil with a saw or trowel to sever any roots. Using a trowel inserted beneath the block and hands on top, the block was carefully picked up and turned over such as to rest on the template. Any remaining mineral soil was carefully scraped away "up" to the bottom of the Oa layer of the forest floor. After all mineral soil was removed, the thickness of the block was measured at the highest and lowest point on each of the 4 sides (1976-1982) or at 5 cm intervals along each of the four sides (1987 onward) for a total of 8 measurements. Beginning in 2002, the total thickness and the thickness of the combined Oi and Oe horizons (referred to in this data set as "Oie") were measured at each point. The average thickness of the Oa horizon could then be determined by subtraction of the average Oie thickness from the average total thickness for each block. In 1976, 1977, and 1982, the entire block was returned to the laboratory for analysis. In 1978, the sample was split into Oi, Oe, and Oa horizons in the field. From 1987 on, the block was separated into Oie and Oa horizons in the field. Each horizon was placed in a separate plastic bag for return to the laboratory.</para>
+               <para>Beginning in 1997, the upper 10 cm of the mineral soil was sampled by coring. After sampling the O horizons, a stainless steel corer (diameter 1.362 inches 1997-2002, diameter 1.374 inches 2013 onward) was inserted in the soil below the forest floor. If the core length exceeded 10 cm, the core was cut to 10 cm and bagged. If the core length was less than 10 cm, usually due to refusal by stones, the entire core was bagged. Two full 10-cm cores, or up to four partial cores, were collected at each site, unless mineral soil was absent.</para>
+               <para/>
+               <para>LABORATORY PROCEDURES</para>
+               <para>The whole sample (1976, 1977, and 1982), all horizons (1978 and 1987), or Oie samples only (1992 onward) were oven dried at 80oC to a constant weight, and ground in a Wiley mill to pass a 2-mm screen. Large solid sticks and roots larger than the size of a pencil and obviously alive or fresh material were removed and weighed. These were not ground and were not included in the mass calculations.</para>
+               <para>The Oa horizon was air dried (1992 onward), weighed and then sieved through a 5-mm stainless steel screen. Sticks, roots and debris (coarse fraction) not passing through the screen with mild pressure were weighed. Stones, which were rarely present in the Oa, were also included in the coarse fraction. Material passing through the screen was weighed and rebagged. A subsample of this air dry screened soil was weighed, oven dried at 80oC, and weighed again. An air dry to oven dry conversion factor was determined in order to express the total Oa soil mass on an oven dry weight basis.</para>
+               <para>The mineral soils (1997 onward) were air dried, weighed, and passed through a 2-mm stainless steel screen. Material passing through the screen was weighed and rebagged. Material not passing through the screen, including sticks, roots, and stones, was weighed. A subsample of this air dry screened soil was weighed, oven dried at 80oC, and weighed again. An air dry to oven dry conversion factor was determined in order to express the total mineral soil mass on an oven dry weight basis.</para>
+               <para>Samples of the ground/screened Oie, Oa, and mineral soils were put in 4 oz. glass jars for long-term preservation in the Hubbard Brook archives.</para>
+               <para>For determination of organic content and acid-extractable metals determination, a known mass of the oven dry ground material was placed in a pre-weighed crucible and ashed overnight at 450-500oC. The ashed material was cooled and weighed. The loss-on-ignition was computed and used as a measure of organic matter content. The ash was eluted with 10 ml of 6N HNO3 and heated for a few minutes (to a simmer) on a hot plate. The hot extract solution was poured into a filter paper (Whatman # 41 ashless) in a funnel and into a 50 ml volumetric flask. The crucible and the material on the filter paper were rinsed several times with distilled deionized water. The volume in the flask was brought up to 50 ml with distilled deionized water. The 50 ml of extract solution was stored at room temperature until chemical analysis. The mass of sample, analytes measured, and instrument used each year are listed below. Analysis of plant tissue standard reference materials (e.g. apple leaves, pine needles) has consistently yielded near-100% recoveries, indicating that this digestion procedure is effective for digesting organic matter. However, digestion of Oa horizon and mineral soil samples is incomplete, as evidenced by residual mineral matter on the filter paper. It is therefore safest to refer to the results as "acid-extractable" rather than "total" element content.</para>
+               <para>Total carbon and nitrogen were determined using oven-dried ground material on a CHN analyzer.</para>
+               <para/>
+               <para>CALCULATIONS</para>
+               <para>For organic horizons, total mass is the sieved mass of soil for the horizon multiplied by the ratio of oven dry soil to air dry soil masses and divided by the area of the template used for sampling (15 x 15 cm). For the mineral horizon, total mass is the average sieved mass of soil in the cores multiplied by the ratio of oven dry soil to air dry soil masses and divided by the diameter of the soil corer. Organic mass is the total mass of soil in the horizon multiplied by the loss on ignition for the horizon. Concentrations of elements in the forest floor were calculated on an oven dry weight basis. Total amounts of the elements were estimated on a per square meter basis by extrapolating up from the 15 x 15 cm sample mass. </para>
+               <para>INSTRUMENTATION</para>
+               <para>Sample analysis varied between years in the mass of soil used, analytes measured and instrumentatation used for each element.</para>
+               <para>Year_______Soil mass (g)__Analytes__Instrument</para>
+               <para>1976-1978____2.0_________Zn, Pb, Cu: AA</para>
+               <para>1976-1978____0.5_________Ca, Mg: ICP (analyzed in 1995)</para>
+               <para>1982_________2.0_________Zn, Pb, Cu: AA *</para>
+               <para>1982_________0.5_________Ca, Mg, K, P, Mg, Cu, Pb, Zn: ICP (analyzed in 1998)</para>
+               <para>1987_________2.0_________Zn, Pb, Cu: AA</para>
+               <para>1987_________0.5_________Ca, Mg: ICP</para>
+               <para>1992_________0.5_________Ca, Mg, K, P, Mn, Zn, Pb, Cu: ICP</para>
+               <para>1997_________0.5_________Ca, Mg, K, P, Mn, Zn, Pb, Cu: ICP</para>
+               <para>2002_________0.5_________Ca, Mg, K, P, Mn, Zn, Pb, Cu: ICP</para>
+               <para>2013_________0.6_________Mg, K, P, Mn, Zn, Pb, Cu: ICP-MS</para>
+               <para>2013_________0.6_________Ca: AA</para>
+               <para>2018_________0.6_________Ca, Mg, K, P, Mn, Al, Fe: ICP; Cu, Pb, Zn: ICP-MS</para>
+               <para>* All data included in the data table are from ICP analysis, except plot 27 which had insufficient volume available for reanalysis.</para>
+               <para>NOTES</para>
+               <para>The primary objectives of the forest floor samplings in 1976-1978 were 1) the determination of the amount of lead (Pb) in the forest floor, 2) monitoring the total mass of the forest floor over time and 3) development of a field collection methodology that was efficient and easily implemented. It was determined that separation of the forest floor at least into Oie and Oa horizons, would have been better than no separation whatsoever, so this procedure was implemented from 1987 onwards. It was also determined that air drying the Oa horizon would have been preferable to oven drying. Air drying makes possible the determination of exchangeable nutrients, whereas oven drying may alter the cation exchange complex. Air drying of the Oa horizon samples was implemented from 1992 onward.</para>
+               <para>The forest floor of Watershed 6 was sampled twice in 1969 and once in 1970. Since sampling technique differed significantly from the sampling technique used from 1976 onward, the earlier data are not included in this dataset. They may be requested in hard copy format from Chris Johnson at Syracuse University.</para>
+            </description>
+         </methodStep>
+      </methods>
+      <project>
+         <title>Hubbard Brook Experimental Forest: Long term soil studies</title>
+         <personnel>
+            <individualName>
+               <givenName>Chris</givenName>
+               <givenName>E</givenName>
+               <surName>Johnson</surName>
+            </individualName>
+            <organizationName>Syracuse University</organizationName>
+            <address>
+               <deliveryPoint>Dept. of Civil and Environmental Engineering</deliveryPoint>
+               <deliveryPoint>151 Link Hall</deliveryPoint>
+               <city>Syracuse</city>
+               <administrativeArea>NY</administrativeArea>
+               <postalCode>13244</postalCode>
+               <country>USA</country>
+            </address>
+            <electronicMailAddress>cejohns@syr.edu</electronicMailAddress>
+            <userId
+          directory="https://orcid.org">https://orcid.org/0000-0001-9079-813X</userId>
+            <userId
+            directory="https://ror.org/">https://ror.org/025r5qe02</userId>
+            <role/>
+         </personnel>
+         <award>
+            <funderName>National Science Foundation</funderName>
+            <funderIdentifier>https://ror.org/021nxhr62</funderIdentifier>
+            <awardNumber>1637685</awardNumber>
+            <title>LTER: Long Term Ecological Research at the Hubbard Brook Experimental Forest (2016)</title>
+            <awardUrl>https://www.nsf.gov/awardsearch/showAward?AWD_ID=1637685</awardUrl>
+         </award>
+         <award>
+            <funderName>National Science Foundation</funderName>
+            <funderIdentifier>https://ror.org/021nxhr62</funderIdentifier>
+            <awardNumber>1633026</awardNumber>
+            <title>LTER: Long-Term Ecological Research at the Hubbard Brook Experimental Forest (2016b)</title>
+            <awardUrl>https://www.nsf.gov/awardsearch/showAward?AWD_ID=1633026</awardUrl>
+         </award>
+         <award>
+            <funderName>National Science Foundation</funderName>
+            <funderIdentifier>https://ror.org/021nxhr62</funderIdentifier>
+            <awardNumber>1114804</awardNumber>
+            <title>LTER: Long-Term Ecological Research at Hubbard Brook Experimental Forest (2010)</title>
+            <awardUrl>https://www.nsf.gov/awardsearch/showAward?AWD_ID=1114804</awardUrl>
+         </award>
+         <award>
+            <funderName>National Science Foundation</funderName>
+            <funderIdentifier>https://ror.org/021nxhr62</funderIdentifier>
+            <awardNumber>0423259</awardNumber>
+            <title>Long-Term Ecological Research (LTER) at Hubbard Brook Experimental Forest (HBR-LTER) (2005)</title>
+            <awardUrl>https://www.nsf.gov/awardsearch/showAward?AWD_ID=0423259</awardUrl>
+         </award>
+         <award>
+            <funderName>National Science Foundation</funderName>
+            <funderIdentifier>https://ror.org/021nxhr62</funderIdentifier>
+            <awardNumber>9810221</awardNumber>
+            <title>LTER: Hubbard Brook Experimental Forest (1998)</title>
+            <awardUrl>https://www.nsf.gov/awardsearch/showAward?AWD_ID=9810221</awardUrl>
+         </award>
+         <award>
+            <funderName>National Science Foundation</funderName>
+            <funderIdentifier>https://ror.org/021nxhr62</funderIdentifier>
+            <awardNumber>9211768</awardNumber>
+            <title>LTER: Long-term Ecological Research at the Hubbard Brook Experimental Forest (1992)</title>
+            <awardUrl>https://www.nsf.gov/awardsearch/showAward?AWD_ID=9211768</awardUrl>
+         </award>
+         <award>
+            <funderName>National Science Foundation</funderName>
+            <funderIdentifier>https://ror.org/021nxhr62</funderIdentifier>
+            <awardNumber>8702331</awardNumber>
+            <title>Long-Term Ecological Research at Hubbard Brook Experimental Forest (1988)</title>
+            <awardUrl>https://www.nsf.gov/awardsearch/showAward?AWD_ID=8702331</awardUrl>
+         </award>
+         <award>
+            <funderName>National Science Foundation</funderName>
+            <funderIdentifier>https://ror.org/021nxhr62</funderIdentifier>
+            <awardNumber>8717570</awardNumber>
+            <title>Collaborative Research: Reorganization of Nutrient Capital in a Northern Hardwood Forest After a Whole-Tree Harvest</title>
+            <awardUrl>https://www.nsf.gov/awardsearch/showAward?AWD_ID=8717570</awardUrl>
+         </award>
+         <relatedProject>
+            <title>Long-term Ecological Research (LTER) at the Hubbard Brook Experimental Forest (1992)</title>
+            <personnel>
+               <individualName>
+                  <givenName>Timothy</givenName>
+                  <givenName>J</givenName>
+                  <surName>Fahey</surName>
+               </individualName>
+               <organizationName>Cornell University</organizationName>
+               <electronicMailAddress>tjf5@cornell.edu</electronicMailAddress>
+               <userId
+            directory="https://orcid.org">https://orcid.org/0000-0003-1283-1162</userId>
+               <role>Principal Investigator</role>
+            </personnel>
+            <funding>National Science Foundation (NSF) 9211768</funding>
+         </relatedProject>
+         <relatedProject>
+            <title>LTER: Hubbard Brook Experimental Forest (1998)</title>
+            <personnel>
+               <individualName>
+                  <givenName>Timothy</givenName>
+                  <givenName>J</givenName>
+                  <surName>Fahey</surName>
+               </individualName>
+               <organizationName>Cornell University</organizationName>
+               <electronicMailAddress>tjf5@cornell.edu</electronicMailAddress>
+               <userId
+            directory="https://orcid.org">https://orcid.org/0000-0003-1283-1162</userId>
+               <role>Principal Investigator</role>
+            </personnel>
+            <funding>National Science Foundation (NSF) 9810221</funding>
+         </relatedProject>
+         <relatedProject>
+            <title>Long-Term Ecological Research (LTER) at Hubbard Brook Experimental Forest (HBR-LTER) (2005)</title>
+            <personnel>
+               <individualName>
+                  <givenName>Timothy</givenName>
+                  <givenName>J</givenName>
+                  <surName>Fahey</surName>
+               </individualName>
+               <organizationName>Cornell University</organizationName>
+               <electronicMailAddress>tjf5@cornell.edu</electronicMailAddress>
+               <userId
+            directory="https://orcid.org">https://orcid.org/0000-0003-1283-1162</userId>
+               <role>Principal Investigator</role>
+            </personnel>
+            <funding>National Science Foundation (NSF) 0423259</funding>
+         </relatedProject>
+         <relatedProject>
+            <title>Long-Term Ecological Research at Hubbard Brook Experimental Forest (2010)</title>
+            <personnel>
+               <individualName>
+                  <givenName>Timothy</givenName>
+                  <givenName>J</givenName>
+                  <surName>Fahey</surName>
+               </individualName>
+               <organizationName>Cornell University</organizationName>
+               <electronicMailAddress>tjf5@cornell.edu</electronicMailAddress>
+               <userId
+            directory="https://orcid.org">https://orcid.org/0000-0003-1283-1162</userId>
+               <role>Principal Investigator</role>
+            </personnel>
+            <funding>National Science Foundation (NSF) 1114804</funding>
+         </relatedProject>
+         <relatedProject>
+            <title>LTER: Long Term Ecological Research at the Hubbard Brook Experimental Forest (2016)</title>
+            <personnel>
+               <individualName>
+                  <givenName>Peter</givenName>
+                  <givenName>M</givenName>
+                  <surName>Groffman</surName>
+               </individualName>
+               <organizationName>Cary Institute of Ecosystem Studies</organizationName>
+               <electronicMailAddress>groffmanp@caryinstitute.org</electronicMailAddress>
+               <userId
+            directory="https://orcid.org">https://orcid.org/0000-0001-8371-6255</userId>
+               <role>Principal Investigator</role>
+            </personnel>
+            <funding>National Science Foundation (NSF) 1637685</funding>
+         </relatedProject>
+         <relatedProject>
+            <title>Collaborative Research: Reorganization of Nutrient Capital in a Northern Hardwood Forest After a Whole-Tree Harvest</title>
+            <personnel>
+               <individualName>
+                  <givenName>Chris</givenName>
+                  <givenName>E</givenName>
+                  <surName>Johnson</surName>
+               </individualName>
+               <organizationName>Syracuse University</organizationName>
+               <electronicMailAddress>cejohns@syr.edu</electronicMailAddress>
+               <userId
+      directory="https://orcid.org">https://orcid.org/0000-0001-9079-813X</userId>
+               <role>Principal Investigator</role>
+            </personnel>
+            <funding>National Science Foundation 8717570</funding>
+         </relatedProject>
+      </project>
+      <dataTable
+      id="16f1fab6db79c79440fbb4c3ff2e7ed7" scope="document"
+          system="https://pasta.edirepository.org">
+         <entityName>HubbardBrook_ForestFloor_SiteInfo_W6</entityName>
+         <entityDescription>Hubbard Brook Forest Floor Data, Watershed 6. Field data and measurements for 15x15 cm excavated organic horizon soil blocks; exact number of samples varies by sampling year.</entityDescription>
+         <physical>
+            <objectName>HubbardBrook_ForestFloor_SiteInfo_W6.csv</objectName>
+            <size
+          unit="byte">104245</size>
+            <authentication
+              method="MD5">78d209c6523a4bb394b70da40781458b</authentication>
+            <dataFormat>
+               <textFormat>
+                  <numHeaderLines>1</numHeaderLines>
+                  <recordDelimiter>\r\n</recordDelimiter>
+                  <attributeOrientation>column</attributeOrientation>
+                  <simpleDelimited>
+                     <fieldDelimiter>,</fieldDelimiter>
+                     <quoteCharacter>"</quoteCharacter>
+                  </simpleDelimited>
+               </textFormat>
+            </dataFormat>
+            <distribution>
+               <online>
+                  <url
+          function="download">https://pasta.lternet.edu/package/data/eml/knb-lter-hbr/172/4/16f1fab6db79c79440fbb4c3ff2e7ed7</url>
+               </online>
+            </distribution>
+         </physical>
+         <attributeList>
+            <attribute
+          id="Year-1">
+               <attributeName>Year</attributeName>
+               <attributeDefinition>Sample year</attributeDefinition>
+               <storageType>date</storageType>
+               <measurementScale>
+                  <dateTime>
+                     <formatString>YYYY</formatString>
+                     <dateTimeDomain/>
+                  </dateTime>
+               </measurementScale>
+            </attribute>
+            <attribute
+          id="Plot-2">
+               <attributeName>Plot</attributeName>
+               <attributeDefinition>Plot number</attributeDefinition>
+               <storageType>string</storageType>
+               <measurementScale>
+                  <nominal>
+                     <nonNumericDomain>
+                        <textDomain>
+                           <definition>text</definition>
+                        </textDomain>
+                     </nonNumericDomain>
+                  </nominal>
+               </measurementScale>
+            </attribute>
+            <attribute
+                  id="ECode-3">
+               <attributeName>E_Code</attributeName>
+               <attributeDefinition>E horizon development intensity</attributeDefinition>
+               <storageType>string</storageType>
+               <measurementScale>
+                  <nominal>
+                     <nonNumericDomain>
+                        <enumeratedDomain
+          enforced="yes">
+                           <codeDefinition>
+                              <code>0</code>
+                              <definition>absent</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>1</code>
+                              <definition>weak salt and pepper</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>1.5</code>
+                              <definition>moderate</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>2</code>
+                              <definition>good, clearly present</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>3</code>
+                              <definition>excellent, deep and well-developed</definition>
+                           </codeDefinition>
+                        </enumeratedDomain>
+                     </nonNumericDomain>
+                  </nominal>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999</code>
+                  <codeExplanation>not available</codeExplanation>
+               </missingValueCode>
+            </attribute>
+            <attribute
+                  id="Sp1-4">
+               <attributeName>Sp_1</attributeName>
+               <attributeDefinition>One of the three most important canopy tree species over the plot</attributeDefinition>
+               <storageType>string</storageType>
+               <measurementScale>
+                  <nominal>
+                     <nonNumericDomain>
+                        <enumeratedDomain
+          enforced="yes">
+                           <codeDefinition>
+                              <code>ABBA</code>
+                              <definition>Abies balsamea (Balsam fir)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>ACSA3</code>
+                              <definition>Acer saccharum (Sugar Maple)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>ACSP2</code>
+                              <definition>Acer spicatum (Mountain maple)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>ACPE</code>
+                              <definition>Acer pensylvanicum (Striped maple or moose wood)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>ACRU</code>
+                              <definition>Acer rubrum (Red maple)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>BEAL2</code>
+                              <definition>Betula alleghaniensis (Yellow birch)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>BEPA</code>
+                              <definition>Betula papyrifera (White or paper birch)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>FAGR</code>
+                              <definition>Fagus grandifolia (American beech)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>FRAM2</code>
+                              <definition>Fraxinus americana (White ash)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>PIRU</code>
+                              <definition>Picea rubens (Red spruce)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>SOAM3</code>
+                              <definition>Sorbus americana (Mountain ash)</definition>
+                           </codeDefinition>
+                        </enumeratedDomain>
+                     </nonNumericDomain>
+                  </nominal>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999</code>
+                  <codeExplanation>not available</codeExplanation>
+               </missingValueCode>
+            </attribute>
+            <attribute
+                  id="Sp2-5">
+               <attributeName>Sp_2</attributeName>
+               <attributeDefinition>One of the three most important canopy tree species over the plot</attributeDefinition>
+               <storageType>string</storageType>
+               <measurementScale>
+                  <nominal>
+                     <nonNumericDomain>
+                        <enumeratedDomain
+          enforced="yes">
+                           <codeDefinition>
+                              <code>ABBA</code>
+                              <definition>Abies balsamea (Balsam fir)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>ACSA3</code>
+                              <definition>Acer saccharum (Sugar Maple)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>ACSP2</code>
+                              <definition>Acer spicatum (Mountain maple)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>ACPE</code>
+                              <definition>Acer pensylvanicum (Striped maple or moose wood)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>ACRU</code>
+                              <definition>Acer rubrum (Red maple)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>BEAL2</code>
+                              <definition>Betula alleghaniensis (Yellow birch)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>BEPA</code>
+                              <definition>Betula papyrifera (White or paper birch)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>FAGR</code>
+                              <definition>Fagus grandifolia (American beech)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>FRAM2</code>
+                              <definition>Fraxinus americana (White ash)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>PIRU</code>
+                              <definition>Picea rubens (Red spruce)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>SOAM3</code>
+                              <definition>Sorbus americana (Mountain ash)</definition>
+                           </codeDefinition>
+                        </enumeratedDomain>
+                     </nonNumericDomain>
+                  </nominal>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999</code>
+                  <codeExplanation>not available</codeExplanation>
+               </missingValueCode>
+            </attribute>
+            <attribute
+                  id="Sp3-6">
+               <attributeName>Sp_3</attributeName>
+               <attributeDefinition>One of the three most important canopy tree species over the plot</attributeDefinition>
+               <storageType>string</storageType>
+               <measurementScale>
+                  <nominal>
+                     <nonNumericDomain>
+                        <enumeratedDomain
+          enforced="yes">
+                           <codeDefinition>
+                              <code>ABBA</code>
+                              <definition>Abies balsamea (Balsam fir)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>ACSA3</code>
+                              <definition>Acer saccharum (Sugar Maple)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>ACSP2</code>
+                              <definition>Acer spicatum (Mountain maple)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>ACPE</code>
+                              <definition>Acer pensylvanicum (Striped maple or moose wood)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>ACRU</code>
+                              <definition>Acer rubrum (Red maple)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>BEAL2</code>
+                              <definition>Betula alleghaniensis (Yellow birch)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>BEPA</code>
+                              <definition>Betula papyrifera (White or paper birch)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>FAGR</code>
+                              <definition>Fagus grandifolia (American beech)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>FRAM2</code>
+                              <definition>Fraxinus americana (White ash)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>PIRU</code>
+                              <definition>Picea rubens (Red spruce)</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>SOAM3</code>
+                              <definition>Sorbus americana (Mountain ash)</definition>
+                           </codeDefinition>
+                        </enumeratedDomain>
+                     </nonNumericDomain>
+                  </nominal>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999</code>
+                  <codeExplanation>not available</codeExplanation>
+               </missingValueCode>
+            </attribute>
+            <attribute
+                    id="FFThickness1-7">
+               <attributeName>FF_Thickness1</attributeName>
+               <attributeDefinition>One of eight measures of thickness of forest floor block (in centimeters)</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>centimeter</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">96</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Centimeter">http://qudt.org/vocab/unit/CentiM</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="FFThickness2-8">
+               <attributeName>FF_Thickness2</attributeName>
+               <attributeDefinition>One of eight measures of thickness of forest floor block (in centimeters)</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>centimeter</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">34</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Centimeter">http://qudt.org/vocab/unit/CentiM</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="FFThickness3-9">
+               <attributeName>FF_Thickness3</attributeName>
+               <attributeDefinition>One of eight measures of thickness of forest floor block (in centimeters)</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>centimeter</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">33</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Centimeter">http://qudt.org/vocab/unit/CentiM</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="FFThickness4-10">
+               <attributeName>FF_Thickness4</attributeName>
+               <attributeDefinition>One of eight measures of thickness of forest floor block (in centimeters)</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>centimeter</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">34.5</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Centimeter">http://qudt.org/vocab/unit/CentiM</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="FFThickness5-11">
+               <attributeName>FF_Thickness5</attributeName>
+               <attributeDefinition>One of eight measures of thickness of forest floor block (in centimeters)</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>centimeter</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">35</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Centimeter">http://qudt.org/vocab/unit/CentiM</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="FFThickness6-12">
+               <attributeName>FF_Thickness6</attributeName>
+               <attributeDefinition>One of eight measures of thickness of forest floor block (in centimeters)</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>centimeter</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">34</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Centimeter">http://qudt.org/vocab/unit/CentiM</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="FFThickness7-13">
+               <attributeName>FF_Thickness7</attributeName>
+               <attributeDefinition>One of eight measures of thickness of forest floor block (in centimeters)</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>centimeter</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">30</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Centimeter">http://qudt.org/vocab/unit/CentiM</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="FFThickness8-14">
+               <attributeName>FF_Thickness8</attributeName>
+               <attributeDefinition>One of eight measures of thickness of forest floor block (in centimeters)</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>centimeter</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">36</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Centimeter">http://qudt.org/vocab/unit/CentiM</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="OieThickness1-15">
+               <attributeName>Oie_Thickness1</attributeName>
+               <attributeDefinition>One of eight measures of thickness of Oie (in centimeters)</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>centimeter</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">10</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Centimeter">http://qudt.org/vocab/unit/CentiM</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="OieThickness2-16">
+               <attributeName>Oie_Thickness2</attributeName>
+               <attributeDefinition>One of eight measures of thickness of Oie (in centimeters)</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>centimeter</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">12.4</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Centimeter">http://qudt.org/vocab/unit/CentiM</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="OieThickness3-17">
+               <attributeName>Oie_Thickness3</attributeName>
+               <attributeDefinition>One of eight measures of thickness of Oie (in centimeters)</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>centimeter</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">10.3</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Centimeter">http://qudt.org/vocab/unit/CentiM</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="OieThickness4-18">
+               <attributeName>Oie_Thickness4</attributeName>
+               <attributeDefinition>One of eight measures of thickness of Oie (in centimeters)</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>centimeter</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">8.5</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Centimeter">http://qudt.org/vocab/unit/CentiM</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="OieThickness5-19">
+               <attributeName>Oie_Thickness5</attributeName>
+               <attributeDefinition>One of eight measures of thickness of Oie (in centimeters)</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>centimeter</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">10.5</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Centimeter">http://qudt.org/vocab/unit/CentiM</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="OieThickness6-20">
+               <attributeName>Oie_Thickness6</attributeName>
+               <attributeDefinition>One of eight measures of thickness of Oie (in centimeters)</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>centimeter</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">11</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Centimeter">http://qudt.org/vocab/unit/CentiM</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="OieThickness7-21">
+               <attributeName>Oie_Thickness7</attributeName>
+               <attributeDefinition>One of eight measures of thickness of Oie (in centimeters)</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>centimeter</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">9.5</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Centimeter">http://qudt.org/vocab/unit/CentiM</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="OieThickness8-22">
+               <attributeName>Oie_Thickness8</attributeName>
+               <attributeDefinition>One of eight measures of thickness of Oie (in centimeters)</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>centimeter</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">9.7</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Centimeter">http://qudt.org/vocab/unit/CentiM</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="Core1-23">
+               <attributeName>Core_1</attributeName>
+               <attributeDefinition>Core depth for one of four possible mineral soil cores collected.</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>centimeter</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">1</minimum>
+                           <maximum
+              exclusive="false">19</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Centimeter">http://qudt.org/vocab/unit/CentiM</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="Core2-24">
+               <attributeName>Core_2</attributeName>
+               <attributeDefinition>Core depth for one of four possible mineral soil cores collected.</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>centimeter</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">2.5</minimum>
+                           <maximum
+              exclusive="false">15</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Centimeter">http://qudt.org/vocab/unit/CentiM</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="Core3-25">
+               <attributeName>Core_3</attributeName>
+               <attributeDefinition>Core depth for one of four possible mineral soil cores collected.</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>centimeter</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">2</minimum>
+                           <maximum
+              exclusive="false">10</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Centimeter">http://qudt.org/vocab/unit/CentiM</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="Core4-26">
+               <attributeName>Core_4</attributeName>
+               <attributeDefinition>Core depth for one of four possible mineral soil cores collected.</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>centimeter</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">1.5</minimum>
+                           <maximum
+              exclusive="false">7.6</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+      label="Centimeter">http://qudt.org/vocab/unit/CentiM</valueURI>
+               </annotation>
+            </attribute>
+         </attributeList>
+         <caseSensitive>no</caseSensitive>
+         <numberOfRecords>763</numberOfRecords>
+      </dataTable>
+      <dataTable
+      id="50d1e45dc7c0f5769e42f6d972e86f12" scope="document"
+          system="https://pasta.edirepository.org">
+         <entityName>HubbardBrook_ForestFloor_PlotLoc_W6</entityName>
+         <entityDescription>Sampling date and location for each forest floor sampled in W6</entityDescription>
+         <physical>
+            <objectName>HubbardBrook_ForestFloor_PlotLoc_W6.csv</objectName>
+            <size
+          unit="byte">19900</size>
+            <authentication
+              method="MD5">23d8880bb7e07fd471ee0b5dfb360d25</authentication>
+            <dataFormat>
+               <textFormat>
+                  <numHeaderLines>1</numHeaderLines>
+                  <recordDelimiter>\r\n</recordDelimiter>
+                  <attributeOrientation>column</attributeOrientation>
+                  <simpleDelimited>
+                     <fieldDelimiter>,</fieldDelimiter>
+                     <quoteCharacter>"</quoteCharacter>
+                  </simpleDelimited>
+               </textFormat>
+            </dataFormat>
+            <distribution>
+               <online>
+                  <url
+          function="download">https://pasta.lternet.edu/package/data/eml/knb-lter-hbr/172/4/50d1e45dc7c0f5769e42f6d972e86f12</url>
+               </online>
+            </distribution>
+         </physical>
+         <attributeList>
+            <attribute
+          id="SurveyYear-27">
+               <attributeName>SurveyYear</attributeName>
+               <attributeDefinition>Sampling Year</attributeDefinition>
+               <storageType>date</storageType>
+               <measurementScale>
+                  <dateTime>
+                     <formatString>YYYY</formatString>
+                     <dateTimeDomain/>
+                  </dateTime>
+               </measurementScale>
+            </attribute>
+            <attribute
+          id="Plot-28">
+               <attributeName>Plot</attributeName>
+               <attributeDefinition>The number associated with the 25m^2 plot where the sample was taken</attributeDefinition>
+               <storageType>string</storageType>
+               <measurementScale>
+                  <nominal>
+                     <nonNumericDomain>
+                        <textDomain>
+                           <definition>text</definition>
+                        </textDomain>
+                     </nonNumericDomain>
+                  </nominal>
+               </measurementScale>
+            </attribute>
+            <attribute
+          id="SampDate-29">
+               <attributeName>Samp_Date</attributeName>
+               <attributeDefinition>Sample date</attributeDefinition>
+               <storageType>date</storageType>
+               <measurementScale>
+                  <dateTime>
+                     <formatString>YYYY-MM-DD</formatString>
+                     <dateTimeDomain/>
+                  </dateTime>
+               </measurementScale>
+               <missingValueCode>
+                  <code>NA</code>
+                  <codeExplanation>date unknown</codeExplanation>
+               </missingValueCode>
+            </attribute>
+            <attribute
+                    id="Plotdown-30">
+               <attributeName>Plot_down</attributeName>
+               <attributeDefinition>Number of meters into the plot, down from the NW corner post</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>meter</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>whole</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">99</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Meter">http://qudt.org/vocab/unit/M</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="PlotOver-31">
+               <attributeName>Plot_Over</attributeName>
+               <attributeDefinition>Number of meters into the plot, over from the NW corner post</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>meter</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>whole</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">99</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+      label="Meter">http://qudt.org/vocab/unit/M</valueURI>
+               </annotation>
+            </attribute>
+         </attributeList>
+         <numberOfRecords>763</numberOfRecords>
+      </dataTable>
+      <dataTable
+      id="382acf1fdcb69da1cca6674929f5ad6b" scope="document"
+          system="https://pasta.edirepository.org">
+         <entityName>HubbardBrook_ForestFloor_MetPool_W6</entityName>
+         <entityDescription>Hubbard Brook Forest Floor Data, Watershed 6. Element amounts measured in 15x15 cm excavated organic horizon soil blocks; exact number of samples varies by sampling year.</entityDescription>
+         <physical>
+            <objectName>HubbardBrook_ForestFloor_MetPool_W6.csv</objectName>
+            <size
+          unit="byte">130291</size>
+            <authentication
+              method="MD5">fef896d330944e555869405b64921078</authentication>
+            <dataFormat>
+               <textFormat>
+                  <numHeaderLines>1</numHeaderLines>
+                  <recordDelimiter>\r\n</recordDelimiter>
+                  <attributeOrientation>column</attributeOrientation>
+                  <simpleDelimited>
+                     <fieldDelimiter>,</fieldDelimiter>
+                     <quoteCharacter>"</quoteCharacter>
+                  </simpleDelimited>
+               </textFormat>
+            </dataFormat>
+            <distribution>
+               <online>
+                  <url
+          function="download">https://pasta.lternet.edu/package/data/eml/knb-lter-hbr/172/4/382acf1fdcb69da1cca6674929f5ad6b</url>
+               </online>
+            </distribution>
+         </physical>
+         <attributeList>
+            <attribute
+          id="SampleID-32">
+               <attributeName>Sample_ID</attributeName>
+               <attributeDefinition>Site ID consists of the sample's year collected, watershed, plot, and horizon</attributeDefinition>
+               <storageType>string</storageType>
+               <measurementScale>
+                  <nominal>
+                     <nonNumericDomain>
+                        <textDomain>
+                           <definition>text</definition>
+                        </textDomain>
+                     </nonNumericDomain>
+                  </nominal>
+               </measurementScale>
+            </attribute>
+            <attribute
+          id="Year-33">
+               <attributeName>Year</attributeName>
+               <attributeDefinition>Sample year</attributeDefinition>
+               <storageType>date</storageType>
+               <measurementScale>
+                  <dateTime>
+                     <formatString>YYYY</formatString>
+                     <dateTimeDomain/>
+                  </dateTime>
+               </measurementScale>
+            </attribute>
+            <attribute
+          id="Watershed-34">
+               <attributeName>Watershed</attributeName>
+               <attributeDefinition>Watershed number</attributeDefinition>
+               <storageType>string</storageType>
+               <measurementScale>
+                  <nominal>
+                     <nonNumericDomain>
+                        <textDomain>
+                           <definition>text</definition>
+                        </textDomain>
+                     </nonNumericDomain>
+                  </nominal>
+               </measurementScale>
+            </attribute>
+            <attribute
+          id="Plot-35">
+               <attributeName>Plot</attributeName>
+               <attributeDefinition>Plot number</attributeDefinition>
+               <storageType>string</storageType>
+               <measurementScale>
+                  <nominal>
+                     <nonNumericDomain>
+                        <textDomain>
+                           <definition>text</definition>
+                        </textDomain>
+                     </nonNumericDomain>
+                  </nominal>
+               </measurementScale>
+            </attribute>
+            <attribute
+                  id="Horizon-36">
+               <attributeName>Horizon</attributeName>
+               <attributeDefinition>Horizon</attributeDefinition>
+               <storageType>string</storageType>
+               <measurementScale>
+                  <nominal>
+                     <nonNumericDomain>
+                        <enumeratedDomain
+          enforced="yes">
+                           <codeDefinition>
+                              <code>Oie</code>
+                              <definition>Oie horizon</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>Oa</code>
+                              <definition>Oa horizon</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>Oie+a</code>
+                              <definition>Oie + Oa horizon</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>min</code>
+                              <definition>mineral horizon</definition>
+                           </codeDefinition>
+                        </enumeratedDomain>
+                     </nonNumericDomain>
+                  </nominal>
+               </measurementScale>
+            </attribute>
+            <attribute
+                    id="Cagm2-37">
+               <attributeName>Ca_g_m2</attributeName>
+               <attributeDefinition>Calcium amount in horizon</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>gramPerMeterSquared</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">246.43</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.99</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.88</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Gram Per Square Meter">http://qudt.org/vocab/unit/GM-PER-M2</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="Mggm2-38">
+               <attributeName>Mg_g_m2</attributeName>
+               <attributeDefinition>Magnesium amount in horizon</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>gramPerMeterSquared</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">225.87</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.99</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.88</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Gram Per Square Meter">http://qudt.org/vocab/unit/GM-PER-M2</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="Kgm2-39">
+               <attributeName>K_g_m2</attributeName>
+               <attributeDefinition>Potassium amount in horizon</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>gramPerMeterSquared</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">246.94</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.99</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.88</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Gram Per Square Meter">http://qudt.org/vocab/unit/GM-PER-M2</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="Pgm2-40">
+               <attributeName>P_g_m2</attributeName>
+               <attributeDefinition>Phosphorus amount in horizon</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>gramPerMeterSquared</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">112.69</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.99</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.88</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Gram Per Square Meter">http://qudt.org/vocab/unit/GM-PER-M2</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="Mngm2-41">
+               <attributeName>Mn_g_m2</attributeName>
+               <attributeDefinition>Manganese amount in horizon</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>gramPerMeterSquared</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">163.49</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.99</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.88</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Gram Per Square Meter">http://qudt.org/vocab/unit/GM-PER-M2</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="Cugm2-42">
+               <attributeName>Cu_g_m2</attributeName>
+               <attributeDefinition>Copper amount in horizon</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>gramPerMeterSquared</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">5.71</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.99</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.88</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Gram Per Square Meter">http://qudt.org/vocab/unit/GM-PER-M2</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="Zngm2-43">
+               <attributeName>Zn_g_m2</attributeName>
+               <attributeDefinition>Zinc amount in horizon</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>gramPerMeterSquared</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">5.8</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.99</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.88</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Gram Per Square Meter">http://qudt.org/vocab/unit/GM-PER-M2</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="Pbgm2-44">
+               <attributeName>Pb_g_m2</attributeName>
+               <attributeDefinition>Lead amount in horizon</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>gramPerMeterSquared</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">4.63</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.99</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.88</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Gram Per Square Meter">http://qudt.org/vocab/unit/GM-PER-M2</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="Algm2-45">
+               <attributeName>Al_g_m2</attributeName>
+               <attributeDefinition>Aluminum amount in horizon</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>gramPerMeterSquared</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">891.32</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.99</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.88</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Gram Per Square Meter">http://qudt.org/vocab/unit/GM-PER-M2</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="Fegm2-46">
+               <attributeName>Fe_g_m2</attributeName>
+               <attributeDefinition>Iron amount in horizon</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>gramPerMeterSquared</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">2762.41</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.99</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.88</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+      label="Gram Per Square Meter">http://qudt.org/vocab/unit/GM-PER-M2</valueURI>
+               </annotation>
+            </attribute>
+         </attributeList>
+         <caseSensitive>no</caseSensitive>
+         <numberOfRecords>1517</numberOfRecords>
+      </dataTable>
+      <dataTable
+      id="0ff5d3e2ca711915795b03770f6e9608" scope="document"
+          system="https://pasta.edirepository.org">
+         <entityName>HubbardBrook_ForestFloor_MetConc_W6</entityName>
+         <entityDescription>Hubbard Brook Forest Floor Data, Watershed 6. Element concentrations measured in 15x15 cm excavated organic horizon soil blocks; exact number of samples varies by sampling year.</entityDescription>
+         <physical>
+            <objectName>HubbardBrook_ForestFloor_MetConc_W6.csv</objectName>
+            <size
+          unit="byte">137590</size>
+            <authentication
+              method="MD5">84a58d33d37f357284d89f6b05e4dd2d</authentication>
+            <dataFormat>
+               <textFormat>
+                  <numHeaderLines>1</numHeaderLines>
+                  <recordDelimiter>\r\n</recordDelimiter>
+                  <attributeOrientation>column</attributeOrientation>
+                  <simpleDelimited>
+                     <fieldDelimiter>,</fieldDelimiter>
+                     <quoteCharacter>"</quoteCharacter>
+                  </simpleDelimited>
+               </textFormat>
+            </dataFormat>
+            <distribution>
+               <online>
+                  <url
+          function="download">https://pasta.lternet.edu/package/data/eml/knb-lter-hbr/172/4/0ff5d3e2ca711915795b03770f6e9608</url>
+               </online>
+            </distribution>
+         </physical>
+         <attributeList>
+            <attribute
+          id="SampleID-47">
+               <attributeName>Sample_ID</attributeName>
+               <attributeDefinition>Site ID consists of the sample's year collected, watershed, plot, and horizon</attributeDefinition>
+               <storageType>string</storageType>
+               <measurementScale>
+                  <nominal>
+                     <nonNumericDomain>
+                        <textDomain>
+                           <definition>text</definition>
+                        </textDomain>
+                     </nonNumericDomain>
+                  </nominal>
+               </measurementScale>
+            </attribute>
+            <attribute
+          id="Year-48">
+               <attributeName>Year</attributeName>
+               <attributeDefinition>Sample year</attributeDefinition>
+               <storageType>date</storageType>
+               <measurementScale>
+                  <dateTime>
+                     <formatString>YYYY</formatString>
+                     <dateTimeDomain/>
+                  </dateTime>
+               </measurementScale>
+            </attribute>
+            <attribute
+          id="Watershed-49">
+               <attributeName>Watershed</attributeName>
+               <attributeDefinition>Watershed number</attributeDefinition>
+               <storageType>string</storageType>
+               <measurementScale>
+                  <nominal>
+                     <nonNumericDomain>
+                        <textDomain>
+                           <definition>text</definition>
+                        </textDomain>
+                     </nonNumericDomain>
+                  </nominal>
+               </measurementScale>
+            </attribute>
+            <attribute
+          id="Plot-50">
+               <attributeName>Plot</attributeName>
+               <attributeDefinition>Plot number</attributeDefinition>
+               <storageType>string</storageType>
+               <measurementScale>
+                  <nominal>
+                     <nonNumericDomain>
+                        <textDomain>
+                           <definition>text</definition>
+                        </textDomain>
+                     </nonNumericDomain>
+                  </nominal>
+               </measurementScale>
+            </attribute>
+            <attribute
+                  id="Horizon-51">
+               <attributeName>Horizon</attributeName>
+               <attributeDefinition>Horizon</attributeDefinition>
+               <storageType>string</storageType>
+               <measurementScale>
+                  <nominal>
+                     <nonNumericDomain>
+                        <enumeratedDomain
+          enforced="yes">
+                           <codeDefinition>
+                              <code>Oie</code>
+                              <definition>Oie horizon</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>Oa</code>
+                              <definition>Oa horizon</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>Oie+a</code>
+                              <definition>Oie + Oa horizon</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>min</code>
+                              <definition>mineral horizon</definition>
+                           </codeDefinition>
+                        </enumeratedDomain>
+                     </nonNumericDomain>
+                  </nominal>
+               </measurementScale>
+            </attribute>
+            <attribute
+                    id="Camgkg-52">
+               <attributeName>Ca_mg_kg</attributeName>
+               <attributeDefinition>Calcium concentration by horizon as ppm of oven dry sample</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>milligramPerKilogram</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">24.3</minimum>
+                           <maximum
+              exclusive="false">10065.2</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>No data available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Milligram Per Kilogram">http://qudt.org/vocab/unit/MilliGM-PER-KiloGM</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="Mgmgkg-53">
+               <attributeName>Mg_mg_kg</attributeName>
+               <attributeDefinition>Magnesium concentration by horizon as ppm of oven dry sample</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>milligramPerKilogram</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">27.1</minimum>
+                           <maximum
+              exclusive="false">4614</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>No data available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Milligram Per Kilogram">http://qudt.org/vocab/unit/MilliGM-PER-KiloGM</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="Kmgkg-54">
+               <attributeName>K_mg_kg</attributeName>
+               <attributeDefinition>Potassium concentration by horizon as ppm of oven dry sample</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>milligramPerKilogram</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">3991.6</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>No data available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Milligram Per Kilogram">http://qudt.org/vocab/unit/MilliGM-PER-KiloGM</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="Pmgkg-55">
+               <attributeName>P_mg_kg</attributeName>
+               <attributeDefinition>Phosphorous concentration by horizon as ppm of oven dry sample</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>milligramPerKilogram</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">3143</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>No data available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Milligram Per Kilogram">http://qudt.org/vocab/unit/MilliGM-PER-KiloGM</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="Mnmgkg-56">
+               <attributeName>Mn_mg_kg</attributeName>
+               <attributeDefinition>Manganese concentration by horizon as ppm of oven dry sample</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>milligramPerKilogram</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">4.8</minimum>
+                           <maximum
+              exclusive="false">7879.9</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>No data available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Milligram Per Kilogram">http://qudt.org/vocab/unit/MilliGM-PER-KiloGM</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="Cumgkg-57">
+               <attributeName>Cu_mg_kg</attributeName>
+               <attributeDefinition>Copper concentration by horizon as ppm of oven dry sample</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>milligramPerKilogram</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">177.5</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>No data available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Milligram Per Kilogram">http://qudt.org/vocab/unit/MilliGM-PER-KiloGM</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="Znmgkg-58">
+               <attributeName>Zn_mg_kg</attributeName>
+               <attributeDefinition>Zinc concentration by horizon as ppm of oven dry sample</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>milligramPerKilogram</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">245.9</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>No data available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Milligram Per Kilogram">http://qudt.org/vocab/unit/MilliGM-PER-KiloGM</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="Pbmgkg-59">
+               <attributeName>Pb_mg_kg</attributeName>
+               <attributeDefinition>Lead concentration by horizon as ppm of oven dry sample</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>milligramPerKilogram</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">220.5</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>No data available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Milligram Per Kilogram">http://qudt.org/vocab/unit/MilliGM-PER-KiloGM</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="Almgkg-60">
+               <attributeName>Al_mg_kg</attributeName>
+               <attributeDefinition>Aluminum concentration by horizon as ppm of oven dry sample</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>milligramPerKilogram</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">149.4</minimum>
+                           <maximum
+              exclusive="false">25512.1</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>No data available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Milligram Per Kilogram">http://qudt.org/vocab/unit/MilliGM-PER-KiloGM</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="Femgkg-61">
+               <attributeName>Fe_mg_kg</attributeName>
+               <attributeDefinition>Iron concentration by horizon as ppm of oven dry sample</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>milligramPerKilogram</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">157.9</minimum>
+                           <maximum
+              exclusive="false">56429.8</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>No data available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+      label="Milligram Per Kilogram">http://qudt.org/vocab/unit/MilliGM-PER-KiloGM</valueURI>
+               </annotation>
+            </attribute>
+         </attributeList>
+         <caseSensitive>no</caseSensitive>
+         <numberOfRecords>1517</numberOfRecords>
+      </dataTable>
+      <dataTable
+      id="775e243b7a2b67c0047498533bf5b9d1" scope="document"
+          system="https://pasta.edirepository.org">
+         <entityName>HubbardBrook_ForestFloor_SoilMass_W6</entityName>
+         <entityDescription>Hubbard Brook Forest Floor Data, Watershed 6. Mass data for 15x15 cm excavated organic horizon soil blocks; exact number of samples varies by sampling year.</entityDescription>
+         <physical>
+            <objectName>HubbardBrook_ForestFloor_SoilMass_W6.csv</objectName>
+            <size
+          unit="byte">69989</size>
+            <authentication
+              method="MD5">1adba92eafc245213cdd4af1f7f43795</authentication>
+            <dataFormat>
+               <textFormat>
+                  <numHeaderLines>1</numHeaderLines>
+                  <recordDelimiter>\r\n</recordDelimiter>
+                  <attributeOrientation>column</attributeOrientation>
+                  <simpleDelimited>
+                     <fieldDelimiter>,</fieldDelimiter>
+                     <quoteCharacter>"</quoteCharacter>
+                  </simpleDelimited>
+               </textFormat>
+            </dataFormat>
+            <distribution>
+               <online>
+                  <url
+          function="download">https://pasta.lternet.edu/package/data/eml/knb-lter-hbr/172/4/775e243b7a2b67c0047498533bf5b9d1</url>
+               </online>
+            </distribution>
+         </physical>
+         <attributeList>
+            <attribute
+          id="SampleID-62">
+               <attributeName>Sample_ID</attributeName>
+               <attributeDefinition>Site ID consists of the sample's year collected, watershed, plot, and horizon</attributeDefinition>
+               <storageType>string</storageType>
+               <measurementScale>
+                  <nominal>
+                     <nonNumericDomain>
+                        <textDomain>
+                           <definition>text</definition>
+                        </textDomain>
+                     </nonNumericDomain>
+                  </nominal>
+               </measurementScale>
+            </attribute>
+            <attribute
+          id="Year-63">
+               <attributeName>Year</attributeName>
+               <attributeDefinition>Sample year</attributeDefinition>
+               <storageType>date</storageType>
+               <measurementScale>
+                  <dateTime>
+                     <formatString>YYYY</formatString>
+                     <dateTimeDomain/>
+                  </dateTime>
+               </measurementScale>
+            </attribute>
+            <attribute
+          id="Watershed-64">
+               <attributeName>Watershed</attributeName>
+               <attributeDefinition>Watershed number</attributeDefinition>
+               <storageType>string</storageType>
+               <measurementScale>
+                  <nominal>
+                     <nonNumericDomain>
+                        <textDomain>
+                           <definition>text</definition>
+                        </textDomain>
+                     </nonNumericDomain>
+                  </nominal>
+               </measurementScale>
+            </attribute>
+            <attribute
+          id="Plot-65">
+               <attributeName>Plot</attributeName>
+               <attributeDefinition>Plot number</attributeDefinition>
+               <storageType>string</storageType>
+               <measurementScale>
+                  <nominal>
+                     <nonNumericDomain>
+                        <textDomain>
+                           <definition>text</definition>
+                        </textDomain>
+                     </nonNumericDomain>
+                  </nominal>
+               </measurementScale>
+            </attribute>
+            <attribute
+                  id="Horizon-66">
+               <attributeName>Horizon</attributeName>
+               <attributeDefinition>Horizon</attributeDefinition>
+               <storageType>string</storageType>
+               <measurementScale>
+                  <nominal>
+                     <nonNumericDomain>
+                        <enumeratedDomain
+          enforced="yes">
+                           <codeDefinition>
+                              <code>Oie</code>
+                              <definition>Oie horizon</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>Oa</code>
+                              <definition>Oa horizon</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>Oie+a</code>
+                              <definition>Oie + Oa horizon</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>min</code>
+                              <definition>mineral horizon</definition>
+                           </codeDefinition>
+                        </enumeratedDomain>
+                     </nonNumericDomain>
+                  </nominal>
+               </measurementScale>
+            </attribute>
+            <attribute
+                    id="OMTM-67">
+               <attributeName>OM_TM</attributeName>
+               <attributeDefinition>Oven dry wt of total mass of horizon (kg/m2)</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>kilogramPerMeterSquared</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">137.66</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Kilogram per Square Meter">http://qudt.org/vocab/unit/KiloGM-PER-M2</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="OMOM-68">
+               <attributeName>OM_OM</attributeName>
+               <attributeDefinition>Oven dry wt of organic matter mass of horizon (kg/m2)</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>kilogramPerMeterSquared</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">0</minimum>
+                           <maximum
+              exclusive="false">38.16</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Kilogram per Square Meter">http://qudt.org/vocab/unit/KiloGM-PER-M2</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+                    id="OMLOI-69">
+               <attributeName>OM_LOI</attributeName>
+               <attributeDefinition>Loss on ignition (percent)</attributeDefinition>
+               <storageType>float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>percent</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                        <bounds>
+                           <minimum
+                    exclusive="false">2.98</minimum>
+                           <maximum
+              exclusive="false">97.56</maximum>
+                        </bounds>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <missingValueCode>
+                  <code>-9999.9</code>
+                  <codeExplanation>Data not available</codeExplanation>
+               </missingValueCode>
+               <missingValueCode>
+                  <code>-8888.8</code>
+                  <codeExplanation>Sample not collected</codeExplanation>
+               </missingValueCode>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+      label="Percent">http://qudt.org/vocab/unit/PERCENT</valueURI>
+               </annotation>
+            </attribute>
+         </attributeList>
+         <caseSensitive>no</caseSensitive>
+         <numberOfRecords>1517</numberOfRecords>
+      </dataTable>
+      <dataTable
+      id="f25fc11474e2b787cecc67949ecd0028" scope="document"
+          system="https://pasta.edirepository.org">
+         <entityName>HubbardBrook_ForestFloor_CN_W6</entityName>
+         <entityDescription>Forest Floor percent carbon and percent nitrogen data table</entityDescription>
+         <physical>
+            <objectName>HubbardBrook_ForestFloor_CN_W6.csv</objectName>
+            <size
+          unit="byte">70761</size>
+            <authentication
+              method="MD5">556d87536034e2cb85e7dfb4e2dc4dd1</authentication>
+            <dataFormat>
+               <textFormat>
+                  <numHeaderLines>1</numHeaderLines>
+                  <recordDelimiter>\r\n</recordDelimiter>
+                  <attributeOrientation>column</attributeOrientation>
+                  <simpleDelimited>
+                     <fieldDelimiter>,</fieldDelimiter>
+                     <quoteCharacter>"</quoteCharacter>
+                  </simpleDelimited>
+               </textFormat>
+            </dataFormat>
+            <distribution>
+               <online>
+                  <url
+          function="download">https://pasta.lternet.edu/package/data/eml/knb-lter-hbr/172/4/f25fc11474e2b787cecc67949ecd0028</url>
+               </online>
+            </distribution>
+         </physical>
+         <attributeList>
+            <attribute
+            id="SiteID-70">
+               <attributeName>Site_ID</attributeName>
+               <attributeLabel>Site_ID</attributeLabel>
+               <attributeDefinition>site ID</attributeDefinition>
+               <storageType
+          typeSystem="XML Schema Datatypes">string</storageType>
+               <measurementScale>
+                  <nominal>
+                     <nonNumericDomain>
+                        <textDomain>
+                           <definition>text</definition>
+                        </textDomain>
+                     </nonNumericDomain>
+                  </nominal>
+               </measurementScale>
+            </attribute>
+            <attribute
+            id="Year-71">
+               <attributeName>Year</attributeName>
+               <attributeLabel>Year</attributeLabel>
+               <attributeDefinition>Sampling year</attributeDefinition>
+               <storageType
+          typeSystem="XML Schema Datatypes">dateTime</storageType>
+               <measurementScale>
+                  <dateTime>
+                     <formatString>YYYY</formatString>
+                     <dateTimeDomain/>
+                  </dateTime>
+               </measurementScale>
+            </attribute>
+            <attribute
+            id="Plot-72">
+               <attributeName>Plot</attributeName>
+               <attributeLabel>Plot</attributeLabel>
+               <attributeDefinition>Plot ID</attributeDefinition>
+               <storageType
+          typeSystem="XML Schema Datatypes">string</storageType>
+               <measurementScale>
+                  <nominal>
+                     <nonNumericDomain>
+                        <textDomain>
+                           <definition>text</definition>
+                        </textDomain>
+                     </nonNumericDomain>
+                  </nominal>
+               </measurementScale>
+            </attribute>
+            <attribute
+            id="Horizon-73">
+               <attributeName>Horizon</attributeName>
+               <attributeLabel>Horizon</attributeLabel>
+               <attributeDefinition>soil horizon</attributeDefinition>
+               <storageType
+                  typeSystem="XML Schema Datatypes">string</storageType>
+               <measurementScale>
+                  <nominal>
+                     <nonNumericDomain>
+                        <enumeratedDomain
+          enforced="yes">
+                           <codeDefinition>
+                              <code>min</code>
+                              <definition>mineral horizon</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>Oa</code>
+                              <definition>Oa horizon</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>Oie</code>
+                              <definition>Oie horizon</definition>
+                           </codeDefinition>
+                           <codeDefinition>
+                              <code>Oie+a</code>
+                              <definition>Oie and Oa horizons</definition>
+                           </codeDefinition>
+                        </enumeratedDomain>
+                     </nonNumericDomain>
+                  </nominal>
+               </measurementScale>
+            </attribute>
+            <attribute
+            id="Watershed-74">
+               <attributeName>Watershed</attributeName>
+               <attributeLabel>Watershed</attributeLabel>
+               <attributeDefinition>Watershed</attributeDefinition>
+               <storageType
+                  typeSystem="XML Schema Datatypes">string</storageType>
+               <measurementScale>
+                  <nominal>
+                     <nonNumericDomain>
+                        <enumeratedDomain
+          enforced="yes">
+                           <codeDefinition>
+                              <code>6</code>
+                              <definition>Watershed 6</definition>
+                           </codeDefinition>
+                        </enumeratedDomain>
+                     </nonNumericDomain>
+                  </nominal>
+               </measurementScale>
+            </attribute>
+            <attribute
+            id="PerCentN-75">
+               <attributeName>PerCentN</attributeName>
+               <attributeLabel>PerCentN</attributeLabel>
+               <attributeDefinition>percent nitrogen</attributeDefinition>
+               <storageType
+              typeSystem="XML Schema Datatypes">float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>percent</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+          label="Percent">http://qudt.org/vocab/unit/PERCENT</valueURI>
+               </annotation>
+            </attribute>
+            <attribute
+            id="PerCentC-76">
+               <attributeName>PerCentC</attributeName>
+               <attributeLabel>PerCentC</attributeLabel>
+               <attributeDefinition>percent carbon</attributeDefinition>
+               <storageType
+              typeSystem="XML Schema Datatypes">float</storageType>
+               <measurementScale>
+                  <ratio>
+                     <unit>
+                        <standardUnit>percent</standardUnit>
+                     </unit>
+                     <numericDomain>
+                        <numberType>real</numberType>
+                     </numericDomain>
+                  </ratio>
+               </measurementScale>
+               <annotation>
+                  <propertyURI
+              label="has unit">http://qudt.org/schema/qudt/hasUnit</propertyURI>
+                  <valueURI
+        label="Percent">http://qudt.org/vocab/unit/PERCENT</valueURI>
+               </annotation>
+            </attribute>
+         </attributeList>
+         <caseSensitive>no</caseSensitive>
+         <numberOfRecords>1704</numberOfRecords>
+      </dataTable>
+   </dataset>
+   <additionalMetadata>
+      <metadata>
+         <fetchedFromEDI
+        dateFetched="2023-02-20"
+        packageID="knb-lter-hbr.172.3"/>
+      </metadata>
+   </additionalMetadata>
+   <additionalMetadata>
+      <metadata>
+         <importedFromXML
+        dateImported="2023-02-20" filename="knb-lter-hbr.172.3.xml"
+        taxonomicCoverageExempt="True"/>
+      </metadata>
+   </additionalMetadata>
+   <additionalMetadata>
+      <metadata>
+         <emlEditor
+        app="ezEML" release="2024.02.21"/>
+      </metadata>
+   </additionalMetadata>
+</eml:eml>

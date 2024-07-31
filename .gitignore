@@ -12,3 +12,6 @@
 .Rhistory
 /.Rproj.user/97F692F1
 /.Rproj.user/shared
+.Rhistory
+*.pper
+/.Rproj.user
