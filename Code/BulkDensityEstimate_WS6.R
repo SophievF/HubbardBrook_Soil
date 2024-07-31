@@ -14,8 +14,26 @@ grid_elevation <- read_csv("./Data/Grid_Elevation_WS6.csv") %>%
 
 ## Soil mass 
 # Load soil mass data
-soil_mass <- read_csv("./Data/MassChemistryOrganicHorizonMineralSoil_WS6_1976_present/HubbardBrook_ForestFloor_SoilMass_W6.csv")
+soil_mass <- read_csv("./Data/MassChemistryOrganicHorizonMineralSoil_WS6_1976_present/HubbardBrook_ForestFloor_SoilMass_W6.csv") %>% 
+  dplyr::select(-Watershed)
 head(soil_mass)
+
+#Merge duplicate sample in year 2013 at plot 156
+soil_2013_156 <- soil_mass %>% 
+  filter(grepl("2013-6-156", Sample_ID)) %>% 
+  group_by(Horizon) %>% 
+  summarise(across(OM_TM:OM_LOI, mean))
+
+soil_2013_156$Plot <- 156
+soil_2013_156$Year <- 2013
+
+soil_mass_red <- soil_mass %>% 
+  # remove duplicate samples
+  filter(!grepl("2013-6-156", Sample_ID)) %>% 
+  dplyr::select(-Sample_ID) %>% 
+  # add averaged values for duplicate sample
+  rbind(soil_2013_156) %>% 
+  tibble()
 
 ## Soil thickness
 # Load soil thickness data
@@ -83,7 +101,71 @@ soil_thick_sum %>%
   facet_wrap(~Elevation_grp) +
   theme_bw()
 
-soil_thick_sum %>% 
-  pivot_longer(!c(Year, Elevation_grp, Plot), names_to = "Horizon", values_to = "Thickness_cm")
+## Merge thickness and mass data to calculate BD
+soil_BD <- soil_thick_sum %>% 
+  pivot_longer(!c(Year, Elevation_grp, Plot), names_to = "Horizon", values_to = "Thickness_cm") %>% 
+  mutate(Thickness_cm = round(Thickness_cm, 2)) %>% 
+  # set thickness values below 0.1 cm to 0
+  mutate(Thickness_cm = case_when(
+    Thickness_cm < 0.1 ~ 0,
+    TRUE ~ Thickness_cm
+  )) %>%
+  mutate(Horizon = case_when(
+    Horizon == "FF_thickness" ~ "Oie+a",
+    Horizon == "Oie_thickness" ~ "Oie",
+    Horizon == "Oa_thickness" ~ "Oa",
+    Horizon == "Min_thickness" ~ "min",
+  )) %>% 
+  left_join(soil_mass_red, by = c("Year", "Plot", "Horizon")) %>% 
+  #OM_TM: convert from kg/m2 in g/cm2
+  mutate(BD_g_cm3 = (OM_TM * 0.1) / Thickness_cm) %>% 
+  # Replace Inf values with NA
+  mutate(BD_g_cm3 = na_if(BD_g_cm3, Inf))
 
+summary(soil_BD$BD_g_cm3)
+
+soil_BD %>% 
+  ggplot(aes(x = BD_g_cm3, y = Thickness_cm)) +
+  geom_point()
+
+soil_BD %>% 
+  drop_na(BD_g_cm3) %>% 
+  ggplot(aes(x = Year, y = BD_g_cm3, color = Horizon)) +
+  geom_point() +
+  facet_wrap(~Elevation_grp) +
+  theme_bw(base_size = 14) +
+  geom_smooth(method = "lm")
+ggsave(file = paste0("./Output/HBEF_BD_estimates_WS6_all_samples_", Sys.Date(),
+                     ".jpeg"), width = 12, height = 6)
+
+soil_BD %>% 
+  group_by(Year, Horizon, Elevation_grp) %>% 
+  reframe(mean_BD_g_cm3 = mean(BD_g_cm3, na.rm = TRUE),
+          sd_BD_g_cm3 = sd(BD_g_cm3, na.rm = TRUE)) %>% 
+  drop_na(mean_BD_g_cm3) %>% 
+  ggplot(aes(x = Year, y = mean_BD_g_cm3, color = Horizon)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = mean_BD_g_cm3 - sd_BD_g_cm3,
+                    ymax = mean_BD_g_cm3 + sd_BD_g_cm3)) +
+  facet_wrap(~Elevation_grp) +
+  theme_bw(base_size = 14)
+ggsave(file = paste0("./Output/HBEF_BD_estimates_WS6_averaged_", Sys.Date(),
+                     ".jpeg"), width = 12, height = 6)
+
+soil_BD %>% 
+  ggplot(aes(x = Horizon, y = BD_g_cm3, color = Elevation_grp)) +
+  geom_boxplot(notch = TRUE) +
+  theme_bw(base_size = 14)
+
+## Calculate averaged BD values for later use
+# After visual inspection, calculate averaged values for each horizon
+soil_BD_avg <- soil_BD %>% 
+  group_by(Horizon) %>% 
+  reframe(mean_BD_g_cm3 = mean(BD_g_cm3, na.rm = TRUE),
+          sd_BD_g_cm3 = sd(BD_g_cm3, na.rm = TRUE)) %>% 
+  #remove Oie+a for which we don't have samples
+  filter(Horizon != "Oie+a")
+
+# Save file 
+write_csv(x = soil_BD_avg, file = "./Data/soil_BD_avg_WS6.csv")
   
