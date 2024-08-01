@@ -162,9 +162,19 @@ soil_BD %>%
 soil_BD_avg <- soil_BD %>% 
   group_by(Horizon) %>% 
   reframe(mean_BD_g_cm3 = mean(BD_g_cm3, na.rm = TRUE),
-          sd_BD_g_cm3 = sd(BD_g_cm3, na.rm = TRUE)) %>% 
+          sd_BD_g_cm3 = sd(BD_g_cm3, na.rm = TRUE),
+          median_BD_g_cm3 = median(BD_g_cm3, na.rm = TRUE),
+          mad_BD_g_cm3 = mad(BD_g_cm3, na.rm = TRUE)) %>% 
   #remove Oie+a for which we don't have samples
   filter(Horizon != "Oie+a")
+
+soil_BD_avg
+
+# Values seems reasonable, for European forests (0-10cm), median BD is 0.73 g/cm3
+# https://www.sciencedirect.com/science/article/pii/S0167880924000252
+
+# Same with organic layer data: Ol 0.03-0.12 g/cm3, Ofh: 0.07-0.27 g/cm3
+# Findings based on a study from Poland: https://www.sciencedirect.com/science/article/pii/S0016706116304918
 
 # Save file 
 write_csv(x = soil_BD_avg, file = "./Data/soil_BD_avg_WS6.csv")
