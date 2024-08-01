@@ -1,171 +1,172 @@
-ID,ProjectName,Watershed,Season,Elevation,Year,Month,Plot,Horizon,Weight_g,Dried,DriedMethod,RootPicked,RootWeight_g,RootWeightMethod,RootSize_mm,Root_Sample_Ratio,Archived_g,Weight_g_14C,Label_14C,C,N,Plot_1_Horizons,Plot_1_HorizonLength,Plot_2_Horizon,Plot_2_HorizonLength,Plot_3_Horizon,Plot_3_HorizonLength,Plot_4_Horizon,Plot_4_HorizonLength,Plot_5_Horizon,Plot_5_HorizonLength,Lengths,Notes
-HBB_001,HubbardBearBrook,W6,Summer,Low,2010,6,LT168,Oi/Oe,22.35,Yes,DegreeC60_48h,Yes,0.18,in vials measured;not precise,all,0.81,12.58,0.4622,#001,37.75,2,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_002,HubbardBearBrook,W6,Summer,Low,2010,6,LT162,Oa/A,52.15,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,38.67,0.4555,#002,13.98,0.75,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_003,HubbardBearBrook,W6,Summer,Low,2010,6,LT162,Oi/Oe,40.62,Yes,DegreeC60_48h,Yes,0.32,in vials measured;not precise,all,0.79,28.39,0.4542,#003,26.27,1.39,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_004,HubbardBearBrook,W6,Summer,Low,2010,6,LT174,Oa/A,32.37,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,0.4553,#004,41.89,1.76,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_005,HubbardBearBrook,W6,Summer,Low,2010,6,LT168,Oa/A,75.05,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,0.5077,#005,21.1,1.1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_006,HubbardBearBrook,W6,Summer,Low,2010,6,LT174,Oi/Oe,32.36,Yes,DegreeC60_48h,Yes,0.25,in vials measured;not precise,all,0.77,22.64,0.4589,#006,44.75,2.29,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Length
-HBB_007,HubbardBearBrook,W6,Summer,Low,2010,6,LT163,Oi/Oe,27.65,Yes,DegreeC60_48h,Yes,0.2,in vials measured;not precise,all,0.72,18.42,0.4568,#007,47.26,2.26,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_008,HubbardBearBrook,W6,Summer,Low,2010,6,LT162,Mineral_0_10,98.3,Yes,DegreeC60_48h,Yes,0.38,in vials measured;not precise,<2,0.39,77.66,0.5601,#008,5.53,0.3,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_009,HubbardBearBrook,W6,Summer,Low,2010,6,LT172,Oi/Oe,30.37,Yes,DegreeC60_48h,Yes,0.11,in vials measured;not precise,all,0.36,21.39,0.4628,#009,36.01,1.88,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_010,HubbardBearBrook,W6,Summer,Low,2010,6,LT163,Mineral_0_10,85.43,Yes,DegreeC60_48h,Yes,0.01,in vials measured;not precise,<2,0.01,62.8,0.5021,#010,2.78,0.12,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_011,HubbardBearBrook,W6,Summer,Low,2010,6,LT172,Oa/A,34.36,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,,,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_012,HubbardBearBrook,W6,Summer,Low,2010,6,LT168,Mineral_0_10,92.54,Yes,DegreeC60_48h,Yes,0.32,in vials measured;not precise,<2,0.35,53.29,0.4811,#012,4.69,0.24,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Run duplicates (HBB_012_a & HBB_012_b) grinded with clean sand only; HBB_012 grinded with playground sand only
-HBB_012a,HubbardBearBrook,W6,Summer,Low,2010,6,LT168,Mineral_0_10,92.54,Yes,DegreeC60_48h,Yes,0.32,in vials measured;not precise,<2,0.35,53.29,0.4791,#032,4.8,0.25,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Run duplicates (HBB_012_a & HBB_012_b) grinded with clean sand only; HBB_012 grinded with playground sand only
-HBB_012b,HubbardBearBrook,W6,Summer,Low,2010,6,LT168,Mineral_0_10,92.54,Yes,DegreeC60_48h,Yes,0.32,in vials measured;not precise,<2,0.35,53.29,0.4791,#032,4.56,0.23,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Run duplicates (HBB_012_a & HBB_012_b) grinded with clean sand only; HBB_012 grinded with playground sand only
-HBB_013,HubbardBearBrook,W6,Summer,Low,2010,6,LT174,Mineral_0_10,93.27,Yes,DegreeC60_48h,Yes,0.03,in vials measured;not precise,<2,0.03,64.82,0.4998,#013,3.37,0.17,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_014,HubbardBearBrook,W6,Summer,Low,2010,6,LT172,Mineral_0_10,112.44,Yes,DegreeC60_48h,Yes,0.28,in vials measured;not precise,<2,0.25,92.61,0.5004,#014,5.17,0.29,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_015,HubbardBearBrook,W6,Summer,Low,2010,6,LT163,Oa/A,36,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,,,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_016,HubbardBearBrook,W6,Summer,Low,2018,7,LT174,Oa/A,12.63,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,0.4697,#016,38.18,1.84,,,,,,,,,,,2 / 5 / 5 / 3,
-HBB_017,HubbardBearBrook,W6,Summer,Low,2018,7,LT163,Oi/Oe,23.5,Yes,DegreeC60_48h,Yes,0.2,in vials measured;not precise,all,0.85,17.04,0.4584,#017,27.11,0.85,,,,,,,,,,,,
-HBB_018,HubbardBearBrook,W6,Summer,Low,2018,7,LT162,Oa/A,39.72,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,0.4689,#018,25.58,1.12,,,,,,,,,,,,
-HBB_019,HubbardBearBrook,W6,Summer,Low,2018,7,LT172,Oi/Oe,16.8,Yes,DegreeC60_48h,Yes,0.15,in vials measured;not precise,all,0.89,10.3,0.4562,#019,42.28,1.9,,,,,,,,,,,2 / 6 / 4 / 4 / 3,
-HBB_020,HubbardBearBrook,W6,Summer,Low,2018,7,LT174,Oi/Oe,14.06,Yes,DegreeC60_48h,Yes,0.19,in vials measured;not precise,all,1.35,7.2,0.4635,#020,43.08,2.27,,,,,,,,,,,6 / 5 / 5 / 3,
-HBB_021,HubbardBearBrook,W6,Summer,Low,2018,7,LT162,Oi/Oe,30.87,Yes,DegreeC60_48h,Yes,0.17,in vials measured;not precise,all,0.55,23.93,0.4591,#021,27.11,1.21,,,,,,,,,,,,
-HBB_022,HubbardBearBrook,W6,Summer,Low,2018,7,LT163,Mineral_0_10,50.38,Yes,DegreeC60_48h,Yes,0.29,in vials measured;not precise,<2,0.58,37.63,0.4957,#022,4.74,0.23,,,,,,,,,,,,
-HBB_023,HubbardBearBrook,W6,Summer,Low,2018,7,LT172,Mineral_0_10,77.58,Yes,DegreeC60_48h,Yes,0.02,in vials measured;not precise,<2,0.03,63.02,0.5735,#023,4.24,0.24,,,,,,,,,,,3.5 / 1 / 3 / - / 7,
-HBB_024,HubbardBearBrook,W6,Summer,Low,2018,7,LT163,Oa/A,28.72,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,0.4581,#024,27.77,0.95,,,,,,,,,,,,
-HBB_025,HubbardBearBrook,W6,Summer,Low,2018,7,LT172,Oa/A,26.4,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,,,,,,,,,,,,,,,2 / 3 / 2 / - / 2,
-HBB_026,HubbardBearBrook,W6,Summer,Low,2018,7,LT174,Mineral_0_10,27.91,Yes,DegreeC60_48h,Yes,0.02,in vials measured;not precise,<2,0.07,16.48,0.4995,#026,4.79,0.22,,,,,,,,,,,- / 2 / - / 5.5,
-HBB_027,HubbardBearBrook,W6,Summer,Low,2018,7,LT168,Mineral_0_10,14.95,Yes,DegreeC60_48h,Yes,0.01,in vials measured;not precise,<2,0.07,5.17,0.4967,#027,4.61,0.25,,,,,,,,,,,,
-HBB_028,HubbardBearBrook,W6,Summer,Low,2018,7,LT162,Mineral_0_10,57.89,Yes,DegreeC60_48h,Yes,0.14,in vials measured;not precise,<2,0.24,42.89,0.4903,#028,5.56,0.23,,,,,,,,,,,,
-HBB_029,HubbardBearBrook,W6,Summer,Low,2018,7,LT168,Oi/Oe,12.32,Yes,DegreeC60_48h,Yes,0.23,in vials measured;not precise,all,1.87,5.54,0.4681,#029,37.74,2.2,,,,,,,,,,,,
-HBB_030,HubbardBearBrook,W6,Summer,Low,2018,7,LT168,Oa/A,22.48,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,,,,,,,,,,,,,,,,
-HBB_031,HubbardBearBrook,W6,Summer,Low,2020,7,LT172,Oi/Oe,16.6,Yes,DegreeC60_48h,No,NA,in vials measured;not precise,all,NA,16.6,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Not planning to measure samples from 2020; too few samples due to Covid
-HBB_032,HubbardBearBrook,W6,Summer,Low,2020,7,LT174,Oa/A,50.5,Yes,DegreeC60_48h,No,NA,in vials measured;not precise,all,NA,50.5,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Not planning to measure samples from 2020; too few samples due to Covid
-HBB_033,HubbardBearBrook,W6,Summer,Low,2020,7,LT162,Oi/Oe,24.01,Yes,DegreeC60_48h,No,NA,in vials measured;not precise,all,NA,24.01,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Not planning to measure samples from 2020; too few samples due to Covid
-HBB_034,HubbardBearBrook,W6,Summer,Low,2020,7,LT174,Mineral_0_10,70.46,Yes,DegreeC60_48h,No,NA,in vials measured;not precise,<2,NA,70.46,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Not planning to measure samples from 2020; too few samples due to Covid
-HBB_035,HubbardBearBrook,W6,Summer,Low,2020,7,LT174,Oi/Oe,24.61,Yes,DegreeC60_48h,No,NA,in vials measured;not precise,all,NA,24.61,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Not planning to measure samples from 2020; too few samples due to Covid
-HBB_036,HubbardBearBrook,W6,Summer,Low,2020,7,LT162,Mineral_0_10,65.67,Yes,DegreeC60_48h,No,NA,in vials measured;not precise,<2,NA,65.67,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Not planning to measure samples from 2020; too few samples due to Covid
-HBB_037,HubbardBearBrook,W6,Summer,Low,2020,7,LT172,Mineral_0_10,67.56,Yes,DegreeC60_48h,No,NA,in vials measured;not precise,<2,NA,67.56,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Not planning to measure samples from 2020; too few samples due to Covid
-HBB_038,HubbardBearBrook,W6,Summer,Low,2020,7,LT172,Oa/A,30.61,Yes,DegreeC60_48h,No,NA,in vials measured;not precise,all,NA,30.61,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Not planning to measure samples from 2020; too few samples due to Covid
-HBB_039,HubbardBearBrook,W6,Summer,Low,2020,7,LT162,Oa/A,42.05,Yes,DegreeC60_48h,No,NA,in vials measured;not precise,all,NA,42.05,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Not planning to measure samples from 2020; too few samples due to Covid
-HBB_040,HubbardBearBrook,W6,Summer,Low,2021,7,LT163,Mineral_0_10,138.7,Yes,DegreeC60_48h,Yes,0.48,in vials measured;not precise,<2,0.35,106.12,0.4602,#040,5.91,0.28,,,,,,,,,,,2 / 3 / 4 / 5 / 8,Run duplicates (HBB_040_a & HBB_040_b) grinded with clean sand only; HBB_040 grinded with playground sand only
-HBB_040a,HubbardBearBrook,W6,Summer,Low,2021,7,LT163,Mineral_0_10,138.7,Yes,DegreeC60_48h,Yes,0.48,in vials measured;not precise,<2,0.35,106.12,0.4611,#030,5.92,0.28,,,,,,,,,,,2 / 3 / 4 / 5 / 8,Run duplicates (HBB_040_a & HBB_040_b) grinded with clean sand only; HBB_040 grinded with playground sand only
-HBB_040b,HubbardBearBrook,W6,Summer,Low,2021,7,LT163,Mineral_0_10,138.7,Yes,DegreeC60_48h,Yes,0.48,in vials measured;not precise,<2,0.35,106.12,0.4611,#030,5.93,0.28,,,,,,,,,,,2 / 3 / 4 / 5 / 8,Run duplicates (HBB_040_a & HBB_040_b) grinded with clean sand only; HBB_040 grinded with playground sand only
-HBB_041,HubbardBearBrook,W6,Summer,Low,2021,7,LT163,Oi/Oe,5.28,Yes,DegreeC60_48h,Yes,0.18,in vials measured;not precise,all,,0,0.4795,#041,36.64,1.7,,,,,,,,,,,1 / 3 / 5 / 5.5 / 4,grinded sample before containers were cleaned with count-free and sand
-HBB_042,HubbardBearBrook,W6,Summer,Low,2021,7,LT163,Oa/A,59.6,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,,,,,,,,,,,,,,,8 / 6 / 4 / 4 / 6,
-HBB_043,HubbardBearBrook,W6,Summer,Low,2021,7,LT174,Oa/A,36.21,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,0.4515,#043,21.91,0.96,,,,,,,,,,,3 / 3.5 / trace / 4,
-HBB_044,HubbardBearBrook,W6,Summer,Low,2021,7,LT162,Mineral_0_10,34.08,Yes,DegreeC60_48h,Yes,0.07,in vials measured;not precise,<2,3.41,23.74,0.4678,#044,4.54,0.23,,,,,,,,,,,2 / 2 / 4.5 / - / - / -,
-HBB_045,HubbardBearBrook,W6,Summer,Low,2021,7,LT168,Oa/A,78.16,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,,,,,,,,,,,,,,,6 / 6 / 3 / - / 2,
-HBB_046,HubbardBearBrook,W6,Summer,Low,2021,7,LT174,Mineral_0_10,128.46,Yes,DegreeC60_48h,Yes,0.45,in vials measured;not precise,<2,0.35,104.08,0.459,#046,3.37,0.19,,,,,,,,,,,4 / 10 / - / 3.5,
-HBB_047,HubbardBearBrook,W6,Summer,Low,2021,7,LT174,Oi/Oe,10.07,Yes,DegreeC60_48h,Yes,0.22,in vials measured;not precise,all,2.18,4.22,0.4657,#047,41.51,1.88,,,,,,,,,,,3.5 / 4 / 2 / 7.5,
-HBB_048,HubbardBearBrook,W6,Summer,Low,2021,7,LT168,Oi/Oe,21.64,Yes,DegreeC60_48h,Yes,0.23,in vials measured;not precise,all,1.06,14.53,0.4846,#048,17.15,0.91,,,,,,,,,,,4 / 3 / 4.5 / 5 / 2,
-HBB_049,HubbardBearBrook,W6,Summer,Low,2021,7,LT162,Oi/Oe,17.91,Yes,DegreeC60_48h,Yes,0.34,in vials measured;not precise,all,1.9,11.85,0.479,#049,40.81,1.93,,,,,,,,,,,6 / 7 / 5 / 3.5 / 5,
-HBB_050,HubbardBearBrook,W6,Summer,Low,2021,7,LT172,Mineral_0_10,40.45,Yes,DegreeC60_48h,Yes,0.14,in vials measured;not precise,<2,0.35,26.2,0.5308,#050,6.24,0.32,,,,,,,,,,,4 / - / - / 2 / 5.5,
-HBB_051,HubbardBearBrook,W6,Summer,Low,2021,7,LT172,Oi/Oe,12.35,Yes,DegreeC60_48h,Yes,0.26,in vials measured;not precise,all,2.11,6.53,0.4674,#051,40.8,2.12,,,,,,,,,,,rot / 4 / 6 / 6 / 4,
-HBB_052,HubbardBearBrook,W6,Summer,Low,2021,7,LT168,Mineral_0_10,100.46,Yes,DegreeC60_48h,Yes,0.31,in vials measured;not precise,<2,0.31,75.26,0.4781,#052,3.87,0.21,,,,,,,,,,,4 / 4 / 8 / - / 2,
-HBB_053,HubbardBearBrook,W6,Summer,Low,2021,7,LT172,Oa/A,59.71,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,0.4546,#053,19.12,0.96,,,,,,,,,,,8 / 6 / 6 / 7 / 3,
-HBB_054,HubbardBearBrook,W6,Summer,Low,2021,7,LT162,Oa/A,39.34,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,,,,,,,,,,,,,,,4 / 4 / 3 / - / 3 / 4,
-HBB_055,HubbardBearBrook,W6,Summer,Low,2023,7,LT174,Oa/A,35.44,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,,,,,,,,,,,,,,,3 / 2 / 4 / 1,
-HBB_056,HubbardBearBrook,W6,Summer,Low,2023,7,LT168,Mineral_0_10,203.94,Yes,DegreeC60_48h,Yes,0.41,in vials measured;not precise,<2,0.2,146.37,0.4627,#056,3.23,0.17,,,,,,,,,,,10 / - / 9.5 / - / 3.5,Run duplicates (HBB_056_a & HBB_056_b) grinded with clean sand only; HBB_056 grinded with playground sand only
-HBB_056a,HubbardBearBrook,W6,Summer,Low,2023,7,LT168,Mineral_0_10,203.94,Yes,DegreeC60_48h,Yes,0.41,in vials measured;not precise,<2,0.2,146.37,0.4746,#031,3.15,0.17,,,,,,,,,,,10 / - / 9.5 / - / 3.5,Run duplicates (HBB_056_a & HBB_056_b) grinded with clean sand only; HBB_056 grinded with playground sand only
-HBB_056b,HubbardBearBrook,W6,Summer,Low,2023,7,LT168,Mineral_0_10,203.94,Yes,DegreeC60_48h,Yes,0.41,in vials measured;not precise,<2,0.2,146.37,0.4746,#031,3.23,0.17,,,,,,,,,,,10 / - / 9.5 / - / 3.5,Run duplicates (HBB_056_a & HBB_056_b) grinded with clean sand only; HBB_056 grinded with playground sand only
-HBB_057,HubbardBearBrook,W6,Summer,Low,2023,7,LT172,Oa/A,16.34,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,7.63,0.4543,#057,22.45,1.3,,,,,,,,,,,6 / - / 3 / 2,
-HBB_058,HubbardBearBrook,W6,Summer,Low,2023,7,LT174,Mineral_0_10,90.1,Yes,DegreeC60_48h,Yes,0.31,in vials measured;not precise,<2,0.34,64.69,0.5127,#058,4.89,0.24,,,,,,,,,,,- / 1 / 9 / 8,
-HBB_059,HubbardBearBrook,W6,Summer,Low,2023,7,LT174,Oi/Oe,7.09,Yes,DegreeC60_48h,Yes,0.32,in vials measured;not precise,all,4.51,0,0.4562,#059,40.53,1.81,,,,,,,,,,,6 / 2 / trace / 2.5,"still quite a few roots left in sample; grinded sample before containers were cleaned with count-free and sand; container opend during grinding, only transferred material that was inside the grinding container; used 'non-clean room' grinding balls"
-HBB_060,HubbardBearBrook,W6,Summer,Low,2023,7,LT168,Oa/A,54.3,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,0.4921,#060,13.59,0.77,,,,,,,,,,,1 / 5 / 3 / 6 / 4,
-HBB_061,HubbardBearBrook,W6,Summer,Low,2023,7,LT163,Oi/Oe,8.74,Yes,DegreeC60_48h,Yes,0.21,in vials measured;not precise,all,2.4,3.13,0.4661,#061,25.65,1.2,,,,,,,,,,,2 / 1 / 2 / 3,grinded sample before containers were cleaned with count-free and sand
-HBB_062,HubbardBearBrook,W6,Summer,Low,2023,7,LT168,Oi/Oe,17.06,Yes,DegreeC60_48h,Yes,0.34,in vials measured;not precise,all,1.99,10.91,0.4696,#062,19.53,0.96,,,,,,,,,,,3 / 3.5 / trace / 5 / 1.5,
-HBB_063,HubbardBearBrook,W6,Summer,Low,2023,7,LT163,Mineral_0_10,103.07,Yes,DegreeC60_48h,Yes,0.14,in vials measured;not precise,<2,0.14,83.19,0.5276,#063,5.81,0.26,,,,,,,,,,,5 / 10 / 2.5 / -,
-HBB_064,HubbardBearBrook,W6,Summer,Low,2023,7,LT162,Mineral_0_10,59.47,Yes,DegreeC60_48h,Yes,0.11,in vials measured;not precise,<2,0.18,39.55,0.482,#064,6.76,0.29,,,,,,,,,,,- / 2 / - / 10 / trace,very light color: E-horizon?
-HBB_065,HubbardBearBrook,W6,Summer,Low,2023,7,LT163,Oa/A,10.97,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,2.54,0.476,#065,26.54,1.24,,,,,,,,,,,2 / - / 3 / 2.5,
-HBB_066,HubbardBearBrook,W6,Summer,Low,2023,7,LT172,Mineral_0_10,53.42,Yes,DegreeC60_48h,Yes,0.13,in vials measured;not precise,<2,0.24,37.28,0.4729,#066,3.34,0.19,,,,,,,,,,,- / - / 6 / 5,
-HBB_067,HubbardBearBrook,W6,Summer,Low,2023,7,LT172,Oi/Oe,13.56,Yes,DegreeC60_48h,Yes,0.21,in vials measured;not precise,all,1.55,7.85,0.4556,#067,42.64,2,,,,,,,,,,,5 / 5 / 2 / 4,
-HBB_068,HubbardBearBrook,W6,Summer,Low,2023,7,LT162,Oi/Oe,22.76,Yes,DegreeC60_48h,Yes,0.34,in vials measured;not precise,all,1.49,16.89,0.5115,#068,26.42,1.24,,,,,,,,,,,4 / trace / 8 / 1 /2,
-HBB_069,HubbardBearBrook,W6,Summer,Low,2023,7,LT162,Oa/A,55.39,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,0.4649,#069,21.33,1.06,,,,,,,,,,,6 / 6 / 4 / 1.5 / 5,
-HBB_070,HubbardBearBrook,W6,Summer,Low,1998,7,LT172,Oi/Oe,12.6,Yes,DegreeC60_48h,Yes,0.24,in vials measured;not precise,all,1.9,2.94,0.4925,#070,45.35,2.8,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,grinded sample before containers were cleaned with count-free and sand
-HBB_071,HubbardBearBrook,W6,Summer,Low,1998,7,LT168,Oa/A,26.6,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,13.71,0.5363,#071,29.47,1.7,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_072,HubbardBearBrook,W6,Summer,Low,1998,7,LT163,Oa/A,30.8,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,,,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_073,HubbardBearBrook,W6,Summer,Low,1998,7,LT162,Oa/A,48.5,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,,,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_074,HubbardBearBrook,W6,Summer,Low,1998,7,LT172,Oa/A,36.7,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,,,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_075,HubbardBearBrook,W6,Summer,Low,1998,7,LT174,Oa/A,33,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,0.5432,#075,22.24,1.06,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,"Not sure if truly ""low"" location"
-HBB_076,HubbardBearBrook,W6,Summer,Low,1998,7,LT168,Mineral_0_10,66.9,Yes,DegreeC60_48h,Yes,0.19,in vials measured;not precise,<2,0.28,53.64,0.5188,#076,2.67,0.14,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_077,HubbardBearBrook,W6,Summer,Low,1998,7,LT174,Mineral_0_10,39.4,Yes,DegreeC60_48h,Yes,0.26,in vials measured;not precise,<2,0.66,26.63,0.4995,#077,5.14,0.26,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_078,HubbardBearBrook,W6,Summer,Low,1998,7,LT172,Mineral_0_10,97,Yes,DegreeC60_48h,Yes,0.34,in vials measured;not precise,<2,0.35,71.13,0.5105,#078,3.52,0.19,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Run duplicates (HBB_078_a & HBB_078_b) grinded with clean sand only; HBB_078 grinded with playground sand only
-HBB_078a,HubbardBearBrook,W6,Summer,Low,1998,7,LT172,Mineral_0_10,97,Yes,DegreeC60_48h,Yes,0.34,in vials measured;not precise,<2,0.35,71.13,0.457,#033,3.52,0.19,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Run duplicates (HBB_078_a & HBB_078_b) grinded with clean sand only; HBB_078 grinded with playground sand only
-HBB_079,HubbardBearBrook,W6,Summer,Low,1998,7,LT162,Mineral_0_10,61.1,Yes,DegreeC60_48h,Yes,0.3,in vials measured;not precise,<2,0.49,48.05,0.4709,#079,5.68,0.26,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_080,HubbardBearBrook,W6,Summer,Low,1998,7,LT163,Mineral_0_10,85.3,Yes,DegreeC60_48h,Yes,0.35,in vials measured;not precise,<2,0.41,70.81,0.4716,#080,2.56,0.11,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_081,HubbardBearBrook,W6,Summer,Low,2000,7,LT172,Oi/Oe,15,Yes,DegreeC60_48h,Yes,0.43,in vials measured;not precise,all,2.87,3.94,0.4694,#081,42.63,2.33,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_082,HubbardBearBrook,W6,Summer,Low,2000,7,LT172,Oa/A,17,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,,,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_083,HubbardBearBrook,W6,Summer,Low,2000,7,LT172,Mineral_0_10,51,Yes,DegreeC60_48h,Yes,0.22,in vials measured;not precise,<2,0.43,31.08,0.4513,#083,1.6,0.08,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_084,HubbardBearBrook,W6,Summer,Low,2000,7,LT174,Oi/Oe,9.4,Yes,DegreeC60_48h,Yes,0.64,in vials measured;not precise,all,6.81,0,0.4553,#084,38.8,1.88,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,grinded sample before containers were cleaned with count-free and sand
-HBB_085,HubbardBearBrook,W6,Summer,Low,2000,7,LT174,Oa/A,18.5,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,,,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_086,HubbardBearBrook,W6,Summer,Low,2000,7,LT174,Mineral_0_10,43.3,Yes,DegreeC60_48h,Yes,0.38,in vials measured;not precise,<2,0.88,26.18,,,5.17,0.28,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_087,HubbardBearBrook,W6,Summer,Low,2000,7,LT162,Oi/Oe,13.6,Yes,DegreeC60_48h,Yes,0.9,in vials measured;not precise,all,6.62,3.02,,,40.77,1.79,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_088,HubbardBearBrook,W6,Summer,Low,2000,7,LT162,Oa/A,26.6,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,,,8.37,0.48,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_089,HubbardBearBrook,W6,Summer,Low,2000,7,LT162,Mineral_0_10,27.9,Yes,DegreeC60_48h,Yes,0.29,in vials measured;not precise,<2,1.04,10.94,,,5.85,0.29,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_090,HubbardBearBrook,W6,Summer,Low,2000,7,LT163,Oi/Oe,19.4,Yes,DegreeC60_48h,Yes,0.53,in vials measured;not precise,all,2.73,7.58,,,43.02,1.84,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_091,HubbardBearBrook,W6,Summer,Low,2000,7,LT163,Oa/A,21.4,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,,,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_092,HubbardBearBrook,W6,Summer,Low,2000,7,LT163,Mineral_0_10,31.3,Yes,DegreeC60_48h,Yes,0.28,in vials measured;not precise,<2,0.89,15.9,,,6.31,0.29,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_093,HubbardBearBrook,W6,Summer,Low,2000,7,LT168,Oi/Oe,12.2,Yes,DegreeC60_48h,Yes,0.29,in vials measured;not precise,all,2.38,2.7,,,37.62,1.83,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_094,HubbardBearBrook,W6,Summer,Low,2000,7,LT168,Mineral_0_10,44.2,Yes,DegreeC60_48h,Yes,0.19,in vials measured;not precise,<2,0.43,24.67,,,3.31,0.15,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
-HBB_095,HubbardBearBrook,W6,Summer,Low,2002,7,LT168,Oi/Oe,11.1,Yes,DegreeC60_48h,Yes,0.17,in vials measured;not precise,all,1.53,0,,,42.69,1.74,Oi/Oe,6,Oi/Oe,3.5,Oi/Oe,5,NA,NA,NA,NA,6 / 3.5 / 5,"Grinded sample before containers were cleaned with count-free and sand; container opend during grinding, only transferred material that was inside the grinding container; used 'non-clean room' grinding balls"
-HBB_096,HubbardBearBrook,W6,Summer,Low,2002,7,LT168,Mineral_0_10,54.7,Yes,DegreeC60_48h,Yes,0.17,in vials measured;not precise,<2,0.31,34.39,,,3.64,0.21,E,5,E,7,B,12,NA,NA,NA,NA,5/7/2012,Oa/A: 4 / 2.5 / 1
-HBB_097,HubbardBearBrook,W6,Summer,Low,2002,7,LT172,Oi/Oe,14.7,Yes,DegreeC60_48h,Yes,0.3,in vials measured;not precise,all,2.04,3.84,,,31.87,1.69,Oi/Oe,6.5,Oi/Oe,4,NA,NA,NA,NA,NA,NA,6.5 / 4,
-HBB_098,HubbardBearBrook,W6,Summer,Low,2002,7,LT172,Oa/A,21.1,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,,,,,Oa,6.5,Oa,0.5,NA,NA,NA,NA,NA,NA,6.5 / 0.5,
-HBB_099,HubbardBearBrook,W6,Summer,Low,2002,7,LT172,Mineral_0_10,40.4,Yes,DegreeC60_48h,Yes,0.22,in vials measured;not precise,<2,0.54,23.13,,,4.32,0.23,B,2,E/B,13.5,NA,NA,NA,NA,NA,NA,2 / 13.5,
-HBB_100,HubbardBearBrook,W6,Summer,Low,2002,7,LT163,Oi/Oe,10.7,Yes,DegreeC60_48h,Yes,0.18,in vials measured;not precise,all,1.68,0,0.477,#074,40.73,1.82,Oi/Oe,4.5,Oi/Oe,4.5,NA,NA,NA,NA,NA,NA,4.5 / 4.5,put woody material from HBB_115 in HBB_100 root vial; weight errounous; grinded sample before containers were cleaned with count-free and sand; used 'non-clean room' grinding balls
-HBB_101,HubbardBearBrook,W6,Summer,Low,2002,7,LT163,Oa/A,18.1,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,,,33.8,1.36,Oa,6.5,Oa,3.5,NA,NA,NA,NA,NA,NA,6.5 / 3.5,
-HBB_102,HubbardBearBrook,W6,Summer,Low,2002,7,LT163,Mineral_0_10,14.9,Yes,DegreeC60_48h,Yes,0.01,in vials measured;not precise,<2,0.07,2.67,,,4.14,0.16,E,5,E,2,NA,NA,NA,NA,NA,NA,2-May,
-HBB_103,HubbardBearBrook,W6,Summer,Low,2002,7,LT162,Oi/Oe,13.8,Yes,DegreeC60_48h,Yes,0.28,in vials measured;not precise,all,2.03,3.21,0.4725,#036,35.56,1.73,Oi/Oe,3,Oi/Oe,3,NA,NA,NA,NA,NA,NA,3-Mar,grinded sample before containers were cleaned with count-free and sand
-HBB_104,HubbardBearBrook,W6,Summer,Low,2002,7,LT162,Oa/A,13.7,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,,,,,A,5.5,NA,2,NA,NA,NA,NA,NA,NA,5.5 / 2 ,
-HBB_105,HubbardBearBrook,W6,Summer,Low,2002,7,LT162,Mineral_0_10,61.3,Yes,DegreeC60_48h,Yes,0.34,in vials measured;not precise,<2,0.55,40.22,,,6.42,0.31,B,10,B,11,NA,NA,NA,NA,NA,NA,11-Oct,
-HBB_106,HubbardBearBrook,W6,Summer,Low,2002,7,LT174,Oi/Oe,10.6,Yes,DegreeC60_48h,Yes,0.32,in vials measured;not precise,all,3.02,0,0.4735,#034,43.02,2.04,Oi/Oe,8.5,Oi/Oe,7.5,NA,NA,NA,NA,NA,NA,8.5 / 7.5,grinded sample before containers were cleaned with count-free and sand; used 'non-clean room' grinding balls
-HBB_107,HubbardBearBrook,W6,Summer,Low,2002,7,LT174,Oa/A,13.4,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,,,37.35,1.49,Oa,8.5,Oa,2.5,NA,NA,NA,NA,NA,NA,8.5 / 2.5,
-HBB_108,HubbardBearBrook,W6,Summer,Low,2002,7,LT174,Mineral_0_10,75.5,Yes,DegreeC60_48h,Yes,0.39,in vials measured;not precise,<2,0.52,56.89,,,6.27,0.31,E,1,NA,0,NA,NA,NA,NA,NA,NA,- / -,
-HBB_109,HubbardBearBrook,W6,Summer,Low,2004,7,LT163,Oi/Oe,12.6,Yes,DegreeC60_48h,Yes,0.54,in vials measured;not precise,all,4.29,2.91,0.4515,#025,48.14,1.76,,,,,,,,,,,5 / 1 / 1 / 6,grinded sample before containers were cleaned with count-free and sand
-HBB_110,HubbardBearBrook,W6,Summer,Low,2004,7,LT163,Oa/A,13.7,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,,,23.71,0.88,,,,,,,,,,,1 / 3 / 4 / 2,
-HBB_111,HubbardBearBrook,W6,Summer,Low,2004,7,LT163,Mineral_0_10,31.7,Yes,DegreeC60_48h,Yes,0.02,in vials measured;not precise,<2,0.06,15.33,,,3.59,0.17,,,,,,,,,,,- / 5 / 2 / -,
-HBB_112,HubbardBearBrook,W6,Summer,Low,2004,7,LT162,Oi/Oe,17.2,Yes,DegreeC60_48h,Yes,0.46,in vials measured;not precise,all,2.67,7.04,0.4872,#072,41.67,1.75,,,,,,,,,,,- / 6 / 1 / 1,Duplicate sample found in archive (not included)
-HBB_113,HubbardBearBrook,W6,Summer,Low,2004,7,LT162,Oa/A,27.1,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,,,13.71,0.72,,,,,,,,,,,3 / 6 / 8 / 4,Duplicate sample found in archive (not included)
-HBB_114,HubbardBearBrook,W6,Summer,Low,2004,7,LT162,Mineral_0_10,41.9,Yes,DegreeC60_48h,Yes,0.35,in vials measured;not precise,<2,0.84,23.18,,,6.26,0.29,,,,,,,,,,,4 / - / 4 / 1,
-HBB_115,HubbardBearBrook,W6,Summer,Low,2004,7,LT168,Oi/Oe,12.6,Yes,DegreeC60_48h,Yes,0.51,in vials measured;not precise,all,4.05,2.15,0.5081,#073,40.67,2.14,,,,,,,,,,,3/2/2003,put woody material from HBB_115 in HBB_100 root vial; weight errounous; grinded sample before containers were cleaned with count-free and sand
-HBB_116,HubbardBearBrook,W6,Summer,Low,2004,7,LT168,Oa/A,18.8,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,,,12.73,0.6,,,,,,,,,,,3/3/2004,
-HBB_117,HubbardBearBrook,W6,Summer,Low,2004,7,LT168,Mineral_0_10,53.5,Yes,DegreeC60_48h,Yes,0.28,in vials measured;not precise,<2,0.52,32.31,,,4.09,0.21,,,,,,,,,,,8/8/2007,Duplicate sample found in archive (not included)
-HBB_118,HubbardBearBrook,W6,Summer,Low,2004,7,LT172,Oi/Oe,18.2,Yes,DegreeC60_48h,Yes,0.32,in vials measured;not precise,all,1.76,7.61,0.4636,#035,45.57,2.43,,,,,,,,,,,5 / 5.5 / 2.5,
-HBB_119,HubbardBearBrook,W6,Summer,Low,2004,7,LT172,Oa/A,26.4,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,,,25.97,1.46,,,,,,,,,,,3 / 5.5 / 2.5,
-HBB_120,HubbardBearBrook,W6,Summer,Low,2004,7,LT172,Mineral_0_10,40.7,Yes,DegreeC60_48h,Yes,0.01,in vials measured;not precise,<2,0.02,24.31,,,4.3,0.23,,,,,,,,,,,1.5 / - / 5,
-HBB_121,HubbardBearBrook,W6,Summer,Low,2004,7,LT174,Oi/Oe,14.4,Yes,DegreeC60_48h,Yes,0.6,in vials measured;not precise,all,4.17,3.64,0.4618,#082,45.26,2.1,,,,,,,,,,,4 / 3 / 4 / 4 / 2,
-HBB_122,HubbardBearBrook,W6,Summer,Low,2004,7,LT174,Oa/A,28.3,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,,,32.9,1.41,,,,,,,,,,,4 / 6 / 2 / 5 / 4,Duplicate sample found in archive (not included)
-HBB_123,HubbardBearBrook,W6,Summer,Low,2004,7,LT174,Mineral_0_10,28.9,Yes,DegreeC60_48h,Yes,0.25,in vials measured;not precise,<2,0.87,10.92,,,6.12,0.29,,,,,,,,,,,- / smidge / 1 / - / 4,Did not clean sieving pan before sieving sample
-HBB_124,HubbardBearBrook,W6,Summer,Low,2006,5,LT163,Oi/Oe,7.1,Yes,DegreeC60_48h,Yes,0.08,in vials measured;not precise,all,1.13,0,0.0025,#011,45.89,1.86,,,,,,,,,,,12 / 9 / 9 / 8 / 2,"grinded sample before containers were cleaned with count-free and sand; Remnant  from old batch, not finely ground"
-HBB_125,HubbardBearBrook,W6,Summer,Low,2006,5,LT163,Oa/A,12.6,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,,,32.03,1.29,,,,,,,,,,,2 / 4 / 3 / 4 / 2,
-HBB_126,HubbardBearBrook,W6,Summer,Low,2006,5,LT163,Mineral_0_10,50.5,Yes,DegreeC60_48h,Yes,0.1,in vials measured;not precise,<2,0.2,30.15,,,4.96,0.23,,,,,,,,,,,- / - / - / - / 10,
-HBB_127,HubbardBearBrook,W6,Summer,Low,2006,5,LT162,Oi/Oe,15.9,Yes,DegreeC60_48h,Yes,0.19,in vials measured;not precise,all,1.19,5.34,0.5017,#085,41.19,1.24,,,,,,,,,,,4 / 12 / 6 / 2 / 3,
-HBB_128,HubbardBearBrook,W6,Summer,Low,2006,5,LT162,Oa/A,18.9,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,0.4611,#055,38.23,1.62,,,,,,,,,,,7 / 5 / 4 / 9 / 5,
-HBB_129,HubbardBearBrook,W6,Summer,Low,2006,5,LT168,Oi/Oe,8.6,Yes,DegreeC60_48h,Yes,0.18,in vials measured;not precise,all,2.09,0,0.4191,#015,36.42,1.76,,,,,,,,,,,1 / 3 / 2 / 4 / 4,grinded sample before containers were cleaned with count-free and sand
-HBB_130,HubbardBearBrook,W6,Summer,Low,2006,5,LT168,Mineral_0_10,42,Yes,DegreeC60_48h,Yes,0.2,in vials measured;not precise,<2,0.48,26.65,0.4732,#045,6.58,0.32,,,,,,,,,,,10 / 10 / 10 / - / -,Oa/A: 4 / 3 / trace / 3 / trace
-HBB_131,HubbardBearBrook,W6,Summer,Low,2006,5,LT172,Oa/A,17.5,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,0.4885,#037,11.06,0.63,,,,,,,,,,,7 / 11 / 9 / 2 / 2,Oi/Oe: 7 / 5 / 4 / 3 / 3
-HBB_132,HubbardBearBrook,W6,Summer,Low,2006,5,LT172,Mineral_0_10,40.6,Yes,DegreeC60_48h,Yes,0.21,in vials measured;not precise,<2,0.52,22.56,0.4953,#038,3.6,0.22,,,,,,,,,,,- / - / 1 / 4 / 8,
-HBB_133,HubbardBearBrook,W6,Summer,Low,2006,5,LT174,Oi/Oe,8.4,Yes,DegreeC60_48h,Yes,0.17,in vials measured;not precise,all,2.02,0,0.3583,#054,29.05,1.59,,,,,,,,,,,4/2/2006,grinded sample before containers were cleaned with count-free and sand
-HBB_134,HubbardBearBrook,W6,Summer,Low,2006,5,LT174,Oa/A,36.2,Yes,DegreeC60_48h,No,,in vials measured;not precise,all,,,,,,,,,,,,,,,,,4/2/2005,
-HBB_135,HubbardBearBrook,W6,Summer,Low,2006,5,LT174,Mineral_0_10,21.6,Yes,DegreeC60_48h,Yes,0.14,in vials measured;not precise,<2,0.65,7.61,0.5282,#039,9.76,0.47,,,,,,,,,,,- / 7 / 2,That was the sample that was sieved before HBB_123 was sieved without cleaning the sieving pan
-HBB_136,HubbardBearBrook,W6,Summer,Low,2006,5,LT162,Mineral_0_10,59.82,Yes,DegreeC60_48h,Yes,0.28,in vials measured;not precise,<2,0.47,39.09,0.5327,#042,4,0.15,,,,,,,,,,,3 / - / - / - / 6,
-HBB_137,HubbardBearBrook,W6,Summer,Low,1998,,all fine roots,Oi/Oe,,,,,,,,,,,,,,,,,,,,,,,,,
-HBB_138,HubbardBearBrook,W6,Summer,Low,1998,,all fine roots,Oa/A,,,,,,,,,,,,,,,,,,,,,,,,,
-HBB_139,HubbardBearBrook,W6,Summer,Low,1998,,all fine roots,Mineral_0_10,,,,,,,,,,,,,,,,,,,,,,,,,
-HBB_140,HubbardBearBrook,W6,Summer,Low,2000,,all fine roots,Oi/Oe,,,,,,,,,,,,,,,,,,,,,,,,,
-HBB_141,HubbardBearBrook,W6,Summer,Low,2000,,all fine roots,Oa/A,,,,,,,,,,,,,,,,,,,,,,,,,
-HBB_142,HubbardBearBrook,W6,Summer,Low,2000,,all fine roots,Mineral_0_10,,,,,,,,,,,,,,,,,,,,,,,,,
-HBB_143,HubbardBearBrook,W6,Summer,Low,2002,,all fine roots,Oi/Oe,,,,,,,,,,,,,,,,,,,,,,,,,
-HBB_144,HubbardBearBrook,W6,Summer,Low,2002,,all fine roots,Oa/A,,,,,,,,,,,,,,,,,,,,,,,,,
-HBB_145,HubbardBearBrook,W6,Summer,Low,2002,,all fine roots,Mineral_0_10,,,,,,,,,,,,,,,,,,,,,,,,,
-HBB_146,HubbardBearBrook,W6,Summer,Low,2004,,all fine roots,Oi/Oe,,,,,,,,,,,,,,,,,,,,,,,,,
-HBB_147,HubbardBearBrook,W6,Summer,Low,2004,,all fine roots,Oa/A,,,,,,,,,,,,,,,,,,,,,,,,,
-HBB_148,HubbardBearBrook,W6,Summer,Low,2004,,all fine roots,Mineral_0_10,,,,,,,,,,,,,,,,,,,,,,,,,
-HBB_149,HubbardBearBrook,W6,Summer,Low,2006,,all fine roots,Oi/Oe,,,,,,,,,,,,,,,,,,,,,,,,,
-HBB_150,HubbardBearBrook,W6,Summer,Low,2006,,all fine roots,Oa/A,,,,,,,,,,,,,,,,,,,,,,,,,
-HBB_151,HubbardBearBrook,W6,Summer,Low,2006,,all fine roots,Mineral_0_10,,,,,,,,,,,,,,,,,,,,,,,,,
-HBB_152,HubbardBearBrook,W6,Summer,Low,2010,,all fine roots,Oi/Oe,,,,,,,,,,,,,,,,,,,,,,,,,
-HBB_153,HubbardBearBrook,W6,Summer,Low,2010,,all fine roots,Oa/A,,,,,,,,,,,,,,,,,,,,,,,,,
-HBB_154,HubbardBearBrook,W6,Summer,Low,2010,,all fine roots,Mineral_0_10,,,,,,,,,,,,,,,,,,,,,,,,,
-HBB_155,HubbardBearBrook,W6,Summer,Low,2018,,all fine roots,Oi/Oe,,,,,,,,,,,,,,,,,,,,,,,,,
-HBB_156,HubbardBearBrook,W6,Summer,Low,2018,,all fine roots,Oa/A,,,,,,,,,,,,,,,,,,,,,,,,,
-HBB_157,HubbardBearBrook,W6,Summer,Low,2018,,all fine roots,Mineral_0_10,,,,,,,,,,,,,,,,,,,,,,,,,
-HBB_158,HubbardBearBrook,W6,Summer,Low,2021,,all fine roots,Oi/Oe,,,,,,,,,,,,,,,,,,,,,,,,,
-HBB_159,HubbardBearBrook,W6,Summer,Low,2021,,all fine roots,Oa/A,,,,,,,,,,,,,,,,,,,,,,,,,
-HBB_160,HubbardBearBrook,W6,Summer,Low,2021,,all fine roots,Mineral_0_10,,,,,,,,,,,,,,,,,,,,,,,,,
-HBB_161,HubbardBearBrook,W6,Summer,Low,2023,,all fine roots,Oi/Oe,,,,,,,,,,,,,,,,,,,,,,,,,
-HBB_162,HubbardBearBrook,W6,Summer,Low,2023,,all fine roots,Oa/A,,,,,,,,,,,,,,,,,,,,,,,,,
-HBB_163,HubbardBearBrook,W6,Summer,Low,2023,,all fine roots,Mineral_0_10,,,,,,,,,,,,,,,,,,,,,,,,,
+ID,ProjectName,Watershed,Season,Elevation,Year,Month,Plot,Horizon,Weight_g,Dried,DriedMethod,RootPicked,RootSize_mm,Archived_g,Weight_g_14C,Label_14C,Measured_%_C,Measured_%_N,F14C,Plot_1_Horizons,Plot_1_HorizonLength,Plot_2_Horizon,Plot_2_HorizonLength,Plot_3_Horizon,Plot_3_HorizonLength,Plot_4_Horizon,Plot_4_HorizonLength,Plot_5_Horizon,Plot_5_HorizonLength,Lengths,Notes
+HBB_001,HubbardBearBrook,W6,Summer,Low,2010,6,LT168,Oi/Oe,22.35,Yes,DegreeC60_48h,Yes,all,12.58,0.4622,#001,37.75,2,1.1117,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_002,HubbardBearBrook,W6,Summer,Low,2010,6,LT162,Oa/A,52.15,Yes,DegreeC60_48h,Yes,all,38.67,0.4555,#002,13.98,0.75,1.0887,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_003,HubbardBearBrook,W6,Summer,Low,2010,6,LT162,Oi/Oe,40.62,Yes,DegreeC60_48h,Yes,all,28.39,0.4542,#003,26.27,1.39,1.1649,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_004,HubbardBearBrook,W6,Summer,Low,2010,6,LT174,Oa/A,32.37,Yes,DegreeC60_48h,Yes,all,,0.4553,#004,41.89,1.76,1.0154,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_005,HubbardBearBrook,W6,Summer,Low,2010,6,LT168,Oa/A,75.05,Yes,DegreeC60_48h,Yes,all,,0.5077,#005,21.1,1.1,1.0696,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_006,HubbardBearBrook,W6,Summer,Low,2010,6,LT174,Oi/Oe,32.36,Yes,DegreeC60_48h,Yes,all,22.64,0.4589,#006,44.75,2.29,1.1205,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Length
+HBB_007,HubbardBearBrook,W6,Summer,Low,2010,6,LT163,Oi/Oe,27.65,Yes,DegreeC60_48h,Yes,all,18.42,0.4568,#007,47.26,2.26,1.143,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_008,HubbardBearBrook,W6,Summer,Low,2010,6,LT162,Mineral_0_10,98.3,Yes,DegreeC60_48h,Yes,<2,77.66,0.5601,#008,5.53,0.3,1.0164,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_009,HubbardBearBrook,W6,Summer,Low,2010,6,LT172,Oi/Oe,30.37,Yes,DegreeC60_48h,Yes,all,21.39,0.4628,#009,36.01,1.88,1.1398,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_010,HubbardBearBrook,W6,Summer,Low,2010,6,LT163,Mineral_0_10,85.43,Yes,DegreeC60_48h,Yes,<2,62.8,0.5021,#010,2.78,0.12,0.9807,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_011,HubbardBearBrook,W6,Summer,Low,2010,6,LT172,Oa/A,34.36,Yes,DegreeC60_48h,Yes,all,,,,,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_012,HubbardBearBrook,W6,Summer,Low,2010,6,LT168,Mineral_0_10,92.54,Yes,DegreeC60_48h,Yes,<2,53.29,0.4811,#012,4.69,0.24,1.0145,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Run duplicates (HBB_012_a & HBB_012_b) grinded with clean sand only; HBB_012 grinded with playground sand only
+HBB_012a,HubbardBearBrook,W6,Summer,Low,2010,6,LT168,Mineral_0_10,92.54,Yes,DegreeC60_48h,Yes,<2,53.29,0.4791,#032,4.8,0.25,1.0313,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Run duplicates (HBB_012_a & HBB_012_b) grinded with clean sand only; HBB_012 grinded with playground sand only
+HBB_012b,HubbardBearBrook,W6,Summer,Low,2010,6,LT168,Mineral_0_10,92.54,Yes,DegreeC60_48h,Yes,<2,53.29,,,4.56,0.23,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Run duplicates (HBB_012_a & HBB_012_b) grinded with clean sand only; HBB_012 grinded with playground sand only
+HBB_013,HubbardBearBrook,W6,Summer,Low,2010,6,LT174,Mineral_0_10,93.27,Yes,DegreeC60_48h,Yes,<2,64.82,0.4998,#013,3.37,0.17,0.9752,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_014,HubbardBearBrook,W6,Summer,Low,2010,6,LT172,Mineral_0_10,112.44,Yes,DegreeC60_48h,Yes,<2,92.61,0.5004,#014,5.17,0.29,1.0122,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_015,HubbardBearBrook,W6,Summer,Low,2010,6,LT163,Oa/A,36,Yes,DegreeC60_48h,Yes,all,,,,,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_016,HubbardBearBrook,W6,Summer,Low,2018,7,LT174,Oa/A,12.63,Yes,DegreeC60_48h,Yes,all,,0.4697,#016,38.18,1.84,1.0378,,,,,,,,,,,2 / 5 / 5 / 3,
+HBB_017,HubbardBearBrook,W6,Summer,Low,2018,7,LT163,Oi/Oe,23.5,Yes,DegreeC60_48h,Yes,all,17.04,0.4584,#017,27.11,0.85,1.0341,,,,,,,,,,,,
+HBB_018,HubbardBearBrook,W6,Summer,Low,2018,7,LT162,Oa/A,39.72,Yes,DegreeC60_48h,Yes,all,,0.4689,#018,25.58,1.12,1.0146,,,,,,,,,,,,
+HBB_019,HubbardBearBrook,W6,Summer,Low,2018,7,LT172,Oi/Oe,16.8,Yes,DegreeC60_48h,Yes,all,10.3,0.4562,#019,42.28,1.9,1.1134,,,,,,,,,,,2 / 6 / 4 / 4 / 3,
+HBB_020,HubbardBearBrook,W6,Summer,Low,2018,7,LT174,Oi/Oe,14.06,Yes,DegreeC60_48h,Yes,all,7.2,0.4635,#020,43.08,2.27,1.1037,,,,,,,,,,,6 / 5 / 5 / 3,
+HBB_021,HubbardBearBrook,W6,Summer,Low,2018,7,LT162,Oi/Oe,30.87,Yes,DegreeC60_48h,Yes,all,23.93,0.4591,#021,27.11,1.21,1.0745,,,,,,,,,,,,
+HBB_022,HubbardBearBrook,W6,Summer,Low,2018,7,LT163,Mineral_0_10,50.38,Yes,DegreeC60_48h,Yes,<2,37.63,0.4957,#022,4.74,0.23,0.9953,,,,,,,,,,,,
+HBB_023,HubbardBearBrook,W6,Summer,Low,2018,7,LT172,Mineral_0_10,77.58,Yes,DegreeC60_48h,Yes,<2,63.02,0.5735,#023,4.24,0.24,0.9985,,,,,,,,,,,3.5 / 1 / 3 / - / 7,
+HBB_024,HubbardBearBrook,W6,Summer,Low,2018,7,LT163,Oa/A,28.72,Yes,DegreeC60_48h,Yes,all,,0.4581,#024,27.77,0.95,1.0274,,,,,,,,,,,,
+HBB_025,HubbardBearBrook,W6,Summer,Low,2018,7,LT172,Oa/A,26.4,Yes,DegreeC60_48h,Yes,all,,,,,,,,,,,,,,,,,2 / 3 / 2 / - / 2,
+HBB_026,HubbardBearBrook,W6,Summer,Low,2018,7,LT174,Mineral_0_10,27.91,Yes,DegreeC60_48h,Yes,<2,16.48,0.4995,#026,4.79,0.22,0.9656,,,,,,,,,,,- / 2 / - / 5.5,
+HBB_027,HubbardBearBrook,W6,Summer,Low,2018,7,LT168,Mineral_0_10,14.95,Yes,DegreeC60_48h,Yes,<2,5.17,0.4967,#027,4.61,0.25,0.9845,,,,,,,,,,,,
+HBB_028,HubbardBearBrook,W6,Summer,Low,2018,7,LT162,Mineral_0_10,57.89,Yes,DegreeC60_48h,Yes,<2,42.89,0.4903,#028,5.56,0.23,0.9789,,,,,,,,,,,,
+HBB_029,HubbardBearBrook,W6,Summer,Low,2018,7,LT168,Oi/Oe,12.32,Yes,DegreeC60_48h,Yes,all,5.54,0.4681,#029,37.74,2.2,1.0776,,,,,,,,,,,,
+HBB_030,HubbardBearBrook,W6,Summer,Low,2018,7,LT168,Oa/A,22.48,Yes,DegreeC60_48h,No,all,,,,,,,,,,,,,,,,,,
+HBB_031,HubbardBearBrook,W6,Summer,Low,2020,7,LT172,Oi/Oe,16.6,Yes,DegreeC60_48h,No,all,16.6,NA,NA,NA,NA,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Not planning to measure samples from 2020; too few samples due to Covid
+HBB_032,HubbardBearBrook,W6,Summer,Low,2020,7,LT174,Oa/A,50.5,Yes,DegreeC60_48h,No,all,50.5,NA,NA,NA,NA,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Not planning to measure samples from 2020; too few samples due to Covid
+HBB_033,HubbardBearBrook,W6,Summer,Low,2020,7,LT162,Oi/Oe,24.01,Yes,DegreeC60_48h,No,all,24.01,NA,NA,NA,NA,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Not planning to measure samples from 2020; too few samples due to Covid
+HBB_034,HubbardBearBrook,W6,Summer,Low,2020,7,LT174,Mineral_0_10,70.46,Yes,DegreeC60_48h,No,<2,70.46,NA,NA,NA,NA,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Not planning to measure samples from 2020; too few samples due to Covid
+HBB_035,HubbardBearBrook,W6,Summer,Low,2020,7,LT174,Oi/Oe,24.61,Yes,DegreeC60_48h,No,all,24.61,NA,NA,NA,NA,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Not planning to measure samples from 2020; too few samples due to Covid
+HBB_036,HubbardBearBrook,W6,Summer,Low,2020,7,LT162,Mineral_0_10,65.67,Yes,DegreeC60_48h,No,<2,65.67,NA,NA,NA,NA,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Not planning to measure samples from 2020; too few samples due to Covid
+HBB_037,HubbardBearBrook,W6,Summer,Low,2020,7,LT172,Mineral_0_10,67.56,Yes,DegreeC60_48h,No,<2,67.56,NA,NA,NA,NA,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Not planning to measure samples from 2020; too few samples due to Covid
+HBB_038,HubbardBearBrook,W6,Summer,Low,2020,7,LT172,Oa/A,30.61,Yes,DegreeC60_48h,No,all,30.61,NA,NA,NA,NA,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Not planning to measure samples from 2020; too few samples due to Covid
+HBB_039,HubbardBearBrook,W6,Summer,Low,2020,7,LT162,Oa/A,42.05,Yes,DegreeC60_48h,No,all,42.05,NA,NA,NA,NA,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Not planning to measure samples from 2020; too few samples due to Covid
+HBB_040,HubbardBearBrook,W6,Summer,Low,2021,7,LT163,Mineral_0_10,138.7,Yes,DegreeC60_48h,Yes,<2,106.12,0.4602,#040,5.91,0.28,0.9927,,,,,,,,,,,2 / 3 / 4 / 5 / 8,Run duplicates (HBB_040_a & HBB_040_b) grinded with clean sand only; HBB_040 grinded with playground sand only
+HBB_040a,HubbardBearBrook,W6,Summer,Low,2021,7,LT163,Mineral_0_10,138.7,Yes,DegreeC60_48h,Yes,<2,106.12,0.4611,#030,5.92,0.28,0.9968,,,,,,,,,,,2 / 3 / 4 / 5 / 8,Run duplicates (HBB_040_a & HBB_040_b) grinded with clean sand only; HBB_040 grinded with playground sand only
+HBB_040b,HubbardBearBrook,W6,Summer,Low,2021,7,LT163,Mineral_0_10,138.7,Yes,DegreeC60_48h,Yes,<2,106.12,,,5.93,0.28,,,,,,,,,,,,2 / 3 / 4 / 5 / 8,Run duplicates (HBB_040_a & HBB_040_b) grinded with clean sand only; HBB_040 grinded with playground sand only
+HBB_041,HubbardBearBrook,W6,Summer,Low,2021,7,LT163,Oi/Oe,5.28,Yes,DegreeC60_48h,Yes,all,0,0.4795,#041,36.64,1.7,1.1028,,,,,,,,,,,1 / 3 / 5 / 5.5 / 4,grinded sample before containers were cleaned with count-free and sand
+HBB_042,HubbardBearBrook,W6,Summer,Low,2021,7,LT163,Oa/A,59.6,Yes,DegreeC60_48h,Yes,all,,,,,,,,,,,,,,,,,8 / 6 / 4 / 4 / 6,
+HBB_043,HubbardBearBrook,W6,Summer,Low,2021,7,LT174,Oa/A,36.21,Yes,DegreeC60_48h,Yes,all,,0.4515,#043,21.91,0.96,1.0162,,,,,,,,,,,3 / 3.5 / trace / 4,
+HBB_044,HubbardBearBrook,W6,Summer,Low,2021,7,LT162,Mineral_0_10,34.08,Yes,DegreeC60_48h,Yes,<2,23.74,0.4678,#044,4.54,0.23,0.9978,,,,,,,,,,,2 / 2 / 4.5 / - / - / -,
+HBB_045,HubbardBearBrook,W6,Summer,Low,2021,7,LT168,Oa/A,78.16,Yes,DegreeC60_48h,Yes,all,,,,,,,,,,,,,,,,,6 / 6 / 3 / - / 2,
+HBB_046,HubbardBearBrook,W6,Summer,Low,2021,7,LT174,Mineral_0_10,128.46,Yes,DegreeC60_48h,Yes,<2,104.08,0.459,#046,3.37,0.19,0.9744,,,,,,,,,,,4 / 10 / - / 3.5,
+HBB_047,HubbardBearBrook,W6,Summer,Low,2021,7,LT174,Oi/Oe,10.07,Yes,DegreeC60_48h,Yes,all,4.22,0.4657,#047,41.51,1.88,1.0853,,,,,,,,,,,3.5 / 4 / 2 / 7.5,
+HBB_048,HubbardBearBrook,W6,Summer,Low,2021,7,LT168,Oi/Oe,21.64,Yes,DegreeC60_48h,Yes,all,14.53,0.4846,#048,17.15,0.91,1.0647,,,,,,,,,,,4 / 3 / 4.5 / 5 / 2,
+HBB_049,HubbardBearBrook,W6,Summer,Low,2021,7,LT162,Oi/Oe,17.91,Yes,DegreeC60_48h,Yes,all,11.85,0.479,#049,40.81,1.93,1.0983,,,,,,,,,,,6 / 7 / 5 / 3.5 / 5,
+HBB_050,HubbardBearBrook,W6,Summer,Low,2021,7,LT172,Mineral_0_10,40.45,Yes,DegreeC60_48h,Yes,<2,26.2,0.5308,#050,6.24,0.32,1.0045,,,,,,,,,,,4 / - / - / 2 / 5.5,
+HBB_051,HubbardBearBrook,W6,Summer,Low,2021,7,LT172,Oi/Oe,12.35,Yes,DegreeC60_48h,Yes,all,6.53,0.4674,#051,40.8,2.12,1.0959,,,,,,,,,,,rot / 4 / 6 / 6 / 4,
+HBB_052,HubbardBearBrook,W6,Summer,Low,2021,7,LT168,Mineral_0_10,100.46,Yes,DegreeC60_48h,Yes,<2,75.26,0.4781,#052,3.87,0.21,0.9913,,,,,,,,,,,4 / 4 / 8 / - / 2,
+HBB_053,HubbardBearBrook,W6,Summer,Low,2021,7,LT172,Oa/A,59.71,Yes,DegreeC60_48h,Yes,all,,0.4546,#053,19.12,0.96,1.0245,,,,,,,,,,,8 / 6 / 6 / 7 / 3,
+HBB_054,HubbardBearBrook,W6,Summer,Low,2021,7,LT162,Oa/A,39.34,Yes,DegreeC60_48h,Yes,all,,,,,,,,,,,,,,,,,4 / 4 / 3 / - / 3 / 4,
+HBB_055,HubbardBearBrook,W6,Summer,Low,2023,7,LT174,Oa/A,35.44,Yes,DegreeC60_48h,Yes,all,,,,,,,,,,,,,,,,,3 / 2 / 4 / 1,
+HBB_056,HubbardBearBrook,W6,Summer,Low,2023,7,LT168,Mineral_0_10,203.94,Yes,DegreeC60_48h,Yes,<2,146.37,0.4627,#056,3.23,0.17,1.0362,,,,,,,,,,,10 / - / 9.5 / - / 3.5,Run duplicates (HBB_056_a & HBB_056_b) grinded with clean sand only; HBB_056 grinded with playground sand only
+HBB_056a,HubbardBearBrook,W6,Summer,Low,2023,7,LT168,Mineral_0_10,203.94,Yes,DegreeC60_48h,Yes,<2,146.37,0.4746,#031,3.15,0.17,1.0067,,,,,,,,,,,10 / - / 9.5 / - / 3.5,Run duplicates (HBB_056_a & HBB_056_b) grinded with clean sand only; HBB_056 grinded with playground sand only
+HBB_056b,HubbardBearBrook,W6,Summer,Low,2023,7,LT168,Mineral_0_10,203.94,Yes,DegreeC60_48h,Yes,<2,146.37,,,3.18,0.18,,,,,,,,,,,,10 / - / 9.5 / - / 3.5,Run duplicates (HBB_056_a & HBB_056_b) grinded with clean sand only; HBB_056 grinded with playground sand only
+HBB_057,HubbardBearBrook,W6,Summer,Low,2023,7,LT172,Oa/A,16.34,Yes,DegreeC60_48h,Yes,all,7.63,0.4543,#057,22.45,1.3,1.089,,,,,,,,,,,6 / - / 3 / 2,
+HBB_058,HubbardBearBrook,W6,Summer,Low,2023,7,LT174,Mineral_0_10,90.1,Yes,DegreeC60_48h,Yes,<2,64.69,0.5127,#058,4.89,0.24,0.962,,,,,,,,,,,- / 1 / 9 / 8,
+HBB_059,HubbardBearBrook,W6,Summer,Low,2023,7,LT174,Oi/Oe,7.09,Yes,DegreeC60_48h,Yes,all,0,0.4562,#059,40.53,1.81,1.0739,,,,,,,,,,,6 / 2 / trace / 2.5,"still quite a few roots left in sample; grinded sample before containers were cleaned with count-free and sand; container opend during grinding, only transferred material that was inside the grinding container; used 'non-clean room' grinding balls"
+HBB_060,HubbardBearBrook,W6,Summer,Low,2023,7,LT168,Oa/A,54.3,Yes,DegreeC60_48h,Yes,all,,0.4921,#060,13.59,0.77,1.0728,,,,,,,,,,,1 / 5 / 3 / 6 / 4,
+HBB_061,HubbardBearBrook,W6,Summer,Low,2023,7,LT163,Oi/Oe,8.74,Yes,DegreeC60_48h,Yes,all,3.13,0.4661,#061,25.65,1.2,1.0522,,,,,,,,,,,2 / 1 / 2 / 3,grinded sample before containers were cleaned with count-free and sand
+HBB_062,HubbardBearBrook,W6,Summer,Low,2023,7,LT168,Oi/Oe,17.06,Yes,DegreeC60_48h,Yes,all,10.91,0.4696,#062,19.53,0.96,1.0387,,,,,,,,,,,3 / 3.5 / trace / 5 / 1.5,
+HBB_063,HubbardBearBrook,W6,Summer,Low,2023,7,LT163,Mineral_0_10,103.07,Yes,DegreeC60_48h,Yes,<2,83.19,0.5276,#063,5.81,0.26,0.9925,,,,,,,,,,,5 / 10 / 2.5 / -,
+HBB_064,HubbardBearBrook,W6,Summer,Low,2023,7,LT162,Mineral_0_10,59.47,Yes,DegreeC60_48h,Yes,<2,39.55,0.482,#064,6.76,0.29,0.9341,,,,,,,,,,,- / 2 / - / 10 / trace,very light color: E-horizon?
+HBB_065,HubbardBearBrook,W6,Summer,Low,2023,7,LT163,Oa/A,10.97,Yes,DegreeC60_48h,Yes,all,2.54,0.476,#065,26.54,1.24,1.1181,,,,,,,,,,,2 / - / 3 / 2.5,
+HBB_066,HubbardBearBrook,W6,Summer,Low,2023,7,LT172,Mineral_0_10,53.42,Yes,DegreeC60_48h,Yes,<2,37.28,0.4729,#066,3.34,0.19,0.9865,,,,,,,,,,,- / - / 6 / 5,
+HBB_067,HubbardBearBrook,W6,Summer,Low,2023,7,LT172,Oi/Oe,13.56,Yes,DegreeC60_48h,Yes,all,7.85,0.4556,#067,42.64,2,1.1052,,,,,,,,,,,5 / 5 / 2 / 4,
+HBB_068,HubbardBearBrook,W6,Summer,Low,2023,7,LT162,Oi/Oe,22.76,Yes,DegreeC60_48h,Yes,all,16.89,0.5115,#068,26.42,1.24,1.0676,,,,,,,,,,,4 / trace / 8 / 1 /2,
+HBB_069,HubbardBearBrook,W6,Summer,Low,2023,7,LT162,Oa/A,55.39,Yes,DegreeC60_48h,Yes,all,,0.4649,#069,21.33,1.06,1.0557,,,,,,,,,,,6 / 6 / 4 / 1.5 / 5,
+HBB_070,HubbardBearBrook,W6,Summer,Low,1998,7,LT172,Oi/Oe,12.6,Yes,DegreeC60_48h,Yes,all,2.94,0.4925,#070,45.35,2.8,1.2235,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,grinded sample before containers were cleaned with count-free and sand
+HBB_071,HubbardBearBrook,W6,Summer,Low,1998,7,LT168,Oa/A,26.6,Yes,DegreeC60_48h,Yes,all,13.71,0.5363,#071,29.47,1.7,1.0904,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_072,HubbardBearBrook,W6,Summer,Low,1998,7,LT163,Oa/A,30.8,Yes,DegreeC60_48h,Yes,all,,,,,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_073,HubbardBearBrook,W6,Summer,Low,1998,7,LT162,Oa/A,48.5,Yes,DegreeC60_48h,Yes,all,,,,,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_074,HubbardBearBrook,W6,Summer,Low,1998,7,LT172,Oa/A,36.7,Yes,DegreeC60_48h,Yes,all,,,,,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_075,HubbardBearBrook,W6,Summer,Low,1998,7,LT174,Oa/A,33,Yes,DegreeC60_48h,Yes,all,,0.5432,#075,22.24,1.06,1.0405,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,"Not sure if truly ""low"" location"
+HBB_076,HubbardBearBrook,W6,Summer,Low,1998,7,LT168,Mineral_0_10,66.9,Yes,DegreeC60_48h,Yes,<2,53.64,0.5188,#076,2.67,0.14,0.9802,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_077,HubbardBearBrook,W6,Summer,Low,1998,7,LT174,Mineral_0_10,39.4,Yes,DegreeC60_48h,Yes,<2,26.63,0.4995,#077,5.14,0.26,0.9939,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_078,HubbardBearBrook,W6,Summer,Low,1998,7,LT172,Mineral_0_10,97,Yes,DegreeC60_48h,Yes,<2,71.13,0.5105,#078,3.52,0.19,0.9841,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Run duplicates (HBB_078_a & HBB_078_b) grinded with clean sand only; HBB_078 grinded with playground sand only
+HBB_078a,HubbardBearBrook,W6,Summer,Low,1998,7,LT172,Mineral_0_10,97,Yes,DegreeC60_48h,Yes,<2,71.13,0.457,#033,3.72,0.2,0.9784,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Run duplicates (HBB_078_a & HBB_078_b) grinded with clean sand only; HBB_078 grinded with playground sand only
+HBB_078b,HubbardBearBrook,W6,Summer,Low,1998,7,LT172,Mineral_0_10,97,Yes,DegreeC60_48h,Yes,<2,71.13,,,3.69,0.21,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,Run duplicates (HBB_078_a & HBB_078_b) grinded with clean sand only; HBB_078 grinded with playground sand only
+HBB_079,HubbardBearBrook,W6,Summer,Low,1998,7,LT162,Mineral_0_10,61.1,Yes,DegreeC60_48h,Yes,<2,48.05,0.4709,#079,5.68,0.26,0.9447,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_080,HubbardBearBrook,W6,Summer,Low,1998,7,LT163,Mineral_0_10,85.3,Yes,DegreeC60_48h,Yes,<2,70.81,0.4716,#080,2.56,0.11,0.9989,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_081,HubbardBearBrook,W6,Summer,Low,2000,7,LT172,Oi/Oe,15,Yes,DegreeC60_48h,Yes,all,3.94,0.4694,#081,42.63,2.33,1.1769,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_082,HubbardBearBrook,W6,Summer,Low,2000,7,LT172,Oa/A,17,Yes,DegreeC60_48h,Yes,all,,,,,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_083,HubbardBearBrook,W6,Summer,Low,2000,7,LT172,Mineral_0_10,51,Yes,DegreeC60_48h,Yes,<2,31.08,0.4513,#083,1.6,0.08,0.8601,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_084,HubbardBearBrook,W6,Summer,Low,2000,7,LT174,Oi/Oe,9.4,Yes,DegreeC60_48h,Yes,all,0,0.4553,#084,38.8,1.88,1.1834,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,grinded sample before containers were cleaned with count-free and sand
+HBB_085,HubbardBearBrook,W6,Summer,Low,2000,7,LT174,Oa/A,18.5,Yes,DegreeC60_48h,Yes,all,,,,,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_086,HubbardBearBrook,W6,Summer,Low,2000,7,LT174,Mineral_0_10,43.3,Yes,DegreeC60_48h,Yes,<2,26.18,,,5.17,0.28,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_087,HubbardBearBrook,W6,Summer,Low,2000,7,LT162,Oi/Oe,13.6,Yes,DegreeC60_48h,Yes,all,3.02,,,40.77,1.79,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_088,HubbardBearBrook,W6,Summer,Low,2000,7,LT162,Oa/A,26.6,Yes,DegreeC60_48h,Yes,all,,,,8.37,0.48,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_089,HubbardBearBrook,W6,Summer,Low,2000,7,LT162,Mineral_0_10,27.9,Yes,DegreeC60_48h,Yes,<2,10.94,,,5.85,0.29,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_090,HubbardBearBrook,W6,Summer,Low,2000,7,LT163,Oi/Oe,19.4,Yes,DegreeC60_48h,Yes,all,7.58,,,43.02,1.84,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_091,HubbardBearBrook,W6,Summer,Low,2000,7,LT163,Oa/A,21.4,Yes,DegreeC60_48h,Yes,all,,,,,,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_092,HubbardBearBrook,W6,Summer,Low,2000,7,LT163,Mineral_0_10,31.3,Yes,DegreeC60_48h,Yes,<2,15.9,,,6.31,0.29,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_093,HubbardBearBrook,W6,Summer,Low,2000,7,LT168,Oi/Oe,12.2,Yes,DegreeC60_48h,Yes,all,2.7,,,37.62,1.83,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_094,HubbardBearBrook,W6,Summer,Low,2000,7,LT168,Mineral_0_10,44.2,Yes,DegreeC60_48h,Yes,<2,24.67,,,3.31,0.15,,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,,
+HBB_095,HubbardBearBrook,W6,Summer,Low,2002,7,LT168,Oi/Oe,11.1,Yes,DegreeC60_48h,Yes,all,0,,,42.69,1.74,,Oi/Oe,6,Oi/Oe,3.5,Oi/Oe,5,NA,NA,NA,NA,6 / 3.5 / 5,"Grinded sample before containers were cleaned with count-free and sand; container opend during grinding, only transferred material that was inside the grinding container; used 'non-clean room' grinding balls"
+HBB_096,HubbardBearBrook,W6,Summer,Low,2002,7,LT168,Mineral_0_10,54.7,Yes,DegreeC60_48h,Yes,<2,34.39,,,3.64,0.21,,E,5,E,7,B,12,NA,NA,NA,NA,05-07-12,Oa/A: 4 / 2.5 / 1
+HBB_097,HubbardBearBrook,W6,Summer,Low,2002,7,LT172,Oi/Oe,14.7,Yes,DegreeC60_48h,Yes,all,3.84,,,31.87,1.69,,Oi/Oe,6.5,Oi/Oe,4,NA,NA,NA,NA,NA,NA,6.5 / 4,
+HBB_098,HubbardBearBrook,W6,Summer,Low,2002,7,LT172,Oa/A,21.1,Yes,DegreeC60_48h,Yes,all,,,,,,,Oa,6.5,Oa,0.5,NA,NA,NA,NA,NA,NA,6.5 / 0.5,
+HBB_099,HubbardBearBrook,W6,Summer,Low,2002,7,LT172,Mineral_0_10,40.4,Yes,DegreeC60_48h,Yes,<2,23.13,,,4.32,0.23,,B,2,E/B,13.5,NA,NA,NA,NA,NA,NA,2 / 13.5,
+HBB_100,HubbardBearBrook,W6,Summer,Low,2002,7,LT163,Oi/Oe,10.7,Yes,DegreeC60_48h,Yes,all,0,0.477,#074,40.73,1.82,1.1979,Oi/Oe,4.5,Oi/Oe,4.5,NA,NA,NA,NA,NA,NA,4.5 / 4.5,put woody material from HBB_115 in HBB_100 root vial; weight errounous; grinded sample before containers were cleaned with count-free and sand; used 'non-clean room' grinding balls
+HBB_101,HubbardBearBrook,W6,Summer,Low,2002,7,LT163,Oa/A,18.1,Yes,DegreeC60_48h,Yes,all,,,,33.8,1.36,,Oa,6.5,Oa,3.5,NA,NA,NA,NA,NA,NA,6.5 / 3.5,
+HBB_102,HubbardBearBrook,W6,Summer,Low,2002,7,LT163,Mineral_0_10,14.9,Yes,DegreeC60_48h,Yes,<2,2.67,,,4.14,0.16,,E,5,E,2,NA,NA,NA,NA,NA,NA,05-Feb,
+HBB_103,HubbardBearBrook,W6,Summer,Low,2002,7,LT162,Oi/Oe,13.8,Yes,DegreeC60_48h,Yes,all,3.21,0.4725,#036,35.56,1.73,1.1693,Oi/Oe,3,Oi/Oe,3,NA,NA,NA,NA,NA,NA,03-Mar,grinded sample before containers were cleaned with count-free and sand
+HBB_104,HubbardBearBrook,W6,Summer,Low,2002,7,LT162,Oa/A,13.7,Yes,DegreeC60_48h,Yes,all,,,,,,,A,5.5,NA,2,NA,NA,NA,NA,NA,NA,5.5 / 2 ,
+HBB_105,HubbardBearBrook,W6,Summer,Low,2002,7,LT162,Mineral_0_10,61.3,Yes,DegreeC60_48h,Yes,<2,40.22,,,6.42,0.31,,B,10,B,11,NA,NA,NA,NA,NA,NA,10-Nov,
+HBB_106,HubbardBearBrook,W6,Summer,Low,2002,7,LT174,Oi/Oe,10.6,Yes,DegreeC60_48h,Yes,all,0,0.4735,#034,43.02,2.04,1.1615,Oi/Oe,8.5,Oi/Oe,7.5,NA,NA,NA,NA,NA,NA,8.5 / 7.5,grinded sample before containers were cleaned with count-free and sand; used 'non-clean room' grinding balls
+HBB_107,HubbardBearBrook,W6,Summer,Low,2002,7,LT174,Oa/A,13.4,Yes,DegreeC60_48h,Yes,all,,,,37.35,1.49,,Oa,8.5,Oa,2.5,NA,NA,NA,NA,NA,NA,8.5 / 2.5,
+HBB_108,HubbardBearBrook,W6,Summer,Low,2002,7,LT174,Mineral_0_10,75.5,Yes,DegreeC60_48h,Yes,<2,56.89,,,6.27,0.31,,E,1,NA,0,NA,NA,NA,NA,NA,NA,- / -,
+HBB_109,HubbardBearBrook,W6,Summer,Low,2004,7,LT163,Oi/Oe,12.6,Yes,DegreeC60_48h,Yes,all,2.91,0.4515,#025,48.14,1.76,1.1401,,,,,,,,,,,5 / 1 / 1 / 6,grinded sample before containers were cleaned with count-free and sand
+HBB_110,HubbardBearBrook,W6,Summer,Low,2004,7,LT163,Oa/A,13.7,Yes,DegreeC60_48h,Yes,all,,,,23.71,0.88,,,,,,,,,,,,1 / 3 / 4 / 2,
+HBB_111,HubbardBearBrook,W6,Summer,Low,2004,7,LT163,Mineral_0_10,31.7,Yes,DegreeC60_48h,Yes,<2,15.33,,,3.59,0.17,,,,,,,,,,,,- / 5 / 2 / -,
+HBB_112,HubbardBearBrook,W6,Summer,Low,2004,7,LT162,Oi/Oe,17.2,Yes,DegreeC60_48h,Yes,all,7.04,0.4872,#072,41.67,1.75,1.142,,,,,,,,,,,- / 6 / 1 / 1,Duplicate sample found in archive (not included)
+HBB_113,HubbardBearBrook,W6,Summer,Low,2004,7,LT162,Oa/A,27.1,Yes,DegreeC60_48h,Yes,all,,,,13.71,0.72,,,,,,,,,,,,3 / 6 / 8 / 4,Duplicate sample found in archive (not included)
+HBB_114,HubbardBearBrook,W6,Summer,Low,2004,7,LT162,Mineral_0_10,41.9,Yes,DegreeC60_48h,Yes,<2,23.18,,,6.26,0.29,,,,,,,,,,,,4 / - / 4 / 1,
+HBB_115,HubbardBearBrook,W6,Summer,Low,2004,7,LT168,Oi/Oe,12.6,Yes,DegreeC60_48h,Yes,all,2.15,0.5081,#073,40.67,2.14,1.1635,,,,,,,,,,,03-02-03,put woody material from HBB_115 in HBB_100 root vial; weight errounous; grinded sample before containers were cleaned with count-free and sand
+HBB_116,HubbardBearBrook,W6,Summer,Low,2004,7,LT168,Oa/A,18.8,Yes,DegreeC60_48h,Yes,all,,,,12.73,0.6,,,,,,,,,,,,03-03-04,
+HBB_117,HubbardBearBrook,W6,Summer,Low,2004,7,LT168,Mineral_0_10,53.5,Yes,DegreeC60_48h,Yes,<2,32.31,,,4.09,0.21,,,,,,,,,,,,08-08-07,Duplicate sample found in archive (not included)
+HBB_118,HubbardBearBrook,W6,Summer,Low,2004,7,LT172,Oi/Oe,18.2,Yes,DegreeC60_48h,Yes,all,7.61,0.4636,#035,45.57,2.43,1.1784,,,,,,,,,,,5 / 5.5 / 2.5,
+HBB_119,HubbardBearBrook,W6,Summer,Low,2004,7,LT172,Oa/A,26.4,Yes,DegreeC60_48h,Yes,all,,,,25.97,1.46,,,,,,,,,,,,3 / 5.5 / 2.5,
+HBB_120,HubbardBearBrook,W6,Summer,Low,2004,7,LT172,Mineral_0_10,40.7,Yes,DegreeC60_48h,Yes,<2,24.31,,,4.3,0.23,,,,,,,,,,,,1.5 / - / 5,
+HBB_121,HubbardBearBrook,W6,Summer,Low,2004,7,LT174,Oi/Oe,14.4,Yes,DegreeC60_48h,Yes,all,3.64,0.4618,#082,45.26,2.1,1.1601,,,,,,,,,,,4 / 3 / 4 / 4 / 2,
+HBB_122,HubbardBearBrook,W6,Summer,Low,2004,7,LT174,Oa/A,28.3,Yes,DegreeC60_48h,Yes,all,,,,32.9,1.41,,,,,,,,,,,,4 / 6 / 2 / 5 / 4,Duplicate sample found in archive (not included)
+HBB_123,HubbardBearBrook,W6,Summer,Low,2004,7,LT174,Mineral_0_10,28.9,Yes,DegreeC60_48h,Yes,<2,10.92,,,6.12,0.29,,,,,,,,,,,,- / smidge / 1 / - / 4,Did not clean sieving pan before sieving sample
+HBB_124,HubbardBearBrook,W6,Summer,Low,2006,5,LT163,Oi/Oe,7.1,Yes,DegreeC60_48h,Yes,all,0,0.0025,#011,45.89,1.86,1.1493,,,,,,,,,,,12 / 9 / 9 / 8 / 2,"grinded sample before containers were cleaned with count-free and sand; Remnant  from old batch, not finely ground"
+HBB_125,HubbardBearBrook,W6,Summer,Low,2006,5,LT163,Oa/A,12.6,Yes,DegreeC60_48h,Yes,all,,,,32.03,1.29,,,,,,,,,,,,2 / 4 / 3 / 4 / 2,
+HBB_126,HubbardBearBrook,W6,Summer,Low,2006,5,LT163,Mineral_0_10,50.5,Yes,DegreeC60_48h,Yes,<2,30.15,,,4.96,0.23,,,,,,,,,,,,- / - / - / - / 10,
+HBB_127,HubbardBearBrook,W6,Summer,Low,2006,5,LT162,Oi/Oe,15.9,Yes,DegreeC60_48h,Yes,all,5.34,0.5017,#085,41.19,1.24,1.0517,Oi/Oe,4,Oi/Oe,12,Oi/Oe,6,Oi/Oe,2,Oi/Oe,3,4 / 12 / 6 / 2 / 3,
+HBB_128,HubbardBearBrook,W6,Summer,Low,2006,5,LT162,Oa/A,18.9,Yes,DegreeC60_48h,Yes,all,,0.4611,#055,38.23,1.62,1.0756,Oa/A,7,Oa/A,5,Oa,4,Oa/A,9,Oa/A,5,7 / 5 / 4 / 9 / 5,
+HBB_129,HubbardBearBrook,W6,Summer,Low,2006,5,LT168,Oi/Oe,8.6,Yes,DegreeC60_48h,Yes,all,0,0.4191,#015,36.42,1.76,1.1279,Oi/Oe,1,Oi/Oe,3,Oi/Oe,2,Oi/Oe,4,Oi/Oe,4,1 / 3 / 2 / 4 / 4,grinded sample before containers were cleaned with count-free and sand
+HBB_130,HubbardBearBrook,W6,Summer,Low,2006,5,LT168,Mineral_0_10,42,Yes,DegreeC60_48h,Yes,<2,26.65,0.4732,#045,6.58,0.32,0.9593,B,10,B,10,B,10,NA,0,NA,0,10 / 10 / 10 / - / -,Oa/A: 4 / 3 / trace / 3 / trace
+HBB_131,HubbardBearBrook,W6,Summer,Low,2006,5,LT172,Oa/A,17.5,Yes,DegreeC60_48h,Yes,all,,0.4885,#037,11.06,0.63,1.1064,Oa,7,Oa,11,Oa,9,Oa,2,Oa,2,7 / 11 / 9 / 2 / 2,Oi/Oe: 7 / 5 / 4 / 3 / 3
+HBB_132,HubbardBearBrook,W6,Summer,Low,2006,5,LT172,Mineral_0_10,40.6,Yes,DegreeC60_48h,Yes,<2,22.56,0.4953,#038,3.6,0.22,1.0188,NA,NA,NA,NA,E,1,B,4,B,8,- / - / 1 / 4 / 8,
+HBB_133,HubbardBearBrook,W6,Summer,Low,2006,5,LT174,Oi/Oe,8.4,Yes,DegreeC60_48h,Yes,all,0,0.3583,#054,29.05,1.59,1.1217,Oi/Oe,4,Oi/Oe,2,Oi/Oe,6,NA,NA,NA,NA,04-02-06,grinded sample before containers were cleaned with count-free and sand
+HBB_134,HubbardBearBrook,W6,Summer,Low,2006,5,LT174,Oa/A,36.2,Yes,DegreeC60_48h,Yes,all,,,,,,,Oa,4,A,2,Oa,5,NA,NA,NA,NA,04-02-05,
+HBB_135,HubbardBearBrook,W6,Summer,Low,2006,5,LT174,Mineral_0_10,21.6,Yes,DegreeC60_48h,Yes,<2,7.61,0.5282,#039,9.76,0.47,0.9651,NA,NA,B,7,E,2,NA,NA,NA,NA,- / 7 / 2,That was the sample that was sieved before HBB_123 was sieved without cleaning the sieving pan
+HBB_136,HubbardBearBrook,W6,Summer,Low,2006,5,LT162,Mineral_0_10,59.82,Yes,DegreeC60_48h,Yes,<2,39.09,0.5327,#042,4,0.15,0.9494,,,,,,,,,,,3 / - / - / - / 6,
+HBB_137,HubbardBearBrook,W6,Summer,Low,1998,,all fine roots,Oi/Oe,,Yes,DegreeC60_48h,Yes,,,,,,,,,,,,,,,,,,,
+HBB_138,HubbardBearBrook,W6,Summer,Low,1998,,all fine roots,Oa/A,,Yes,DegreeC60_48h,Yes,,,,,,,,,,,,,,,,,,,
+HBB_139,HubbardBearBrook,W6,Summer,Low,1998,,all fine roots,Mineral_0_10,,Yes,DegreeC60_48h,Yes,,,,,,,,,,,,,,,,,,,
+HBB_140,HubbardBearBrook,W6,Summer,Low,2000,,all fine roots,Oi/Oe,,Yes,DegreeC60_48h,Yes,,,,,,,,,,,,,,,,,,,
+HBB_141,HubbardBearBrook,W6,Summer,Low,2000,,all fine roots,Oa/A,,Yes,DegreeC60_48h,Yes,,,,,,,,,,,,,,,,,,,
+HBB_142,HubbardBearBrook,W6,Summer,Low,2000,,all fine roots,Mineral_0_10,,Yes,DegreeC60_48h,Yes,,,,,,,,,,,,,,,,,,,
+HBB_143,HubbardBearBrook,W6,Summer,Low,2002,,all fine roots,Oi/Oe,,Yes,DegreeC60_48h,Yes,,,,,,,,,,,,,,,,,,,
+HBB_144,HubbardBearBrook,W6,Summer,Low,2002,,all fine roots,Oa/A,,Yes,DegreeC60_48h,Yes,,,,,,,,,,,,,,,,,,,
+HBB_145,HubbardBearBrook,W6,Summer,Low,2002,,all fine roots,Mineral_0_10,,Yes,DegreeC60_48h,Yes,,,,,,,,,,,,,,,,,,,
+HBB_146,HubbardBearBrook,W6,Summer,Low,2004,,all fine roots,Oi/Oe,,Yes,DegreeC60_48h,Yes,,,,,,,,,,,,,,,,,,,
+HBB_147,HubbardBearBrook,W6,Summer,Low,2004,,all fine roots,Oa/A,,Yes,DegreeC60_48h,Yes,,,,,,,,,,,,,,,,,,,
+HBB_148,HubbardBearBrook,W6,Summer,Low,2004,,all fine roots,Mineral_0_10,,Yes,DegreeC60_48h,Yes,,,,,,,,,,,,,,,,,,,
+HBB_149,HubbardBearBrook,W6,Summer,Low,2006,,all fine roots,Oi/Oe,,Yes,DegreeC60_48h,Yes,,,,,,,,,,,,,,,,,,,
+HBB_150,HubbardBearBrook,W6,Summer,Low,2006,,all fine roots,Oa/A,,Yes,DegreeC60_48h,Yes,,,,,,,,,,,,,,,,,,,
+HBB_151,HubbardBearBrook,W6,Summer,Low,2006,,all fine roots,Mineral_0_10,,Yes,DegreeC60_48h,Yes,,,,,,,,,,,,,,,,,,,
+HBB_152,HubbardBearBrook,W6,Summer,Low,2010,,all fine roots,Oi/Oe,,Yes,DegreeC60_48h,Yes,,,,,,,,,,,,,,,,,,,
+HBB_153,HubbardBearBrook,W6,Summer,Low,2010,,all fine roots,Oa/A,,Yes,DegreeC60_48h,Yes,,,,,,,,,,,,,,,,,,,
+HBB_154,HubbardBearBrook,W6,Summer,Low,2010,,all fine roots,Mineral_0_10,,Yes,DegreeC60_48h,Yes,,,,,,,,,,,,,,,,,,,
+HBB_155,HubbardBearBrook,W6,Summer,Low,2018,,all fine roots,Oi/Oe,,Yes,DegreeC60_48h,Yes,,,,,,,,,,,,,,,,,,,
+HBB_156,HubbardBearBrook,W6,Summer,Low,2018,,all fine roots,Oa/A,,Yes,DegreeC60_48h,Yes,,,,,,,,,,,,,,,,,,,
+HBB_157,HubbardBearBrook,W6,Summer,Low,2018,,all fine roots,Mineral_0_10,,Yes,DegreeC60_48h,Yes,,,,,,,,,,,,,,,,,,,
+HBB_158,HubbardBearBrook,W6,Summer,Low,2021,,all fine roots,Oi/Oe,,Yes,DegreeC60_48h,Yes,,,,,,,,,,,,,,,,,,,
+HBB_159,HubbardBearBrook,W6,Summer,Low,2021,,all fine roots,Oa/A,,Yes,DegreeC60_48h,Yes,,,,,,,,,,,,,,,,,,,
+HBB_160,HubbardBearBrook,W6,Summer,Low,2021,,all fine roots,Mineral_0_10,,Yes,DegreeC60_48h,Yes,,,,,,,,,,,,,,,,,,,
+HBB_161,HubbardBearBrook,W6,Summer,Low,2023,,all fine roots,Oi/Oe,,Yes,DegreeC60_48h,Yes,,,,,,,,,,,,,,,,,,,
+HBB_162,HubbardBearBrook,W6,Summer,Low,2023,,all fine roots,Oa/A,,Yes,DegreeC60_48h,Yes,,,,,,,,,,,,,,,,,,,
+HBB_163,HubbardBearBrook,W6,Summer,Low,2023,,all fine roots,Mineral_0_10,,Yes,DegreeC60_48h,Yes,,,,,,,,,,,,,,,,,,,
