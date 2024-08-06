@@ -6,6 +6,7 @@
 library(tidyverse)
 library(SoilR)
 library(forecast)
+library(FME)
 
 # Load HBEF data
 HBEF_data <- read_csv("./Data/HBEF_data_all_2024-08-01.csv") %>% 
@@ -21,6 +22,15 @@ HBEF_data$Horizon <- factor(HBEF_data$Horizon,
 HBEF_data %>% 
   group_by(Horizon) %>% 
   reframe(mean_14C = mean(Delta14C, na.rm = TRUE))
+
+HBEF_data %>% 
+  drop_na(Delta14C) %>% 
+  filter(Horizon == "Oa/A") %>% 
+  ggplot(aes(x = `Measured_%_C`, y = Delta14C)) +
+  geom_point(aes(color = Plot)) +
+  facet_wrap(vars(Horizon, Year)) +
+  # geom_smooth(method = "lm") +
+  theme_bw()
 
 ## Set-up model at steady state
 ## set-up model
@@ -61,7 +71,8 @@ NHZone2_2023 %>%
   geom_line() 
 
 # time interval for model
-Year <- seq(-53050, 2025, by = 1)
+# years <- seq(-53042, 2025, by = 0.5)
+years <- seq(-10000, 2025, by = 0.5)
 
 # initial C stocks in each pool
 C0 <- c(1394, 1484, 3170)
@@ -69,57 +80,338 @@ C0 <- c(1394, 1484, 3170)
 # initial Delta14C in each pool: 0 for all fast cycling pools; -26 for mineral (= average value over all years)
 init14C <- c(0, 0, -25)
 
-# lag-time before C enters soils: ask Josh again
+# lag-time before C enters soils: based on communication with Josh
 lag_time <- 8
 
 # Number of model iterations: set to 15000 later
-itr <- 500
+itr <- 15000
 
 # C inputs
 In <- 210
 
-###NOT DONE YET####
-
 ## Set-up 14C pool (three pools in series)
-ThreePSeriesModel <- function(pars){
-  mod=ThreepSeriesModel14(
+# initial values are based on current C budget, assuming three pools (no roots)
+ThreePSeriesModel_fun <- function(pars){
+  mod = ThreepSeriesModel14(
     t = years,
     ks = pars[1:3],
     C0 = as.numeric(C0), 
-    F0_Delta14C = iniD14C,
+    F0_Delta14C = init14C,
     In = In,
-    a21= pars[4]*pars[1], #0.5*pars[1], #change if do not want to estimate alpha
-    a32= pars[5]*pars[2], #0.1*pars[2], #change if do not want to estimate alpha
+    a21 = pars[4]*pars[1], #change if do not want to estimate alpha
+    a32 = pars[5]*pars[2], #change if do not want to estimate alpha
     inputFc = NHZone2_2023,
     lag = lag_time
   )
   model_result = getF14(mod)
-  return(data.frame(time = years, Oie = model_result[,1],
-                    Oa = model_result[,2], min = model_result[,3]))
+  return(data.frame(time = years, oie = model_result[,1],
+                    oa = model_result[,2], min = model_result[,3]))
 }
+
+# model_df <- ThreePSeriesModel_fun(init_pars)
+# model_df %>% filter(time == 1998)
 
 min_data <- HBEF_data %>% 
   drop_na(Delta14C) %>% 
   filter(Horizon == "Mineral_0_10") %>% 
-  dplyr::select(Year, Delta14C)
+  rename(time = Year) %>% 
+  group_by(time) %>% 
+  summarise(min = mean(Delta14C),
+            sd = sd(Delta14C)) %>%
+  # Remove 2000 for now since we don't have the data for the other horizons yet
+  filter(time != 2000) %>% 
+  data.frame()
 
 oa_data <- HBEF_data %>% 
   drop_na(Delta14C) %>% 
   filter(Horizon == "Oa/A") %>% 
-  dplyr::select(Year, Delta14C)
+  rename(time = Year) %>% 
+  group_by(time) %>% 
+  summarise(oa = mean(Delta14C),
+            sd = sd(Delta14C)) %>% 
+  data.frame()
 
 oie_data <- HBEF_data %>% 
   drop_na(Delta14C) %>% 
   filter(Horizon == "Oi/Oe") %>% 
-  dplyr::select(Year, Delta14C)
+  rename(time = Year) %>% 
+  group_by(time) %>% 
+  summarise(oie = mean(Delta14C),
+            sd = sd(Delta14C)) %>%
+  # Remove 2000, 2004, 2006 for now since we don't have the data for the other horizons yet
+  filter(time != 2000 & time != 2002 & time != 2004) %>% 
+  # Replace NA for 1998 sd with ~26 which is the mean sd for all years in the Oie
+  replace(is.na(.), 26.66504) %>% 
+  data.frame()
 
-costF1 <- function(pars){
-  funccall = ThreePSeriesModel(pars)
-  cost1 = modCost(model = funccall, obs = flf,  err = "sd")
-  cost2 = modCost(model = funccall, obs = oa_data,  err = "sd", cost = cost1)
-  cost3 = modCost(model = funccall, obs = min_data,   err = "sd", cost = cost2)
+tpsCost <- function(pars){
+  funccall = ThreePSeriesModel_fun(pars)
+  cost1 = modCost(model = funccall, obs = oie_data, err = "sd")
+  cost2 = modCost(model = funccall, obs = oa_data, err = "sd", cost = cost1)
+  cost3 = modCost(model = funccall, obs = min_data, err = "sd", cost = cost2)
   return(cost3)
 }
+
+init_pars <- c(k1 = 1/6, k2 = 1/14, k3 = 1/81, 
+               alpha21 = 100/(100 + 110), alpha32 = 39/(39 + 61))
+
+tpsModelFit <- FME::modFit(f = tpsCost, p = init_pars, method = "Marq", 
+                           upper = c(3, rep(1,4)), lower = rep(0,5)) 
+
+tpsVar <- tpsModelFit$var_ms_unweighted
+
+tpsMcmcFits <- FME::modMCMC(f = tpsCost, p = tpsModelFit$par, niter = itr, ntrydr = 5, 
+                            updatecov = 50, var0 = tpsVar, upper = c(3, rep(1,4)), 
+                            lower = rep(0,5)) #Create a new object to record fit stats
+
+tpsModelOutput <- ThreePSeriesModel_fun(pars = as.numeric(summary(tpsMcmcFits)[1,1:6]))
+
+# Save output
+save(tpsMcmcFits, tpsModelOutput, 
+     file = paste0("./Output/ThreePoolSeriesModel_", itr, "_", Sys.Date(), ".Rdata"))
+write_csv(summary(tpsMcmcFits), 
+          file = paste0("./Output/ThreePoolSeriesModel_summary_", itr, "_",
+                        Sys.Date(), ".csv"))
+
+# Create long dataframe
+tpsModelOutput_df <- tpsModelOutput %>% 
+  filter(time > 1945) %>% 
+  pivot_longer(!time, values_to = "Delta14C", names_to = "Horizon") %>% 
+  rename(Year = time)
+
+tpsModelOutput_df$Horizon <- factor(tpsModelOutput_df$Horizon,
+                                    levels = c("oie", "oa", "min"),
+                                    ordered = TRUE)
+
+# Load HBEF data
+HBEF_data <- read_csv("./Data/HBEF_data_all_2024-08-01.csv") %>% 
+  # not needed once field notes are entered
+  dplyr::select(-c(Plot_1_Horizons:Notes))
+
+HBEF_data_14C_sum <- HBEF_data %>% 
+  drop_na(Delta14C) %>% 
+  group_by(Year, Horizon) %>% 
+  summarise(Delta14C_mean = mean(Delta14C),
+            Delta14C_sd = sd(Delta14C)) %>% 
+  mutate(Horizon = case_when(
+    Horizon == "Oi/Oe" ~ "oie",
+    Horizon == "Oa/A" ~ "oa",
+    Horizon == "Mineral_0_10" ~ "min"
+  ))
+
+HBEF_data_14C_sum$Horizon <- factor(HBEF_data_14C_sum$Horizon,
+                                    levels = c("oie", "oa", "min"),
+                                    ordered = TRUE)
+
+tpsMcmcFits$bestpar
+
+summary(tpsMcmcFits)
+
+#Check for convergence: if model is converged, there should be no visible drift
+plot(tpsMcmcFits)
+
+## Plot measured and modeled data together  
+NHZone2_2023 %>%  
+  filter(Year > 1945) %>% 
+  ggplot(aes(x = Year, y = Delta14C)) +
+  geom_line() +
+  geom_line(data = tpsModelOutput_df,
+            aes(color = Horizon), linewidth = 1) +
+  # Add measured data points
+  geom_errorbar(data = HBEF_data_14C_sum,
+                aes(y = Delta14C_mean, ymin = Delta14C_mean - Delta14C_sd,
+                    ymax = Delta14C_mean + Delta14C_sd,
+                    group = Horizon),
+                width = 0.3) +
+  geom_point(data = HBEF_data_14C_sum, aes(y = Delta14C_mean, fill = Horizon),
+             shape = 21, size = 2) +
+  scale_x_continuous("Year", limits = c(1955,2025), expand = c(0,0),
+                     breaks = seq(1955,2025,10)) +
+  scale_y_continuous(expression(paste(Delta^14, "C [‰]")), limits = c(-175,1000),
+                     expand = c(0,0)) +
+  theme_classic(base_size = 16) +
+  theme(axis.text = element_text(color = "black")) +
+  scale_color_manual("Modeled\nhorizon data", label = c("Oie", "Oa", "0-10 cm"),
+                     values = c("#33a02c", "#b2df8a", "#a6cee3")) +
+  scale_fill_manual("Measured\nhorizon data", label = c("Oie", "Oa/A", "0-10 cm"),
+                    values = c("#33a02c", "#b2df8a", "#a6cee3"))
+
+# ggsave(file = paste0("./Output/HBEF_SteadyStateModel_tpsModelFit_14C_", itr, "_",
+#                      Sys.Date(), ".jpeg"), width = 10, height = 6) 
+
+#### Uncertainty analysis
+pars <- tpsMcmcFits$pars
+
+num <- 1000
+
+# sens_all <- summary(FME::sensRange(num = num, func = ThreePSeriesModel_fun, parInput = pars))
+
+sens_oie <- summary(sensRange(num = num, func = ThreePSeriesModel_fun, parInput = pars, 
+                              sensvar = c("oie"))) %>% 
+  mutate(Horizon = "oie")
+sens_oa <- summary(sensRange(num = num, func = ThreePSeriesModel_fun, parInput = pars, 
+                             sensvar = c("oa"))) %>% 
+  mutate(Horizon = "oa")
+sens_min <- summary(sensRange(num = num, func = ThreePSeriesModel_fun, parInput = pars, 
+                              sensvar = c("min"))) %>% 
+  mutate(Horizon = "min")
+
+sens_all <- rbind(sens_oie, sens_oa, sens_min) %>% 
+  tibble() %>% 
+  dplyr::rename(Year = x) %>% 
+  filter(Year > 1945)
+
+write_csv(sens_all , 
+          file = paste0("./Output/ThreePoolSeriesModel_SensitivityAnalysis_", itr, "_",
+                        Sys.Date(), ".csv"))
+
+atm_mod <- data.frame(Year = NHZone2_2023$Year,
+                      Mean = NA,
+                      Sd = NA,
+                      Min = NA,
+                      Max = NA,
+                      q05 = NA,
+                      q25 = NA,
+                      q50 = NHZone2_2023$Delta14C,
+                      q75 = NA,
+                      q95 = NA,
+                      Horizon = "Atmosphere") %>% 
+  dplyr::filter(Year > 1945)
+
+sens_all$Horizon <- factor(sens_all$Horizon,
+                           levels = c("oie", "oa", "min"), ordered = TRUE)
+
+
+sens_all %>% 
+  ggplot(aes(x = Year)) +
+  geom_line(aes(y = Mean, color = Horizon), linewidth = 1) +
+  geom_ribbon(aes(ymin = Mean - Sd, ymax = Mean + Sd, fill = Horizon), alpha = 0.4) +
+  geom_line(data = NHZone2_2023 %>% 
+              filter(Year > 1945), aes(y = Delta14C)) +
+  # Add measured data points
+  geom_errorbar(data = HBEF_data_14C_sum,
+                aes(y = Delta14C_mean, ymin = Delta14C_mean - Delta14C_sd,
+                    ymax = Delta14C_mean + Delta14C_sd,
+                    group = Horizon),
+                width = 0.3) +
+  geom_point(data = HBEF_data_14C_sum, aes(y = Delta14C_mean, fill = Horizon),
+             shape = 21, size = 2) +
+  scale_x_continuous("Year", limits = c(1955,2025), expand = c(0,0),
+                     breaks = seq(1955,2025,10)) +
+  scale_y_continuous(expression(paste(Delta^14, "C [‰]")), limits = c(-175,1000),
+                     expand = c(0,0)) +
+  theme_classic(base_size = 16) +
+  theme(axis.text = element_text(color = "black")) +
+  scale_color_manual("Modeled\nhorizon data", label = c("Oie", "Oa", "0-10 cm"),
+                     values = c("#33a02c", "#b2df8a", "#a6cee3")) +
+  scale_fill_manual("Measured\nhorizon data", label = c("Oie", "Oa/A", "0-10 cm"),
+                    values = c("#33a02c", "#b2df8a", "#a6cee3")) 
+
+ggsave(file = paste0("./Output/HBEF_SteadyStateModel_tpsModelFit_14C_Sensitivity_", itr, "_",
+                     Sys.Date(), ".jpeg"), width = 10, height = 6) 
+
+#### Calculate system C age and turnover time
+propagation_fun <- function(data, num_iter, input_vector){
+  
+  pb <- txtProgressBar(min = 0, max = num_iter, style = 3)
+  
+  n_iter <- num_iter
+  
+  iter <- numeric(n_iter)
+  Iter_number <- numeric(n_iter)
+  System_age <- numeric(n_iter)
+  oie_age <- numeric(n_iter)
+  oa_age <- numeric(n_iter)
+  min_age <- numeric(n_iter)
+  Transit_time <- numeric(n_iter)
+  
+  
+  for (i in 1:n_iter){
+        subset_par <- data.frame(k1 = sample(data$k1, 1),
+                                 k2 = sample(data$k2, 1),
+                                 k3 = sample(data$k3, 1),
+                                 alpha21 = sample(data$alpha21, 1),
+                                 alpha31 = sample(data$alpha32, 1))
+    
+    #-------------- A matrix and inputs
+    ks <- subset_par[1:3]
+    A <- -1 * diag(ks) 
+    
+    ## Add transfer coefficients to A matrix:
+    alpha_2_1 <- subset_par[4]
+    alpha_3_2 <- subset_par[5]
+    
+    A[2,1] <- as.numeric(alpha_2_1*subset_par[1])
+    A[3,2] <- as.numeric(alpha_3_2*subset_par[2])
+    
+    u <- matrix((input_vector), ncol = 1)
+    
+    #---------------- Age and transit time ----------------------
+    
+    Sist_age <- systemAge(A = A, u = u)
+    Trans_time <- transitTime(A = A, u = u)
+    
+    Iter_number[i] <- i
+    System_age[i] <- as.numeric(Sist_age$meanSystemAge)
+    oie_age[i] <- as.numeric(Sist_age$meanPoolAge[1])
+    oa_age[i] <- as.numeric(Sist_age$meanPoolAge[2])
+    min_age[i] <- as.numeric(Sist_age$meanPoolAge[3])
+    Transit_time[i] <- as.numeric(Trans_time$meanTransitTime)
+    
+    
+    age_results <- as.data.frame(cbind(
+      Iter_number, System_age, oie_age, oa_age, min_age, Transit_time
+    ))
+    
+    setTxtProgressBar(pb, i)
+    
+  }
+  
+  return(age_results)
+}
+
+# tpsMcmcFits$pars <- tpsMcmcFits$pars[-(1:1000), ]
+
+pars_df <- as.data.frame(tpsMcmcFits$pars)
+
+age_transit_dist <- propagation_fun(pars_df, 10000, C0)
+
+write_csv(age_transit_dist, 
+          file = paste0("./Output/ThreePoolSeriesModel_Age_Transit_Distribution_", itr, "_",
+                        Sys.Date(), ".csv"))
+
+age_transit_dist_sum <- age_transit_dist %>% 
+  pivot_longer(!Iter_number, values_to = "age_yr", names_to = "Pools") %>% 
+  group_by(Pools) %>% 
+  summarise(mean_age = mean(age_yr),
+            sd_age = sd(age_yr),
+            median_age = median(age_yr),
+            mad_age = mad(age_yr))
+  
+age_transit_dist %>% 
+  pivot_longer(!Iter_number, values_to = "age_yr", names_to = "Pools") %>% 
+  filter(Pools != "System_age", Pools != "Transit_time") %>%
+  mutate(Pools = factor(Pools, levels = c("oie_age", "oa_age", "min_age"),
+                        ordered = TRUE)) %>% 
+  ggplot(aes(x = age_yr, color = Pools)) +
+  geom_density(linewidth = 1) +
+  facet_wrap(~Pools, scales = "free_y") +
+  geom_vline(aes(xintercept = mean_age), 
+             data = age_transit_dist_sum %>% 
+               filter(Pools != "System_age",
+                      Pools != "Transit_time"),
+             linetype = "dashed") +
+  theme_bw() +
+  theme_classic(base_size = 16) +
+  theme(axis.text = element_text(color = "black"),
+        legend.position = "none") +
+  scale_color_manual(values = c("#33a02c", "#b2df8a", "#a6cee3")) +
+  scale_x_continuous("Age [yr]", limits = c(0,650), expand = c(0,0))
+ggsave(file = paste0("./Output/HBEF_SteadyStateModel_tpsModelFit_14C_Age_Distribution_", 
+                     itr, "_", Sys.Date(), ".jpeg"), width = 10, height = 6) 
+  
+
+
 
 
 

@@ -30,7 +30,7 @@ HBEF_dup_avg <- HBEF_dup %>%
     grepl("HBB_078", ID) ~ "HBB_078"
   )) %>% 
   group_by(ID_group) %>% 
-  mutate(across(c(where(is.numeric)), mean, na.rm = TRUE)) %>% 
+  mutate(across(c(where(is.numeric)), \(x) mean(x, na.rm = TRUE))) %>% 
   filter(row_number() == 1) %>% 
   ungroup() %>% 
   dplyr::select(-ID_group)
