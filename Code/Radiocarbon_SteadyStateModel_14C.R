@@ -81,8 +81,10 @@ foryrs <- 10 # Number of years to forecast
 fNZ2 <- forecast(mNZ2, h = foryrs*q, level = c(69,90)) #Uses the fitted model to forecast 10 years into the future
 
 NHZone2_2023 <- data.frame(Year = c(NHZone2[-dim(NHZone2)[1],1],
-                                    seq(tsp(fNZ2$mean)[1], tsp(fNZ2$mean)[2], by = 1/tsp(fNZ2$mean)[3])),
-                           Delta14C = c(NHZone2[-dim(NHZone2)[1],2], as.numeric((fNZ2$mean)-1)*1000))
+                                    seq(tsp(fNZ2$mean)[1], tsp(fNZ2$mean)[2], 
+                                        by = 1/tsp(fNZ2$mean)[3])),
+                           Delta14C = c(NHZone2[-dim(NHZone2)[1],2], 
+                                        as.numeric((fNZ2$mean)-1)*1000))
 
 NHZone2_2023 %>% 
   filter(Year >= 1949) %>% 
@@ -100,7 +102,7 @@ C0 <- c(1394, 1484, 3170)
 init14C <- c(0, 0, -25)
 
 # lag-time before C enters soils: based on communication with Josh
-lag_time <- 8
+lag_time <- 3
 
 # Number of model iterations
 itr <- 15000
@@ -143,8 +145,8 @@ min_data <- HBEF_all %>%
   group_by(time) %>% 
   summarise(min = mean(Delta14C),
             sd = sd(Delta14C)) %>%
-  # Replace NA for 2000 sd with ~21 which is the mean sd for all years in the Oie
-  replace(is.na(.), 26.66504) %>%  
+  # Replace NA for 2000 sd with ~21 which is the mean sd for all years in the min
+  replace(is.na(.), 21.1) %>%  
   data.frame()
 
 oa_data <- HBEF_all %>% 
@@ -197,9 +199,9 @@ tpsModelOutput <- ThreePSeriesModel_fun(pars = as.numeric(summary(tpsMcmcFits)[1
 
 # Save output
 save(tpsMcmcFits, tpsModelOutput, 
-     file = paste0("./Output/ThreePoolSeriesModel_", itr, "_", Sys.Date(), ".Rdata"))
+     file = paste0("./Output/ThreePoolSeriesModel_", lag_time, "_", Sys.Date(), ".Rdata"))
 write_csv(summary(tpsMcmcFits), 
-          file = paste0("./Output/ThreePoolSeriesModel_summary_", itr, "_",
+          file = paste0("./Output/ThreePoolSeriesModel_summary_", lag_time, "_",
                         Sys.Date(), ".csv"))
 
 # Create long dataframe
@@ -233,12 +235,12 @@ tpsMcmcFits$bestpar
 summary(tpsMcmcFits)
 
 #Check for convergence: if model is converged, there should be no visible drift
-jpeg(paste0("./Output/HBEFall_SteadyStateModel_tpsModelFit_14C_converg_", itr, "_",
+jpeg(paste0("./Output/HBEFall_SteadyStateModel_tpsModelFit_14C_converg_", lag_time, "_",
             Sys.Date(), ".jpeg"), width = 1550, height = 1000)
 plot(tpsMcmcFits)
 dev.off()
 
-jpeg(paste0("./Output/HBEFall_SteadyStateModel_tpsModelFit_14C_pairs_", itr, "_",
+jpeg(paste0("./Output/HBEFall_SteadyStateModel_tpsModelFit_14C_pairs_", lag_time, "_",
             Sys.Date(), ".jpeg"), width = 1550, height = 1000)
 pairs(tpsMcmcFits)
 dev.off()
@@ -269,7 +271,7 @@ NHZone2_2023 %>%
   scale_fill_manual("Measured\nhorizon data", label = c("Oie", "Oa/A", "0-10 cm"),
                     values = c("#33a02c", "#b2df8a", "#a6cee3"))
 
-ggsave(file = paste0("./Output/HBEFall_SteadyStateModel_tpsModelFit_14C_", itr, "_",
+ggsave(file = paste0("./Output/HBEFall_SteadyStateModel_tpsModelFit_14C_", lag_time, "_",
                      Sys.Date(), ".jpeg"), width = 10, height = 6)
 
 #### Uncertainty analysis
@@ -297,7 +299,7 @@ sens_all <- rbind(sens_oie, sens_oa, sens_min) %>%
   filter(Year > 1945)
 
 write_csv(sens_all , 
-          file = paste0("./Output/ThreePoolSeriesModel_SensitivityAnalysis_", itr, "_",
+          file = paste0("./Output/ThreePoolSeriesModel_SensitivityAnalysis_", lag_time, "_",
                         Sys.Date(), ".csv"))
 
 atm_mod <- data.frame(Year = NHZone2_2023$Year,
@@ -342,7 +344,7 @@ sens_all %>%
   scale_fill_manual("Measured\nhorizon data", label = c("Oie", "Oa/A", "0-10 cm"),
                     values = c("#33a02c", "#b2df8a", "#a6cee3")) 
 
-ggsave(file = paste0("./Output/HBEFall_SteadyStateModel_tpsModelFit_14C_Sensitivity_", itr, "_",
+ggsave(file = paste0("./Output/HBEFall_SteadyStateModel_tpsModelFit_14C_Sensitivity_", lag_time, "_",
                      Sys.Date(), ".jpeg"), width = 10, height = 6) 
 
 #### Calculate system C age and turnover time
@@ -413,7 +415,7 @@ pars_df <- as.data.frame(tpsMcmcFits$pars[-(1:1000), ])
 age_transit_dist <- propagation_fun(pars_df, 10000, C0)
 
 write_csv(age_transit_dist, 
-          file = paste0("./Output/ThreePoolSeriesModel_Age_Transit_Distribution_", itr, "_",
+          file = paste0("./Output/ThreePoolSeriesModel_Age_Transit_Distribution_", lag_time, "_",
                         Sys.Date(), ".csv"))
 
 age_transit_dist_sum <- age_transit_dist %>% 
@@ -444,10 +446,10 @@ age_transit_dist %>%
   scale_color_manual(values = c("#33a02c", "#b2df8a", "#a6cee3")) +
   scale_x_continuous("Age [yr]", limits = c(0,650), expand = c(0,0))
 ggsave(file = paste0("./Output/HBEF_SteadyStateModel_tpsModelFit_14C_Age_Distribution_", 
-                     itr, "_", Sys.Date(), ".jpeg"), width = 10, height = 6) 
+                     lag_time, "_", Sys.Date(), ".jpeg"), width = 10, height = 6) 
   
 
-
+ 
 
 
 
