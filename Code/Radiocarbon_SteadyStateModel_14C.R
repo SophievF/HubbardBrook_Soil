@@ -102,7 +102,7 @@ C0 <- c(1394, 1484, 3170)
 init14C <- c(0, 0, -25)
 
 # lag-time before C enters soils: based on communication with Josh
-lag_time <- 3
+lag_time <- 5
 
 # Number of model iterations
 itr <- 15000
