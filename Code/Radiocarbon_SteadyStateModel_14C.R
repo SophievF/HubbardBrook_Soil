@@ -1,5 +1,5 @@
 ## Hubbard Brook archived soil samples project ##
-## Radiocarbon analysis - contraint model with 14C ##
+## Radiocarbon analysis - constraint model with 14C ##
 ## Sophie von Fromm ##
 ## 2024-08-01 ##
 
@@ -9,7 +9,7 @@ library(forecast)
 library(FME)
 
 # Load HBEF data
-HBEF_data <- read_csv("./Data/HBEF_data_all_2024-08-01.csv") %>% 
+HBEF_data <- read_csv("./Data/HBEF_data_all_2024-09-20.csv") %>% 
   # not needed once field notes are entered
   dplyr::select(-c(Plot_1_Horizons:Notes))
 
@@ -20,6 +20,7 @@ HBEF_data$Horizon <- factor(HBEF_data$Horizon,
                             ordered = TRUE)
 
 HBEF_data %>% 
+  filter(Plot != "all fine roots") %>% 
   group_by(Horizon) %>% 
   reframe(mean_14C = mean(Delta14C, na.rm = TRUE))
 
@@ -72,7 +73,7 @@ FpfromF <- function(X){ # X must be a data.frame with first column time and seco
 }
 
 FpNZ2 <- FpfromF(Hua2021$NHZone2[,c(1,4)]) #Absolute fraction modern F'
-qNZ2<- spline(FpNZ2, xout = y) #Spline interpolation of the NH_Zone 2 data set at a quarterly basis
+qNZ2 <- spline(FpNZ2, xout = y) #Spline interpolation of the NH_Zone 2 data set at a quarterly basis
 NZ2 <- ts(qNZ2$y, start = y0, freq = q) #Transformation into a time-series object
 
 mNZ2 <- ets(NZ2) #Fits an exponential smoothing state space model to the time series
@@ -98,11 +99,11 @@ years <- seq(-10000, 2025, by = 0.5)
 # initial C stocks in each pool
 C0 <- c(1394, 1484, 3170)
 
-# initial Delta14C in each pool: 0 for all fast cycling pools; -26 for mineral (= average value over all years)
-init14C <- c(0, 0, -25)
+# initial Delta14C in each pool: 0 for all fast cycling pools; -23 for mineral (= average value over all years)
+init14C <- c(0, 0, -23)
 
 # lag-time before C enters soils: based on communication with Josh
-lag_time <- 5
+lag_time <- 3
 
 # Number of model iterations
 itr <- 15000
@@ -132,9 +133,10 @@ ThreePSeriesModel_fun <- function(pars){
 # model_df <- ThreePSeriesModel_fun(init_pars)
 # model_df %>% filter(time == 1998)
 
-# Summarize and merge data by horizon
+# Summarize and merge data by horizon; remove roots for now
 HBEF_all <- HBEF_data %>% 
-  dplyr::select(Year, Horizon, Delta14C) %>% 
+  filter(Plot != "all fine roots") %>% 
+  dplyr::select(Year, Horizon, Delta14C)
   rbind(litter_data %>% 
           dplyr::select(Year, Horizon, Delta14C))
 
@@ -145,8 +147,6 @@ min_data <- HBEF_all %>%
   group_by(time) %>% 
   summarise(min = mean(Delta14C),
             sd = sd(Delta14C)) %>%
-  # Replace NA for 2000 sd with ~21 which is the mean sd for all years in the min
-  replace(is.na(.), 21.1) %>%  
   data.frame()
 
 oa_data <- HBEF_all %>% 
@@ -165,8 +165,6 @@ oie_data <- HBEF_all %>%
   group_by(time) %>% 
   summarise(oie = mean(Delta14C),
             sd = sd(Delta14C)) %>%
-  # Remove 2000, 2004, 2006 for now since we don't have the data for the other horizons yet
-  # filter(time != 2000 & time != 2002 & time != 2004) %>% 
   # Replace NA for 1998 sd with ~26 which is the mean sd for all years in the Oie
   replace(is.na(.), 26.66504) %>% 
   data.frame()

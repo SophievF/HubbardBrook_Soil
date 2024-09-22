@@ -8,7 +8,7 @@ library(SoilR)
 library(forecast)
 
 # Load HBEF data
-HBEF_data <- read_csv("./Data/HBEF_data_all_2024-08-01.csv") %>% 
+HBEF_data <- read_csv("./Data/HBEF_data_all_2024-09-20.csv") %>% 
   # not needed once field notes are entered
   dplyr::select(-c(Plot_1_Horizons:Notes))
 
@@ -21,8 +21,8 @@ HBEF_data$Horizon <- factor(HBEF_data$Horizon,
 # Quick look at the radiocarbon data
 HBEF_data %>% 
   drop_na(Delta14C) %>% 
-  ggplot(aes(x = Year, y = Delta14C)) +
-  geom_point(aes(color = Plot)) +
+  ggplot(aes(x = Year, y = Delta14C, color = Plot)) +
+  geom_point() +
   geom_smooth(method = "lm") +
   theme_bw(base_size = 14) +
   facet_wrap(~Horizon)

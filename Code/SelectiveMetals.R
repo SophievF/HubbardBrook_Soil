@@ -6,7 +6,7 @@
 library(tidyverse)
 
 # Load HBEF data
-HBEF_data <- read_csv("./Data/HBEF_data_all_2024-08-15.csv") %>% 
+HBEF_data <- read_csv("./Data/HBEF_data_all_2024-09-.csv") %>% 
   # not needed once field notes are entered
   dplyr::select(-c(Plot_1_Horizons:Notes))
 
