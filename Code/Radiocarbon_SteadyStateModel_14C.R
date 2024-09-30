@@ -136,7 +136,7 @@ ThreePSeriesModel_fun <- function(pars){
 # Summarize and merge data by horizon; remove roots for now
 HBEF_all <- HBEF_data %>% 
   filter(Plot != "all fine roots") %>% 
-  dplyr::select(Year, Horizon, Delta14C)
+  dplyr::select(Year, Horizon, Delta14C) %>% 
   rbind(litter_data %>% 
           dplyr::select(Year, Horizon, Delta14C))
 
