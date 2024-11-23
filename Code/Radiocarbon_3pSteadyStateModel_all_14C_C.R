@@ -7,6 +7,8 @@ library(tidyverse)
 library(SoilR)
 library(forecast)
 library(FME)
+library(doParallel)
+library(foreach)
 
 # Load HBEF data
 HBEF_data <- read_csv("./Data/HBEF_data_all_2024-11-07.csv") %>% 
@@ -48,7 +50,7 @@ HBEF_data %>%
 LitterData <- read_csv("./Data/LitterData_Driscoll.csv")
 
 #fm * exp(lambda * (-obs_date_y + 1950)) - 1) * 1000
-lambda <- -0.0001209681
+lambda <- 0.0001209681
 
 litter_data <- LitterData %>% 
   filter(Watershed == 6) %>% 
@@ -220,9 +222,9 @@ NHZone2_2023 %>%
   geom_line() 
 
 # time interval for model
-# years <- seq(-53042, 2025, by = 0.5)
-# years <- seq(-10000, 2025, by = 0.5)
-years <- seq(0, 2023, by = 1)
+# years <- seq(-53042, 2023, by = 0.5)
+years <- seq(-10000, 2023, by = 0.5)
+# years <- seq(0, 2023, by = 0.5)
 
 # initial C stocks in each pool (based on existing C budget)
 C0 <- c(1394, 1484, 3170)
@@ -237,12 +239,13 @@ lag_time <- 3
 itr <- 15000
 
 # C inputs
-In <- data.frame(year = years, Inputs = rep(210, length(years)))
+# In <- data.frame(year = years, Inputs = rep(210, length(years)))
+In <- 210
 
 ## Set-up 14C pool (three pools in series)
 # initial values are based on current C budget, assuming three pools (no roots)
 ThreePSeriesModel_fun <- function(pars){
-  mod = ThreepSeriesModel14(
+  mod = SoilR::ThreepSeriesModel14(
     t = years,
     ks = pars[1:3],
     C0 = as.numeric(C0),
@@ -253,8 +256,8 @@ ThreePSeriesModel_fun <- function(pars){
     inputFc = NHZone2_2023,
     lag = lag_time
   )
-  res_14C = getF14(mod)
-  res_C = getC(mod)
+  res_14C = SoilR::getF14(mod)
+  res_C = SoilR::getC(mod)
   return(data.frame(time = years,
                     oie_14C = res_14C[,1],
                     oie_C = res_C[,1],
@@ -266,12 +269,12 @@ ThreePSeriesModel_fun <- function(pars){
 
 tpsCost <- function(pars){
   funccall = ThreePSeriesModel_fun(pars)
-  cost1 = modCost(model = funccall, obs = oie_data_14C, err = "sd")
-  cost2 = modCost(model = funccall, obs = oa_data_14C, err = "sd", cost = cost1)
-  cost3 = modCost(model = funccall, obs = min_data_14C, err = "sd", cost = cost2)
-  cost4 = modCost(model = funccall, obs = oie_data_C, err = "sd", cost = cost3)
-  cost5 = modCost(model = funccall, obs = oa_data_C, err = "sd", cost = cost4)
-  cost6 = modCost(model = funccall, obs = min_data_C, err = "sd", cost = cost5)
+  cost1 = FME::modCost(model = funccall, obs = oie_data_14C, err = "sd")
+  cost2 = FME::modCost(model = funccall, obs = oa_data_14C, err = "sd", cost = cost1)
+  cost3 = FME::modCost(model = funccall, obs = min_data_14C, err = "sd", cost = cost2)
+  cost4 = FME::modCost(model = funccall, obs = oie_data_C, err = "sd", cost = cost3)
+  cost5 = FME::modCost(model = funccall, obs = oa_data_C, err = "sd", cost = cost4)
+  cost6 = FME::modCost(model = funccall, obs = min_data_C, err = "sd", cost = cost5)
   return(cost6)
 }
 
@@ -280,7 +283,7 @@ init_pars <- c(k1 = 1/6, k2 = 1/14, k3 = 1/81,
 
 #double-check lower/upper again
 tpsModelFit <- FME::modFit(f = tpsCost, p = init_pars, method = "Marq", 
-                           upper = c(3, rep(1,4)), lower = rep(0,5)) 
+               upper = c(3, rep(1,4)), lower = rep(0,5))
 
 #sum squared residuals
 tpsModelFit$ssr
