@@ -317,61 +317,61 @@ pairs(fpsMcmcFits)
 dev.off()
 
 ## Plot measured and modeled data together  
-NHZone2_2023 %>%  
-  filter(Year > 1945) %>% 
-  ggplot(aes(x = Year, y = Delta14C)) +
-  geom_line() +
-  geom_line(data = fpsModelOutput_df,
-            aes(color = Horizon, linetype = Horizon), linewidth = 1) +
-  # Add measured data points
-  geom_errorbar(data = HBEF_data_14C_C_sum,
-                aes(y = Delta14C_mean, ymin = Delta14C_mean - Delta14C_sd,
-                    ymax = Delta14C_mean + Delta14C_sd,
-                    group = Horizon),
-                width = 0.3) +
-  geom_point(data = HBEF_data_14C_C_sum, aes(y = Delta14C_mean, fill = Horizon),
-             shape = 21, size = 2) +
-  scale_x_continuous("Year", limits = c(1968,2024), expand = c(0,0),
-                     breaks = seq(1969,2023,10)) +
-  scale_y_continuous(expression(paste(Delta^14, "C [‰]")), limits = c(-175,1000),
-                     expand = c(0,0)) +
-  theme_classic(base_size = 16) +
-  theme(axis.text = element_text(color = "black")) +
-  scale_linetype_manual("Modeled", label = c("Oi", "Oe", "Oie", "Oa", "0-10 cm"),
-                        values = c(2, 3, 1, 1, 1)) +
-  scale_color_manual("Modeled", label = c("Oi", "Oe", "Oie", "Oa", "0-10 cm"),
-                     values = c("#33a02c", "#33a02c", "#33a02c", "#b2df8a", "#a6cee3")) +
-  scale_fill_manual("Measured", label = c("Oie", "Oa/A", "0-10 cm"),
-                    values = c("#33a02c", "#b2df8a", "#a6cee3"))
+# NHZone2_2023 %>%  
+#   filter(Year > 1945) %>% 
+#   ggplot(aes(x = Year, y = Delta14C)) +
+#   geom_line() +
+#   geom_line(data = fpsModelOutput_df,
+#             aes(color = Horizon, linetype = Horizon), linewidth = 1) +
+#   # Add measured data points
+#   geom_errorbar(data = HBEF_data_14C_C_sum,
+#                 aes(y = Delta14C_mean, ymin = Delta14C_mean - Delta14C_sd,
+#                     ymax = Delta14C_mean + Delta14C_sd,
+#                     group = Horizon),
+#                 width = 0.3) +
+#   geom_point(data = HBEF_data_14C_C_sum, aes(y = Delta14C_mean, fill = Horizon),
+#              shape = 21, size = 2) +
+#   scale_x_continuous("Year", limits = c(1968,2024), expand = c(0,0),
+#                      breaks = seq(1969,2023,10)) +
+#   scale_y_continuous(expression(paste(Delta^14, "C [‰]")), limits = c(-175,1000),
+#                      expand = c(0,0)) +
+#   theme_classic(base_size = 16) +
+#   theme(axis.text = element_text(color = "black")) +
+#   scale_linetype_manual("Modeled", label = c("Oi", "Oe", "Oie", "Oa", "0-10 cm"),
+#                         values = c(2, 3, 1, 1, 1)) +
+#   scale_color_manual("Modeled", label = c("Oi", "Oe", "Oie", "Oa", "0-10 cm"),
+#                      values = c("#33a02c", "#33a02c", "#33a02c", "#b2df8a", "#a6cee3")) +
+#   scale_fill_manual("Measured", label = c("Oie", "Oa/A", "0-10 cm"),
+#                     values = c("#33a02c", "#b2df8a", "#a6cee3"))
+# 
+# ggsave(file = paste0("./Output/HBEF_4ps_short_14C_",
+#                      Sys.Date(), ".jpeg"), width = 10, height = 6)
 
-ggsave(file = paste0("./Output/HBEF_4ps_short_14C_",
-                     Sys.Date(), ".jpeg"), width = 10, height = 6)
-
-fpsModelOutput_df %>%  
-  ggplot(aes(x = Year, y = SOC_Stock)) +
-  geom_line(aes(color = Horizon, linetype = Horizon), linewidth = 1) +
-  # Add measured data points
-  geom_errorbar(data = HBEF_data_14C_C_sum,
-                aes(y = C_mean, ymin = C_mean - C_sd,
-                    ymax = C_mean + C_sd,
-                    group = Horizon),
-                width = 0.3) +
-  geom_point(data = HBEF_data_14C_C_sum, aes(y = C_mean, fill = Horizon),
-             shape = 21, size = 2) +
-  scale_x_continuous("Year", limits = c(1968,2024), expand = c(0,0),
-                     breaks = seq(1969,2023,10)) +
-  scale_y_continuous("C stocks") +
-  theme_classic(base_size = 16) +
-  theme(axis.text = element_text(color = "black")) +
-  scale_linetype_manual("Modeled", label = c("Oi", "Oe", "Oie", "Oa", "0-10 cm"),
-                        values = c(2, 3, 1, 1, 1)) +
-  scale_color_manual("Modeled", label = c("Oi", "Oe", "Oie", "Oa", "0-10 cm"),
-                     values = c("#33a02c", "#33a02c", "#33a02c", "#b2df8a", "#a6cee3")) +
-  scale_fill_manual("Measured\nhorizon data", label = c("Oie", "Oa/A", "0-10 cm"),
-                    values = c("#33a02c", "#b2df8a", "#a6cee3"))
-
-ggsave(file = paste0("./Output/HBEF_4ps_short_C_",
-                     Sys.Date(), ".jpeg"), width = 10, height = 6)
+# fpsModelOutput_df %>%  
+#   ggplot(aes(x = Year, y = SOC_Stock)) +
+#   geom_line(aes(color = Horizon, linetype = Horizon), linewidth = 1) +
+#   # Add measured data points
+#   geom_errorbar(data = HBEF_data_14C_C_sum,
+#                 aes(y = C_mean, ymin = C_mean - C_sd,
+#                     ymax = C_mean + C_sd,
+#                     group = Horizon),
+#                 width = 0.3) +
+#   geom_point(data = HBEF_data_14C_C_sum, aes(y = C_mean, fill = Horizon),
+#              shape = 21, size = 2) +
+#   scale_x_continuous("Year", limits = c(1968,2024), expand = c(0,0),
+#                      breaks = seq(1969,2023,10)) +
+#   scale_y_continuous("C stocks") +
+#   theme_classic(base_size = 16) +
+#   theme(axis.text = element_text(color = "black")) +
+#   scale_linetype_manual("Modeled", label = c("Oi", "Oe", "Oie", "Oa", "0-10 cm"),
+#                         values = c(2, 3, 1, 1, 1)) +
+#   scale_color_manual("Modeled", label = c("Oi", "Oe", "Oie", "Oa", "0-10 cm"),
+#                      values = c("#33a02c", "#33a02c", "#33a02c", "#b2df8a", "#a6cee3")) +
+#   scale_fill_manual("Measured\nhorizon data", label = c("Oie", "Oa/A", "0-10 cm"),
+#                     values = c("#33a02c", "#b2df8a", "#a6cee3"))
+# 
+# ggsave(file = paste0("./Output/HBEF_4ps_short_C_",
+#                      Sys.Date(), ".jpeg"), width = 10, height = 6)
 
 #### Uncertainty analysis
 pars <- fpsMcmcFits$pars
@@ -658,20 +658,20 @@ fun_pred_obs_C <- function(x){
 
 oie_C <- fun_pred_obs_C(x = "oie") +
   #Only plot the one that is significant
-  # geom_smooth(data = model_C_pred_obs %>%
-  #               filter(Horizon == "oie"),
-  #             method = "lm") +
+  geom_smooth(data = model_C_pred_obs %>%
+                filter(Horizon == "oie"),
+              method = "lm") +
   scale_x_continuous("Predicted SOC stocks [g/m2]",
-                     limits = c(1300,1575), expand = c(0,0)) +
+                     limits = c(1300,1535), expand = c(0,0)) +
   scale_y_continuous("Observed SOC stocks [g/m2]",
                      limits = c(750,1750), expand = c(0,0)) +
   scale_color_manual(values = c("#33a02c"))
-ggsave(file = paste0("./Output/HBEF_4ps__C_Obs_Pred_oie_", lag_time, "_",
-                     Sys.Date(), ".jpeg"), width = 5, height = 6)
+# ggsave(file = paste0("./Output/HBEF_4ps__C_Obs_Pred_oie_", lag_time, "_",
+#                      Sys.Date(), ".jpeg"), width = 5, height = 6)
 
 oa_C <- fun_pred_obs_C(x = "oa") +
   scale_x_continuous("Predicted SOC stocks [g/m2]",
-                     limits = c(1350,1700), expand = c(0,0)) +
+                     limits = c(1350,1610), expand = c(0,0)) +
   scale_y_continuous("Observed SOC stocks [g/m2]",
                      limits = c(750,3250), expand = c(0,0)) +
   scale_color_manual(values = c("#b2df8a"))
