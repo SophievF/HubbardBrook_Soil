@@ -35,6 +35,22 @@ soil_mass_red <- soil_mass %>%
   rbind(soil_2013_156) %>% 
   tibble()
 
+soil_mass_red %>%
+  left_join(grid_elevation, by = "Plot") %>% 
+  filter(Elevation_grp == "Lower") %>% 
+  filter(Horizon != "min") %>% 
+  group_by(Year, Plot) %>%
+  summarise(sum_OM_OM = sum(OM_OM, na.rm = TRUE)) %>% 
+  ungroup(Plot) %>% 
+  summarise(mean_OM_OM = mean(sum_OM_OM, na.rm = TRUE),
+            sd_OM_OM = sd(sum_OM_OM, na.rm = TRUE)) %>% 
+  ggplot(aes(x = Year, y = mean_OM_OM)) +
+  geom_point(size = 3) +
+  geom_errorbar(aes(ymax = mean_OM_OM + sd_OM_OM,
+                    ymin = mean_OM_OM - sd_OM_OM)) +
+  scale_y_continuous("Forest floor OM (kg/m2)") +
+  geom_smooth() 
+
 ## Soil thickness
 # Load soil thickness data
 soil_thickness <- read_csv("./Data/MassChemistryOrganicHorizonMineralSoil_WS6_1976_present/HubbardBrook_ForestFloor_SiteInfo_W6.csv")
@@ -164,7 +180,11 @@ soil_BD_avg <- soil_BD %>%
   reframe(mean_BD_g_cm3 = mean(BD_g_cm3, na.rm = TRUE),
           sd_BD_g_cm3 = sd(BD_g_cm3, na.rm = TRUE),
           median_BD_g_cm3 = median(BD_g_cm3, na.rm = TRUE),
-          mad_BD_g_cm3 = mad(BD_g_cm3, na.rm = TRUE)) %>% 
+          mad_BD_g_cm3 = mad(BD_g_cm3, na.rm = TRUE),
+          mean_thick_cm = mean(Thickness_cm, na.rm = TRUE),
+          sd_thick_cm = sd(Thickness_cm, na.rm = TRUE),
+          median_thick_cm = median(Thickness_cm, na.rm = TRUE),
+          mad_thick_cm = mad(Thickness_cm, na.rm = TRUE)) %>% 
   #remove Oie+a for which we don't have samples
   filter(Horizon != "Oie+a")
 

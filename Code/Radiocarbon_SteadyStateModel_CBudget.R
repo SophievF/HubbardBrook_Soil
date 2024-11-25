@@ -8,7 +8,7 @@ library(SoilR)
 library(forecast)
 
 # Load HBEF data
-HBEF_data <- read_csv("./Data/HBEF_data_all_2024-09-20.csv") %>% 
+HBEF_data <- read_csv("./Data/HBEF_data_all_2024-11-07.csv") %>% 
   # not needed once field notes are entered
   dplyr::select(-c(Plot_1_Horizons:Notes))
 
@@ -115,6 +115,8 @@ C14pools_df <- C14pools %>%
 # Plot: only the three main pools (Oie: Pool 2, Oa/A: Pool 4; Mineral: Pool 6)
 HBEF_data_14C_sum <- HBEF_data %>% 
   drop_na(Delta14C) %>% 
+  #remove roots
+  filter(Plot != "all fine roots") %>% 
   group_by(Year, Horizon) %>% 
   summarise(Delta14C_mean = mean(Delta14C),
             Delta14C_sd = sd(Delta14C))
@@ -140,13 +142,40 @@ NHZone2_2023 %>%
                      expand = c(0,0)) +
   theme_classic(base_size = 16) +
   theme(axis.text = element_text(color = "black")) +
-  scale_color_manual("Modeled\nhorizon data", label = c("Oie", "Oa", "0 - >20 cm"),
+  scale_color_manual("Modeled\nhorizon data", label = c("Oie", "Oa", "Mineral"),
                      values = c("#33a02c", "#b2df8a", "#a6cee3")) +
-  scale_fill_manual("Measured\nhorizon data", label = c("Oie", "Oa/A", "0-10 cm"),
+  scale_fill_manual("Measured\nhorizon data", label = c("Oie", "Oa/A", "Mineral"),
                     values = c("#33a02c", "#b2df8a", "#a6cee3"))
 
 ggsave(file = paste0("./Output/HBEF_SteadyStateModel_CBudget_14C_", Sys.Date(),
                      ".jpeg"), width = 10, height = 6)
+
+# Plot: only the root pools (Oie: Pool 1, Oa/A: Pool 3; Mineral: Pool 5)
+HBEF_root_14C_sum <- HBEF_data %>% 
+  drop_na(Delta14C) %>% 
+  #only roots
+  filter(Plot == "all fine roots") 
+
+NHZone2_2023 %>%  
+  ggplot(aes(x = Year, y = Delta14C)) +
+  geom_line() +
+  #filter for pool 2, 4, and 6
+  geom_line(data = C14pools_df %>%
+              filter(pool == "pool_1"| pool == "pool_3"| pool == "pool_5"),
+            aes(color = pool), linewidth = 1) +
+  # Add measured data points
+  geom_point(data = HBEF_root_14C_sum, aes(y = Delta14C, fill = Horizon),
+             shape = 21, size = 2) +
+  scale_x_continuous("Year", limits = c(1995,2025), expand = c(0,0),
+                     breaks = seq(1995,2025,10)) +
+  scale_y_continuous(expression(paste(Delta^14, "C [‰]")), limits = c(0,500),
+                     expand = c(0,0)) +
+  theme_classic(base_size = 16) +
+  theme(axis.text = element_text(color = "black")) +
+  scale_color_manual("Modeled\nhorizon data", label = c("Oie", "Oa", "Mineral"),
+                     values = c("#33a02c", "#b2df8a", "#a6cee3")) +
+  scale_fill_manual("Measured\nhorizon data", label = c("Oie", "Oa/A", "Mineral"),
+                    values = c("#33a02c", "#b2df8a", "#a6cee3"))
 
 ## System age and transit time
 ages <- seq(0,200)

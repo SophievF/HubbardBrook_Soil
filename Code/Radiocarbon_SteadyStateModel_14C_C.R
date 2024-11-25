@@ -7,8 +7,6 @@ library(tidyverse)
 library(SoilR)
 library(forecast)
 library(FME)
-library(doParallel)
-library(foreach)
 
 # Load HBEF data
 HBEF_data <- read_csv("./Data/HBEF_data_all_2024-11-07.csv") %>% 
@@ -38,6 +36,15 @@ HBEF_data %>%
   facet_wrap(~Horizon) +
   geom_smooth(method = "lm")
 
+HBEF_data %>% 
+  filter(Plot == "all fine roots") %>% 
+  group_by(Year, Horizon) %>% 
+  ggplot(aes(x = Year, y = Delta14C)) +
+  geom_point() +
+  facet_wrap(~Horizon) +
+  geom_smooth(method = "lm") +
+  theme_bw(base_size = 16)
+
 HBEF_data %>%
   drop_na(Delta14C) %>%
   ggplot(aes(x = Year, y = Delta14C)) +
@@ -50,7 +57,7 @@ HBEF_data %>%
 LitterData <- read_csv("./Data/LitterData_Driscoll.csv")
 
 #fm * exp(lambda * (-obs_date_y + 1950)) - 1) * 1000
-lambda <- 0.0001209681
+lambda <- 0.00012097
 
 litter_data <- LitterData %>% 
   filter(Watershed == 6) %>% 
@@ -60,36 +67,40 @@ litter_data <- LitterData %>%
     Plot > 152 ~ "Low",
     TRUE ~ "Mid"
   )) %>% 
+  #add dummy variable for SOC stocks
+  mutate(SOC_g_m2 = NA) %>% 
   #match Horizon names
   mutate(Horizon = case_when(
     Horizon == "Oie" ~ "Oi/Oe",
     Horizon == "Oa" ~ "Oa/A"
   )) 
 
-litter_data %>%
-  group_by(Year, Plot) %>%
-  count(Elevation)
+# litter_data %>% 
+#   group_by(Year, Plot) %>% 
+#   count(Elevation)
+# 
+# soil_info <- read_csv("./Data/MassChemistryOrganicHorizonMineralSoil_WS6_1976_present/HubbardBrook_ForestFloor_SoilMass_W6.csv") %>% 
+#   dplyr::select(-Watershed) 
 
-soil_info <- read_csv("./Data/MassChemistryOrganicHorizonMineralSoil_WS6_1976_present/HubbardBrook_ForestFloor_SoilMass_W6.csv") %>%
-  dplyr::select(-Watershed)
+# litter_all <- soil_info %>% 
+#   #calculate SOC stocks (from kg/m2 to g/m2) and from OM to C
+#   mutate(SOC_g_m2 = OM_OM * 1000 * 0.58) %>% 
+#     mutate(Horizon = case_when(
+#     Horizon == "Oie" ~ "Oi/Oe",
+#     Horizon == "Oa" ~ "Oa/A"
+#   )) %>% 
+#   dplyr::select(Year, Plot, Horizon, SOC_g_m2) %>% 
+#   right_join(litter_data)
 
-litter_all <- soil_info %>%
-  #calculate SOC stocks (from kg/m2 to g/m2) and from OM to C
-  mutate(SOC_g_m2 = OM_OM * 1000 * 0.58) %>%
-    mutate(Horizon = case_when(
-    Horizon == "Oie" ~ "Oi/Oe",
-    Horizon == "Oa" ~ "Oa/A"
-  )) %>%
-  dplyr::select(Year, Plot, Horizon, SOC_g_m2) %>%
-  right_join(litter_data)
+#gap-fill missing 1969 data from 1978 and closests Plot
+# litter_all[31,4] <- 1235.4 #Plot 2
+# litter_all[32,4] <- 986 #Plot 129
+# litter_all[33,4] <- 2383.8 #Plot 114
+# litter_all[34,4] <- 777.2 #Plot 2
+# litter_all[35,4] <- 904.8 #Plot 129
+# litter_all[36,4] <- 1508 #Plot 114
 
-#gap-fill missing 1969 data from 1978 and closest Plot
-litter_all[31,4] <- 1235.4 #Plot 2
-litter_all[32,4] <- 986 #Plot 129
-litter_all[33,4] <- 2383.8 #Plot 114
-litter_all[34,4] <- 777.2 #Plot 2
-litter_all[35,4] <- 904.8 #Plot 129
-litter_all[36,4] <- 1508 #Plot 114
+litter_all <- litter_data 
 
 # Summarize and merge data by horizon; remove roots for now
 HBEF_all <- HBEF_data %>% 
@@ -222,21 +233,16 @@ NHZone2_2023 %>%
   geom_line() 
 
 # time interval for model
-<<<<<<< Updated upstream
-# years <- seq(-53042, 2023, by = 0.5)
-years <- seq(-10000, 2023, by = 0.5)
-# years <- seq(0, 2023, by = 0.5)
-=======
-years <- seq(-53042, 2025, by = 0.5)
+# years <- seq(-53042, 2025, by = 0.5)
 # years <- seq(-10000, 2025, by = 0.5)
-# years <- seq(0, 2023, by = 1)
->>>>>>> Stashed changes
+years <- seq(1969, 2023, by = 0.5)
 
-# initial C stocks in each pool (based on existing C budget)
-C0 <- c(1394, 1484, 3170)
+# initial C stocks in each pool (average of first three years; w/o Charleys data)
+C0 <- c(mean(oie_data_C[1:3,2]), mean(oa_data_C[1:3,2]), mean(min_data_C[1:3,2]))
 
-## initial Delta14C in each pool 
-init14C <- c(0, 0, -23)
+## initial Delta14C in each pool (average of first three years; w/Charleys data)
+init14C <- c(mean(oie_data_14C[1:3,2]), mean(oa_data_14C[1:3,2]), 
+                              mean(min_data_14C[1:3,2]))
 
 # lag-time before C enters soils: based on communication with Josh
 lag_time <- 3
@@ -245,13 +251,12 @@ lag_time <- 3
 itr <- 15000
 
 # C inputs
-# In <- data.frame(year = years, Inputs = rep(210, length(years)))
-In <- 210
+In <- data.frame(year = years, Inputs = rep(210, length(years)))
 
 ## Set-up 14C pool (three pools in series)
 # initial values are based on current C budget, assuming three pools (no roots)
 ThreePSeriesModel_fun <- function(pars){
-  mod = SoilR::ThreepSeriesModel14(
+  mod = ThreepSeriesModel14(
     t = years,
     ks = pars[1:3],
     C0 = as.numeric(C0),
@@ -262,8 +267,8 @@ ThreePSeriesModel_fun <- function(pars){
     inputFc = NHZone2_2023,
     lag = lag_time
   )
-  res_14C = SoilR::getF14(mod)
-  res_C = SoilR::getC(mod)
+  res_14C = getF14(mod)
+  res_C = getC(mod)
   return(data.frame(time = years,
                     oie_14C = res_14C[,1],
                     oie_C = res_C[,1],
@@ -275,21 +280,21 @@ ThreePSeriesModel_fun <- function(pars){
 
 tpsCost <- function(pars){
   funccall = ThreePSeriesModel_fun(pars)
-  cost1 = FME::modCost(model = funccall, obs = oie_data_14C, err = "sd")
-  cost2 = FME::modCost(model = funccall, obs = oa_data_14C, err = "sd", cost = cost1)
-  cost3 = FME::modCost(model = funccall, obs = min_data_14C, err = "sd", cost = cost2)
-  cost4 = FME::modCost(model = funccall, obs = oie_data_C, err = "sd", cost = cost3)
-  cost5 = FME::modCost(model = funccall, obs = oa_data_C, err = "sd", cost = cost4)
-  cost6 = FME::modCost(model = funccall, obs = min_data_C, err = "sd", cost = cost5)
+  cost1 = modCost(model = funccall, obs = oie_data_14C, err = "sd")
+  cost2 = modCost(model = funccall, obs = oa_data_14C, err = "sd", cost = cost1)
+  cost3 = modCost(model = funccall, obs = min_data_14C, err = "sd", cost = cost2)
+  cost4 = modCost(model = funccall, obs = oie_data_C, err = "sd", cost = cost3)
+  cost5 = modCost(model = funccall, obs = oa_data_C, err = "sd", cost = cost4)
+  cost6 = modCost(model = funccall, obs = min_data_C, err = "sd", cost = cost5)
   return(cost6)
 }
 
-init_pars <- c(k1 = 1/6, k2 = 1/14, k3 = 1/81, 
+init_pars <- c(k1 = 1/7, k2 = 1/19, k3 = 1/55, 
                alpha21 = 100/(100 + 110), alpha32 = 39/(39 + 61))
 
 #double-check lower/upper again
 tpsModelFit <- FME::modFit(f = tpsCost, p = init_pars, method = "Marq", 
-               upper = c(3, rep(1,4)), lower = rep(0,5))
+                           upper = c(3, rep(1,4)), lower = rep(0,5)) 
 
 #sum squared residuals
 tpsModelFit$ssr
@@ -301,14 +306,14 @@ tpsModelFit$ms
 (2*length(tpsModelFit$par))-(2*log(tpsModelFit$ms))
 
 #Mean squared residuals per variable/horizon
-sqrt(tpsModelFit$var_ms)
+tpsModelFit$var_ms
 
 model_summary <- data.frame(ssr = tpsModelFit$ssr,
                             msr = tpsModelFit$ms,
                             aic = (2*length(tpsModelFit$par))-(2*log(tpsModelFit$ms)))
 
 write.csv(model_summary, row.names = TRUE, quote = FALSE,
-          file = paste0("./Output/HBEF_3ps_steady_long_14C_C_summary_stats_", lag_time, "_",
+          file = paste0("./Output/ThreePoolSeriesModel_14C_C_summary_stats_", lag_time, "_",
                         Sys.Date(), ".csv"))
 
 tpsVar <- tpsModelFit$var_ms_unweighted
@@ -318,13 +323,17 @@ tpsMcmcFits <- FME::modMCMC(f = tpsCost, p = tpsModelFit$par, niter = itr, ntryd
                             updatecov = 50, var0 = tpsVar, upper = c(3, rep(1,4)),
                             lower = rep(0,5)) #Create a new object to record fit stats
 
+# tpsMcmcFits <- FME::modMCMC(f = tpsCost, p = tpsModelFit$par, niter = itr, ntrydr = 5, 
+#                             updatecov = 50, var0 = tpsVar, upper = c(rep(1,5)), 
+#                             lower = rep(0,5)) #Create a new object to record fit stats
+
 tpsModelOutput <- ThreePSeriesModel_fun(pars = as.numeric(summary(tpsMcmcFits)[1,1:6]))
 
 # Save output
 save(tpsModelFit, tpsMcmcFits, tpsModelOutput, 
-     file = paste0("./Output/HBEF_3ps_steady_long_14C_C_", lag_time, "_", Sys.Date(), ".Rdata"))
+     file = paste0("./Output/ThreePoolSeriesModel_14C_C", lag_time, "_", Sys.Date(), ".Rdata"))
 write_csv(summary(tpsMcmcFits), 
-          file = paste0("./Output/HBEF_3ps_steady_long_14C_C_summary_", lag_time, "_",
+          file = paste0("./Output/ThreePoolSeriesModel_14C_C_summary_", lag_time, "_",
                         Sys.Date(), ".csv"))
 
 # Create long dataframe
@@ -365,12 +374,12 @@ tpsMcmcFits$bestpar
 summary(tpsMcmcFits)
 
 #Check for convergence: if model is converged, there should be no visible drift
-jpeg(paste0("./Output/HBEF_3ps_steady_long_14C_C_converg_", lag_time, "_",
+jpeg(paste0("./Output/HBEFall_tpsModelFit_14C_C_converg_", lag_time, "_",
             Sys.Date(), ".jpeg"), width = 1550, height = 1000)
 plot(tpsMcmcFits)
 dev.off()
 
-jpeg(paste0("./Output/HBEF_3ps_steady_long_14C_C_pairs_", lag_time, "_",
+jpeg(paste0("./Output/HBEFall_tpsModelFit_14C_C_pairs_", lag_time, "_",
             Sys.Date(), ".jpeg"), width = 1550, height = 1000)
 pairs(tpsMcmcFits)
 dev.off()
@@ -401,7 +410,7 @@ NHZone2_2023 %>%
   scale_fill_manual("Measured", label = c("Oie", "Oa/A", "0-10 cm"),
                     values = c("#33a02c", "#b2df8a", "#a6cee3"))
 
-ggsave(file = paste0("./Output/HBEF_3ps_steady_long_14C_", lag_time, "_",
+ggsave(file = paste0("./Output/HBEFall_tpsModelFit_14C_", lag_time, "_",
                      Sys.Date(), ".jpeg"), width = 10, height = 6)
 
 tpsModelOutput_df %>%  
@@ -426,7 +435,7 @@ tpsModelOutput_df %>%
                     values = c("#33a02c", "#b2df8a", "#a6cee3")) +
   facet_wrap(~Horizon)
 
-ggsave(file = paste0("./Output/HBEF_3ps_steady_long_C_", lag_time, "_",
+ggsave(file = paste0("./Output/HBEFall_tpsModelFit_C_", lag_time, "_",
                      Sys.Date(), ".jpeg"), width = 10, height = 6)
 
 #### Uncertainty analysis
@@ -454,7 +463,7 @@ sens_all_14C <- rbind(sens_oie_14C, sens_oa_14C, sens_min_14C) %>%
   filter(Year > 1968)
 
 write_csv(sens_all_14C, 
-          file = paste0("./Output/HBEF_3ps_steady_long_sens_14C_", lag_time, "_",
+          file = paste0("./Output/ThreePoolSeriesModel_SensitivityAnalysis_14C_", lag_time, "_",
                         Sys.Date(), ".csv"))
 
 sens_oie_C <- summary(sensRange(num = num, func = ThreePSeriesModel_fun, parInput = pars, 
@@ -475,7 +484,7 @@ sens_all_C <- rbind(sens_oie_C, sens_oa_C, sens_min_C) %>%
   filter(Year > 1968)
 
 write_csv(sens_all_C, 
-          file = paste0("./Output/HBEF_3ps_steady_long_sens_C_", lag_time, "_",
+          file = paste0("./Output/ThreePoolSeriesModel_SensitivityAnalysis_C_", lag_time, "_",
                         Sys.Date(), ".csv"))
 
 atm_mod <- data.frame(Year = NHZone2_2023$Year,
@@ -523,7 +532,7 @@ sens_all_14C %>%
   scale_fill_manual("Measured", label = c("Oie", "Oa/A", "0-10 cm"),
                     values = c("#33a02c", "#b2df8a", "#a6cee3")) 
 
-ggsave(file = paste0("./Output/HBEF_3ps_steady_long_14C_Sensitivity_", lag_time, "_",
+ggsave(file = paste0("./Output/HBEFall_tpsModelFit_14C_Sensitivity_", lag_time, "_",
                      Sys.Date(), ".jpeg"), width = 10, height = 6) 
 
 sens_all_C %>% 
@@ -552,7 +561,7 @@ sens_all_C %>%
               aes(y = C_mean), color = "black", alpha = 0.3,
               linetype = "dashed", linewidth = 0.5)
 
-ggsave(file = paste0("./Output/HBEF_3ps_steady_long_C_Sensitivity_", lag_time, "_",
+ggsave(file = paste0("./Output/HBEFall_tpsModelFit_C_Sensitivity_", lag_time, "_",
                      Sys.Date(), ".jpeg"), width = 10, height = 6)
 
 #### Calculate transit time; system age does not represent current status, as it assumes steady-state
@@ -624,7 +633,7 @@ pars_df <- as.data.frame(tpsMcmcFits$pars[-(1:1000), ])
 age_transit_dist <- propagation_fun(pars_df, 10000, C0)
 
 write_csv(age_transit_dist, 
-          file = paste0("./Output/HBEF_3ps_steady_long_MeanAge_Transit_Distribution_", lag_time, "_",
+          file = paste0("./Output/ThreePoolSeriesModel_Age_Transit_Distribution_", lag_time, "_",
                         Sys.Date(), ".csv"))
 
 age_transit_dist_sum <- age_transit_dist %>% 
@@ -655,7 +664,7 @@ age_transit_dist %>%
   scale_color_manual(values = c("#33a02c", "#b2df8a", "#a6cee3")) +
   scale_x_continuous("Age [yr]", expand = c(0,0))
 
-ggsave(file = paste0("./Output/HBEF_3ps_steady_long_14C_MeanAge_Distribution_", 
+ggsave(file = paste0("./Output/HBEF_tpsModelFit_14C_Age_Distribution_", 
                      lag_time, "_", Sys.Date(), ".jpeg"), width = 10, height = 6) 
   
 
