@@ -52,16 +52,24 @@ HBEF_all <- HBEF_data %>%
 
 #Groffman data only
 HBEF_all %>% 
-  filter(DataSource == "Groffman") %>% 
-  ggplot(aes(x = Year, y = SOC_g_m2)) +
-  geom_point() +
+  filter(DataSource == "Groffman") %>%
+  filter(Horizon == "Oi/Oe") %>% 
+  group_by(Year) %>%
+  summarise(mean_SOC_g_m2 = mean(SOC_g_m2),
+            sd_SOC_g_m2 = sd(SOC_g_m2)) %>% 
+  ggplot(aes(x = Year, y = mean_SOC_g_m2)) +
+  geom_point(shape = 21, size = 3, fill = "#F7746B") +
+  geom_errorbar(aes(ymin =  mean_SOC_g_m2 - sd_SOC_g_m2,
+                    ymax =  mean_SOC_g_m2 + sd_SOC_g_m2)) +
   theme_classic(base_size = 16) +
   theme(axis.text = element_text(color = "black")) +
-  facet_wrap(~Horizon) +
-  geom_smooth(method = "lm") +
+  # facet_wrap(~Horizon) +
+  geom_smooth(method = "lm", fill = "#F7746B", color = "#F7746B") +
   scale_y_continuous("Mean SOC stock [gC/m2]", expand = c(0,0),
-                     limits = c(500,5000))
-ggsave("./Output/HBEF_SOC_stocks_Groffman.jpeg")
+                     limits = c(0,2000)) +
+  scale_x_continuous(expand = c(0,0), limits = c(1997,2024))
+ggsave("./Output/HBEF_SOC_stocks_Oie_Groffman.jpeg",
+       width = 8, height = 6)
 
 #Calculate decline in SOC stocks in Oie
 lm_oie_C <- lm(mean_SOC_g_m2 ~ Year,

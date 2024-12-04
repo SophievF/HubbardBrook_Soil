@@ -28,8 +28,14 @@ soil_resp_sum %>%
   geom_point(shape = 21, size = 3) +
   geom_errorbar(aes(ymin =  mean_gC_m2_yr - sd_gC_m2_yr,
                     ymax =  mean_gC_m2_yr + sd_gC_m2_yr)) +
-  theme_bw() +
-  geom_smooth(aes(color = Breakpoint), method = "lm")
+  theme_classic(base_size = 16) +
+  theme(axis.text = element_text(color = "black"),
+        legend.position = "none") +
+  geom_smooth(aes(color = Breakpoint), method = "lm") +
+  scale_y_continuous("Soil respiration [gC/m2 yr]", expand = c(0,0)) +
+  scale_x_continuous("Year", expand = c(0,0), breaks = seq(2005,2020,5))
+ggsave("./Output/SoilRespirationBreakPoint_low_2002_2022.jpeg",
+       width = 8, height = 6)
 
 lm_post_break <- lm(mean_gC_m2_yr ~ Year, 
    data = soil_resp_sum %>% 
