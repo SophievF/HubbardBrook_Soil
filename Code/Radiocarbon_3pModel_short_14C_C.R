@@ -7,8 +7,6 @@ library(tidyverse)
 library(SoilR)
 library(forecast)
 library(FME)
-library(doParallel)
-library(foreach)
 library(ggpubr)
 
 # Load HBEF data
@@ -53,7 +51,7 @@ LitterData <- read_csv("./Data/LitterData_Driscoll.csv")
 #fm * exp(lambda * (-obs_date_y + 1950)) - 1) * 1000
 lambda <- 0.0001209681
 
-litter_data <- LitterData %>% 
+litter_all <- LitterData %>% 
   filter(Watershed == 6) %>% 
   mutate(Delta14C = (F14C * exp(lambda * (-Year + 1950)) -1) * 1000) %>% 
   mutate(Elevation = case_when(
@@ -65,32 +63,9 @@ litter_data <- LitterData %>%
   mutate(Horizon = case_when(
     Horizon == "Oie" ~ "Oi/Oe",
     Horizon == "Oa" ~ "Oa/A"
-  )) 
-
-litter_data %>%
-  group_by(Year, Plot) %>%
-  count(Elevation)
-
-soil_info <- read_csv("./Data/MassChemistryOrganicHorizonMineralSoil_WS6_1976_present/HubbardBrook_ForestFloor_SoilMass_W6.csv") %>%
-  dplyr::select(-Watershed)
-
-litter_all <- soil_info %>%
-  #calculate SOC stocks (from kg/m2 to g/m2) and from OM to C
-  mutate(SOC_g_m2 = OM_OM * 1000 * 0.58) %>%
-    mutate(Horizon = case_when(
-    Horizon == "Oie" ~ "Oi/Oe",
-    Horizon == "Oa" ~ "Oa/A"
-  )) %>%
-  dplyr::select(Year, Plot, Horizon, SOC_g_m2) %>%
-  right_join(litter_data)
-
-#gap-fill missing 1969 data from 1978 and closest Plot
-litter_all[31,4] <- 1235.4 #Plot 2
-litter_all[32,4] <- 986 #Plot 129
-litter_all[33,4] <- 2383.8 #Plot 114
-litter_all[34,4] <- 777.2 #Plot 2
-litter_all[35,4] <- 904.8 #Plot 129
-litter_all[36,4] <- 1508 #Plot 114
+  )) %>% 
+  #Add NA's for SOC stocks so model will not be contrained by SOC stocsk 
+  mutate(SOC_g_m2 = NA)
 
 # Summarize and merge data by horizon; remove roots for now
 HBEF_all <- HBEF_data %>% 
@@ -103,31 +78,6 @@ HBEF_all <- HBEF_data %>%
           dplyr::select(Year, Horizon, Delta14C, SOC_g_m2, Elevation) %>% 
           mutate(DataSource = "Driscoll")) %>% 
   dplyr::select(Year:Delta14C, SOC_g_m2, DataSource, Elevation)
-
-HBEF_all %>% 
-  # filter(Elevation == "Low") %>% 
-  group_by(Year, Horizon, DataSource) %>% 
-  summarise(mean_C = mean(SOC_g_m2, na.rm = TRUE),
-            sd_C = sd(SOC_g_m2, na.rm = TRUE)) %>% 
-  ggplot(aes(x = Year, y = mean_C, color = DataSource)) +
-  geom_point() +
-  geom_errorbar(aes(ymax = mean_C + sd_C, ymin = mean_C - sd_C)) +
-  facet_wrap(~Horizon) +
-  geom_smooth(method = "lm") +
-  theme_bw(base_size = 16) +
-  scale_y_continuous("Mean SOC stock [gC/m2]", expand = c(0,0))
-
-HBEF_all %>% 
-  group_by(Year, Horizon, DataSource) %>% 
-  summarise(mean_14C = mean(Delta14C, na.rm = TRUE),
-            sd_14C = sd(Delta14C, na.rm = TRUE)) %>% 
-  ggplot(aes(x = Year, y = mean_14C, color = DataSource)) +
-  geom_point() +
-  geom_errorbar(aes(ymax = mean_14C + sd_14C, ymin = mean_14C - sd_14C)) +
-  facet_wrap(~Horizon) +
-  geom_smooth(method = "lm") +
-  theme_bw(base_size = 16) +
-  scale_y_continuous("Mean Delta 14C", expand = c(0,0))
 
 min_data_14C <- HBEF_all %>% 
   filter(Horizon == "Mineral_0_10") %>% 
@@ -223,15 +173,22 @@ NHZone2_2023 %>%
   geom_line() 
 
 # time interval for model
-years <- seq(-53042, 2023, by = 0.5)
-# years <- seq(-10000, 2023, by = 0.5)
-# years <- seq(0, 2023, by = 0.5)
+# years <- seq(-53042, 2025, by = 0.5)
+# years <- seq(-10000, 2025, by = 0.5)
+years <- seq(1969, 2023, by = 0.5)
 
-# initial C stocks in each pool (based on existing C budget)
-C0 <- c(1394, 1484, 3170)
+# initial C stocks in each pool (based 3-yr average)
+# C0 <- c(mean(oie_data_C[1:3,2]),  
+#         mean(oa_data_C[1:3,2]), mean(min_data_C[1:3,2]))
+#Average of first three years (including data from Driscoll)
+C0 <- c(1409, 1615, 2143)
 
-## initial Delta14C in each pool 
-init14C <- c(0, 0, -23)
+## initial Delta14C in each pool (based on steady-state 3p model)
+load("./Output/ThreePoolSeriesModel_3_2024-09-21.Rdata")
+init_14C_1996 <- tpsModelOutput %>%
+  dplyr::filter(time == 1969)
+init14C <- c(init_14C_1996[,2], init_14C_1996[,3], init_14C_1996[,4])
+rm(tpsModelOutput, tpsMcmcFits)
 
 # lag-time before C enters soils: based on communication with Josh
 lag_time <- 3
@@ -246,7 +203,7 @@ In <- 210
 ## Set-up 14C pool (three pools in series)
 # initial values are based on current C budget, assuming three pools (no roots)
 ThreePSeriesModel_fun <- function(pars){
-  mod = SoilR::ThreepSeriesModel14(
+  mod = ThreepSeriesModel14(
     t = years,
     ks = pars[1:3],
     C0 = as.numeric(C0),
@@ -257,8 +214,8 @@ ThreePSeriesModel_fun <- function(pars){
     inputFc = NHZone2_2023,
     lag = lag_time
   )
-  res_14C = SoilR::getF14(mod)
-  res_C = SoilR::getC(mod)
+  res_14C = getF14(mod)
+  res_C = getC(mod)
   return(data.frame(time = years,
                     oie_14C = res_14C[,1],
                     oie_C = res_C[,1],
@@ -270,60 +227,60 @@ ThreePSeriesModel_fun <- function(pars){
 
 tpsCost <- function(pars){
   funccall = ThreePSeriesModel_fun(pars)
-  cost1 = FME::modCost(model = funccall, obs = oie_data_14C, err = "sd")
-  cost2 = FME::modCost(model = funccall, obs = oa_data_14C, err = "sd", cost = cost1)
-  cost3 = FME::modCost(model = funccall, obs = min_data_14C, err = "sd", cost = cost2)
-  cost4 = FME::modCost(model = funccall, obs = oie_data_C, err = "sd", cost = cost3)
-  cost5 = FME::modCost(model = funccall, obs = oa_data_C, err = "sd", cost = cost4)
-  cost6 = FME::modCost(model = funccall, obs = min_data_C, err = "sd", cost = cost5)
+  cost1 = modCost(model = funccall, obs = oie_data_14C, err = "sd")
+  cost2 = modCost(model = funccall, obs = oa_data_14C, err = "sd", cost = cost1)
+  cost3 = modCost(model = funccall, obs = min_data_14C, err = "sd", cost = cost2)
+  cost4 = modCost(model = funccall, obs = oie_data_C, err = "sd", cost = cost3)
+  cost5 = modCost(model = funccall, obs = oa_data_C, err = "sd", cost = cost4)
+  cost6 = modCost(model = funccall, obs = min_data_C, err = "sd", cost = cost5)
   return(cost6)
 }
 
-init_pars <- c(k1 = 1/6, k2 = 1/14, k3 = 1/81, 
+init_pars <- c(k1 = 1/7, k2 = 1/16, k3 = 1/55, 
                alpha21 = 100/(100 + 110), alpha32 = 39/(39 + 61))
 
 #double-check lower/upper again
-tpsModelFit <- FME::modFit(f = tpsCost, p = init_pars, method = "Marq", 
-               upper = c(3, rep(1,4)), lower = rep(0,5))
+tpsModelShortFit <- FME::modFit(f = tpsCost, p = init_pars, method = "Marq", 
+                           upper = c(3, rep(1,4)), lower = rep(0,5)) 
 
 #sum squared residuals
-tpsModelFit$ssr
+tpsModelShortFit$ssr
 
 #mean squared residuals
-tpsModelFit$ms
+tpsModelShortFit$ms
 
 #AIC
-(2*length(tpsModelFit$par))-(2*log(tpsModelFit$ms))
+(2*length(tpsModelShortFit$par))-(2*log(tpsModelShortFit$ms))
 
 #Mean squared residuals per variable/horizon
-sqrt(tpsModelFit$var_ms)
+sqrt(tpsModelShortFit$var_ms)
 
-model_summary <- data.frame(ssr = tpsModelFit$ssr,
-                            msr = tpsModelFit$ms,
-                            aic = (2*length(tpsModelFit$par))-(2*log(tpsModelFit$ms)))
+model_summary <- data.frame(ssr = tpsModelShortFit$ssr,
+                            msr = tpsModelShortFit$ms,
+                            aic = (2*length(tpsModelShortFit$par))-(2*log(tpsModelShortFit$ms)))
 
 write.csv(model_summary, row.names = TRUE, quote = FALSE,
-          file = paste0("./Output/HBEF_3ps_steady_long_14C_C_summary_stats_", lag_time, "_",
+          file = paste0("./Output/HBEF_3ps_short_14C_C_summary_stats_", lag_time, "_",
                         Sys.Date(), ".csv"))
 
-tpsVar <- tpsModelFit$var_ms_unweighted
+tpsVar <- tpsModelShortFit$var_ms_unweighted
 
 #double-check lower/upper again
-tpsMcmcFits <- FME::modMCMC(f = tpsCost, p = tpsModelFit$par, niter = itr, ntrydr = 5,
-                            updatecov = 50, var0 = tpsVar, upper = c(3, rep(1,4)),
-                            lower = rep(0,5)) #Create a new object to record fit stats
+tpsShortMcmcFits <- FME::modMCMC(f = tpsCost, p = tpsModelShortFit$par, niter = itr, ntrydr = 5,
+                                 updatecov = 50, var0 = tpsVar, upper = c(3, rep(1,4)),
+                                 lower = rep(0,5)) #Create a new object to record fit stats
 
-tpsModelOutput <- ThreePSeriesModel_fun(pars = as.numeric(summary(tpsMcmcFits)[1,1:6]))
+tpsModelShortOutput <- ThreePSeriesModel_fun(pars = as.numeric(summary(tpsShortMcmcFits)[1,1:5]))
 
 # Save output
-save(tpsModelFit, tpsMcmcFits, tpsModelOutput, 
-     file = paste0("./Output/HBEF_3ps_steady_long_14C_C_", lag_time, "_", Sys.Date(), ".Rdata"))
-write_csv(summary(tpsMcmcFits), 
-          file = paste0("./Output/HBEF_3ps_steady_long_14C_C_summary_", lag_time, "_",
+save(tpsModelShortFit, tpsShortMcmcFits, tpsModelShortOutput, 
+     file = paste0("./Output/HBEF_3ps_short_14C_C_", lag_time, "_", Sys.Date(), ".Rdata"))
+write_csv(summary(tpsShortMcmcFits), 
+          file = paste0("./Output/HBEF_3ps_short_14C_C_summary_", lag_time, "_",
                         Sys.Date(), ".csv"))
 
 # Create long dataframe
-tpsModelOutput_df <- tpsModelOutput %>% 
+tpsModelOutput_df <- tpsModelShortOutput %>% 
   # filter(time > 1945) %>% 
   pivot_longer(!time,
                cols_vary = "slowest",
@@ -355,19 +312,19 @@ HBEF_data_14C_C_sum$Horizon <- factor(HBEF_data_14C_C_sum$Horizon,
                                       levels = c("oie", "oa", "min"),
                                       ordered = TRUE)
 
-tpsMcmcFits$bestpar
+tpsShortMcmcFits$bestpar
 
-summary(tpsMcmcFits)
+summary(tpsShortMcmcFits)
 
 #Check for convergence: if model is converged, there should be no visible drift
-jpeg(paste0("./Output/HBEF_3ps_steady_long_14C_C_converg_", lag_time, "_",
+jpeg(paste0("./Output/HBEF_3ps_short_14C_C_converg_", lag_time, "_",
             Sys.Date(), ".jpeg"), width = 1550, height = 1000)
-plot(tpsMcmcFits)
+plot(tpsShortMcmcFits)
 dev.off()
 
-jpeg(paste0("./Output/HBEF_3ps_steady_long_14C_C_pairs_", lag_time, "_",
+jpeg(paste0("./Output/HBEF_3ps_short_14C_C_pairs_", lag_time, "_",
             Sys.Date(), ".jpeg"), width = 1550, height = 1000)
-pairs(tpsMcmcFits)
+pairs(tpsShortMcmcFits)
 dev.off()
 
 ## Plot measured and modeled data together  
@@ -396,10 +353,10 @@ dev.off()
 #   scale_fill_manual("Measured", label = c("Oie", "Oa/A", "0-10 cm"),
 #                     values = c("#33a02c", "#b2df8a", "#a6cee3"))
 # 
-# ggsave(file = paste0("./Output/HBEF_3ps_steady_long_14C_", lag_time, "_",
+# ggsave(file = paste0("./Output/HBEF_3ps_short_14C_", lag_time, "_",
 #                      Sys.Date(), ".jpeg"), width = 10, height = 6)
 # 
-# tpsModelOutput_df %>%  
+# tpsModelOutput_df %>%
 #   ggplot(aes(x = Year, y = SOC_Stock)) +
 #   geom_line(aes(color = Horizon), linewidth = 1) +
 #   # Add measured data points
@@ -421,15 +378,13 @@ dev.off()
 #                     values = c("#33a02c", "#b2df8a", "#a6cee3")) +
 #   facet_wrap(~Horizon)
 # 
-# ggsave(file = paste0("./Output/HBEF_3ps_steady_long_C_", lag_time, "_",
+# ggsave(file = paste0("./Output/HBEF_3ps_short_C_", lag_time, "_",
 #                      Sys.Date(), ".jpeg"), width = 10, height = 6)
 
 #### Uncertainty analysis
-pars <- tpsMcmcFits$pars
+pars <- tpsShortMcmcFits$pars
 
 num <- 1000
-
-# sens_all <- summary(FME::sensRange(num = num, func = ThreePSeriesModel_fun, parInput = pars))
 
 sens_oie_14C <- summary(sensRange(num = num, func = ThreePSeriesModel_fun, parInput = pars, 
                                   sensvar = c("oie_14C"))) %>% 
@@ -449,7 +404,7 @@ sens_all_14C <- rbind(sens_oie_14C, sens_oa_14C, sens_min_14C) %>%
   filter(Year > 1968)
 
 write_csv(sens_all_14C, 
-          file = paste0("./Output/HBEF_3ps_steady_long_sens_14C_", lag_time, "_",
+          file = paste0("./Output/HBEF_3ps_short_sens_14C_", lag_time, "_",
                         Sys.Date(), ".csv"))
 
 sens_oie_C <- summary(sensRange(num = num, func = ThreePSeriesModel_fun, parInput = pars, 
@@ -470,7 +425,7 @@ sens_all_C <- rbind(sens_oie_C, sens_oa_C, sens_min_C) %>%
   filter(Year > 1968)
 
 write_csv(sens_all_C, 
-          file = paste0("./Output/HBEF_3ps_steady_long_sens_C_", lag_time, "_",
+          file = paste0("./Output/HBEF_3ps_short_sens_C_", lag_time, "_",
                         Sys.Date(), ".csv"))
 
 atm_mod <- data.frame(Year = NHZone2_2023$Year,
@@ -516,7 +471,8 @@ sens_all_14C %>%
                      values = c("#33a02c", "#b2df8a", "#a6cee3")) +
   scale_fill_manual("Measured", label = c("Oie", "Oa/A", "0-10 cm"),
                     values = c("#33a02c", "#b2df8a", "#a6cee3")) 
-ggsave(file = paste0("./Output/HBEF_3ps_steady_long_14C_Sensitivity_", lag_time, "_",
+
+ggsave(file = paste0("./Output/HBEF_3ps_short_14C_Sensitivity_", lag_time, "_",
                      Sys.Date(), ".jpeg"), width = 10, height = 6) 
 
 sens_all_C %>% 
@@ -540,176 +496,198 @@ sens_all_C %>%
                      values = c("#33a02c", "#b2df8a", "#a6cee3")) +
   scale_fill_manual("Measured", label = c("Oie", "Oa/A", "0-10 cm"),
                     values = c("#33a02c", "#b2df8a", "#a6cee3")) +
-  # geom_smooth(method = "lm", data = HBEF_data_14C_C_sum, 
-  #             aes(y = C_mean), color = "black", alpha = 0.3,
-  #             linetype = "dashed", linewidth = 0.5) +
-  facet_wrap(~Horizon) 
-ggsave(file = paste0("./Output/HBEF_3ps_steady_long_C_Sensitivity_", lag_time, "_",
+  facet_wrap(~Horizon)
+
+ggsave(file = paste0("./Output/HBEF_3ps_short_C_Sensitivity_", lag_time, "_",
                      Sys.Date(), ".jpeg"), width = 10, height = 6)
 
-#### Calculate transit time/ system age 
-## Based on best parameter fits
-# https://www.bgc-jena.mpg.de/TEE/basics/2015/12/30/Ages-Transit-Times/
+#Plot predicted vs observed (mean + SD) for each Horizon and compute linear regression
+model_14C_pred_obs <- sens_all_14C %>%
+  right_join(HBEF_data_14C_C_sum)
 
-bestpar <- tpsMcmcFits$bestpar
-k <- bestpar[c(1:3)]
-A <- diag(-k)
-A[2,1] <- k[1]*bestpar[4]
-A[3,2] <- k[2]*bestpar[5]
-u <- matrix(c(210,0,0))
-ua <- seq(0,2000)
+lm_14C_oie <- lm(Delta14C_mean ~ Mean,
+                 data = model_14C_pred_obs %>% 
+                   filter(Horizon == "oie"))
+summary(lm_14C_oie)
+cor(y = model_14C_pred_obs[model_14C_pred_obs$Horizon == "oie",]$Delta14C_mean,
+    x = model_14C_pred_obs[model_14C_pred_obs$Horizon == "oie",]$Mean,
+    method = "pearson")
 
-# System Age
-SA <- systemAge(A = A, u = u, a = ua)
-SA$meanSystemAge
-SA$meanPoolAge
-SA$quantilesSystemAge
+#Resdiduals sum of square
+rss <- c(crossprod(lm_14C_oie$residuals))
 
-sum(SA$systemAgeDensity[c(101:2001)])/sum(SA$systemAgeDensity)*100
+#Mean squared error
+mse <- rss/length(lm_14C_oie$residuals)
 
-# Transit age
-TT <- transitTime(A = A, u = u, a = seq(0,100))
-TT$meanTransitTime
+#Root mse
+sqrt(mse)
 
-# SA$systemAgeDensity %>% 
-#   as.data.frame() %>% 
-#   dplyr::rename(age_dens = '.') %>% 
-#   mutate(age = ua) %>% 
-#   mutate(age_perc = (age_dens/sum(age_dens))*100,
-#          perc_sum = cumsum(age_perc)) %>% 
-#   # filter(perc_sum <= 51) %>% 
-#   # filter(perc_sum == max(perc_sum)) %>% 
-#   ggplot(aes(x = age, y = perc_sum)) +
-#   geom_path(linewidth = 1) +
-#   theme_bw(base_size = 16) +
-#   theme(axis.text = element_text(color = "black"),
-#         legend.position = "none") +
-#   scale_y_continuous("Cumulative distribution [%]", limits = c(0,100.1), expand = c(0,0)) +
-#   scale_x_continuous("Age [yr]", expand = c(0,0))
+lm_14C_oa <- lm(Delta14C_mean ~ Mean,
+                data = model_14C_pred_obs %>% 
+                  filter(Horizon == "oa"))
+summary(lm_14C_oa)
+cor(y = model_14C_pred_obs[model_14C_pred_obs$Horizon == "oa",]$Delta14C_mean,
+    x = model_14C_pred_obs[model_14C_pred_obs$Horizon == "oa",]$Mean,
+    method = "pearson")
+sqrt(c(crossprod(lm_14C_oa$residuals))/length(lm_14C_oa$residuals))
 
-# Plot distribution for each pool
-pool_age_dens <- SA$poolAgeDensity %>%
-  as.data.frame() %>%
-  dplyr::rename(oie = V1,
-                oa = V2,
-                min = V3) %>%
-  mutate(age = ua) %>% 
-  pivot_longer(!age, values_to = "age_dens", names_to = "Horizon") 
+lm_14C_min <- lm(Delta14C_mean ~ Mean,
+                 data = model_14C_pred_obs %>% 
+                   filter(Horizon == "min"))
+summary(lm_14C_min)
+cor(y = model_14C_pred_obs[model_14C_pred_obs$Horizon == "min",]$Delta14C_mean,
+    x = model_14C_pred_obs[model_14C_pred_obs$Horizon == "min",]$Mean,
+    method = "pearson")
+sqrt(c(crossprod(lm_14C_min$residuals))/length(lm_14C_min$residuals))
 
-pool_age_dens$Horizon <- factor(pool_age_dens$Horizon, levels = c("oie", "oa", "min"))
-
-# Calculate how much C is cycling on different timescales
-pool_age_perc <- pool_age_dens %>% 
-  group_by(Horizon) %>% 
-  mutate(age_perc = (age_dens/sum(age_dens))*100,
-         perc_sum = cumsum(age_perc))
-
-pool_age_fun <- function(x){
-  pool_age_dens %>%
+fun_pred_obs_14C <- function(x){
+  model_14C_pred_obs %>%
     filter(Horizon == x) %>% 
-    ggplot(aes(y = age_dens, color = Horizon, x = age, fill = Horizon)) +
-    geom_ribbon(data = pool_age_perc %>% 
-                  filter(Horizon == x) %>% 
-                  filter(perc_sum <= 50),
-                aes(ymin = 0, ymax = age_dens), 
-                color = NA, alpha = 0.3) +
-    geom_line(linewidth = 1) +
+    ggplot(aes(x = Mean, y = Delta14C_mean, color = Horizon)) +
+    geom_abline(intercept = 1, linetype = "dashed") +
+    geom_point() +
+    geom_errorbar(aes(ymin = Delta14C_mean - Delta14C_sd, 
+                      ymax = Delta14C_mean + Delta14C_sd)) +
+    geom_errorbar(aes(xmin = Mean - Sd, 
+                      xmax = Mean + Sd)) +
     theme_classic(base_size = 16) +
     theme(axis.text = element_text(color = "black"),
           legend.position = "none") +
-    facet_wrap(~Horizon, scales = "free") +
-    scale_y_continuous("Density function", expand = c(0,0)) +
-    scale_x_continuous("Pool age [yr]", expand = c(0,0))
+    facet_wrap(~Horizon) 
 }
 
-pool_age_50 <- pool_age_perc %>% 
-  group_by(Horizon) %>% 
-  filter(perc_sum <= 50) %>% 
-  filter(perc_sum == max(perc_sum))
+oie_14C <- fun_pred_obs_14C(x = "oie") +
+  #Only plot the one that is significant
+  geom_smooth(data = model_14C_pred_obs %>%
+                filter(Horizon == "oie"),
+              method = "lm") +
+  scale_x_continuous(expression(paste("Predicted ", Delta^14, "C [‰]")),
+                     limits = c(0,525), expand = c(0,0)) +
+  scale_y_continuous(expression(paste("Observed ", Delta^14, "C [‰]")),
+                     limits = c(0,525), expand = c(0,0)) +
+  scale_color_manual(values = c("#33a02c"))
 
-oie_age_p <- pool_age_fun(x = "oie") +
-  scale_x_continuous("", expand = c(0,0)) +
-  coord_cartesian(xlim = c(0,50)) +
-  scale_color_manual(values = c("#33a02c")) +
-  scale_fill_manual(values = c("#33a02c")) +
-  geom_vline(xintercept = SA$meanPoolAge[1,], linetype = "dashed") +
-  annotate(geom = "text", x = 35, y = 0.13, 
-           label = paste0("Mean age = ", round(SA$meanPoolAge[1,],0), " yrs")) +
-  annotate(geom = "text", x = 35, y = 0.125, 
-           label = paste0("50% <= ", round(pool_age_50[1,1],0), " yrs"))
+oa_14C <- fun_pred_obs_14C(x = "oa") +
+  scale_x_continuous(expression(paste("Predicted ", Delta^14, "C [‰]")),
+                     limits = c(-20,155), expand = c(0,0)) +
+  scale_y_continuous(expression(paste("Observed ", Delta^14, "C [‰]")),
+                     limits = c(-20,220), expand = c(0,0)) +
+  scale_color_manual(values = c("#b2df8a"))
 
-oa_age_p <- pool_age_fun(x = "oa") +
-  scale_y_continuous("", expand = c(0,0)) +
-  coord_cartesian(xlim = c(0,650)) +
-  scale_color_manual(values = c("#b2df8a")) +
-  scale_fill_manual(values = c("#b2df8a")) +
-  geom_vline(xintercept = SA$meanPoolAge[2,], linetype = "dashed") +
-  annotate(geom = "text", x = 450, y = 0.0075, 
-           label = paste0("Mean age = ", round(SA$meanPoolAge[2,],0), " yrs")) +
-  annotate(geom = "text", x = 450, y = 0.0072, 
-         label = paste0("50% <= ", round(pool_age_50[2,1],0), " yrs"))
+min_14C <- fun_pred_obs_14C(x = "min") +
+  scale_x_continuous(expression(paste("Predicted ", Delta^14, "C [‰]")),
+                     limits = c(-40,0), expand = c(0,0)) +
+  scale_y_continuous(expression(paste("Observed ", Delta^14, "C [‰]")),
+                     limits = c(-110,20), expand = c(0,0)) +
+  scale_color_manual(values = c("#a6cee3"))
 
-min_age_p <- pool_age_fun(x = "min") +
-  scale_y_continuous("", expand = c(0,0)) +
-  scale_x_continuous("", expand = c(0,0)) +
-  coord_cartesian(xlim = c(0,1800)) +
-  scale_color_manual(values = c("#a6cee3")) +
-  scale_fill_manual(values = c("#a6cee3")) +
-  geom_vline(xintercept = SA$meanPoolAge[3,], linetype = "dashed") +
-  annotate(geom = "text", x = 1100, y = 0.0024, 
-           label = paste0("Mean age = ", round(SA$meanPoolAge[3,],0), " yrs")) +
-  annotate(geom = "text", x = 1100, y = 0.0023, 
-           label = paste0("50% <= ", round(pool_age_50[3,1],0), " yrs"))
+ggarrange(oie_14C, oa_14C, min_14C, nrow = 1)
+ggsave(file = paste0("./Output/HBEF_3ps_short_14C_Obs_Pred_", lag_time, "_",
+                     Sys.Date(), ".jpeg"), width = 12, height = 6)
 
-ggarrange(oie_age_p, oa_age_p, min_age_p, nrow = 1)
-ggsave(file = paste0("./Output/HBEF_3ps_steady_long_PoolAgeDis_", lag_time, "_",
-                     Sys.Date(), ".jpeg"), width = 12, height = 5)
+model_C_pred_obs <- sens_all_C %>%
+  right_join(HBEF_data_14C_C_sum)
 
-pool_age_cum_fun <- function(x){
-  pool_age_perc %>% 
+lm_C_oie <- lm(C_mean ~ Mean,
+               data = model_C_pred_obs %>% 
+                 filter(Horizon == "oie"))
+summary(lm_C_oie)
+cor(y = model_C_pred_obs[model_C_pred_obs$Horizon == "oie",]$Delta14C_mean,
+    x = model_C_pred_obs[model_C_pred_obs$Horizon == "oie",]$Mean,
+    method = "pearson")
+sqrt(c(crossprod(lm_C_oie$residuals))/length(lm_C_oie$residuals))
+
+lm_C_oa <- lm(C_mean ~ Mean,
+                data = model_C_pred_obs %>% 
+                  filter(Horizon == "oa"))
+summary(lm_C_oa)
+cor(y = model_C_pred_obs[model_C_pred_obs$Horizon == "oa",]$Delta14C_mean,
+    x = model_C_pred_obs[model_C_pred_obs$Horizon == "oa",]$Mean,
+    method = "pearson")
+sqrt(c(crossprod(lm_C_oa$residuals))/length(lm_C_oa$residuals))
+
+lm_C_min <- lm(C_mean ~ q50,
+                 data = model_C_pred_obs %>% 
+                   filter(Horizon == "min"))
+summary(lm_C_min)
+cor(y = model_C_pred_obs[model_C_pred_obs$Horizon == "min",]$Delta14C_mean,
+    x = model_C_pred_obs[model_C_pred_obs$Horizon == "min",]$Mean,
+    method = "pearson")
+sqrt(c(crossprod(lm_C_min$residuals))/length(lm_C_min$residuals))
+
+fun_pred_obs_C <- function(x){
+  model_C_pred_obs %>%
     filter(Horizon == x) %>% 
-    ggplot(aes(x = age, y = perc_sum, color = Horizon)) +
-    geom_path(linewidth = 2) +
+    ggplot(aes(x = Mean, y = C_mean, color = Horizon)) +
+    geom_abline(intercept = 1, linetype = "dashed") +
+    geom_point() +
+    geom_errorbar(aes(ymin = C_mean - C_sd, 
+                      ymax = C_mean + C_sd)) +
+    geom_errorbar(aes(xmin = Mean - Sd, 
+                      xmax = Mean + Sd)) +
     theme_classic(base_size = 16) +
     theme(axis.text = element_text(color = "black"),
-          legend.position = "none",
-          panel.grid.major = element_line()) +
-    facet_wrap(~Horizon) +
-    scale_y_continuous("Cumulative distribution [%]", limits = c(0,101), expand = c(0,0)) +
-    scale_x_continuous("Age [yr]", expand = c(0,0))
+          legend.position = "none") +
+    facet_wrap(~Horizon) 
 }
-  
-oie_age_cum_p <- pool_age_cum_fun(x = "oie") +
-  scale_x_continuous("", expand = c(0,0)) +
-  coord_cartesian(xlim = c(0,50)) +
-  scale_color_manual(values = c("#33a02c")) +
-  geom_vline(xintercept = SA$meanPoolAge[1,], linetype = "dashed") +
-  annotate(geom = "text", x = 20, y = 10, 
-           label = paste0("Mean age = ", round(SA$meanPoolAge[1,],0), " yrs")) 
 
-oa_age_cum_p <- pool_age_cum_fun(x = "oa") +
-  scale_y_continuous("", expand = c(0,0), limits = c(0,101)) +
-  coord_cartesian(xlim = c(0,650)) +
-  scale_color_manual(values = c("#b2df8a")) +
-  geom_vline(xintercept = SA$meanPoolAge[2,], linetype = "dashed") +
-  annotate(geom = "text", x = 300, y = 10, 
-           label = paste0("Mean age = ", round(SA$meanPoolAge[2,],0), " yrs")) 
+oie_C <- fun_pred_obs_C(x = "oie") +
+  scale_x_continuous("Predicted SOC stocks [g/m2]",
+                     limits = c(1300,1535), expand = c(0,0)) +
+  scale_y_continuous("Observed SOC stocks [g/m2]",
+                     limits = c(750,1750), expand = c(0,0)) +
+  scale_color_manual(values = c("#33a02c"))
+ggsave(file = paste0("./Output/HBEF_3ps_short_C_Obs_Pred_oie_", lag_time, "_",
+                     Sys.Date(), ".jpeg"), width = 5, height = 6)
 
-min_age_cum_p <- pool_age_cum_fun(x = "min") +
-  scale_y_continuous("", expand = c(0,0), limits = c(0,101)) +
-  scale_x_continuous("", expand = c(0,0)) +
-  coord_cartesian(xlim = c(0,1800)) +
-  scale_color_manual(values = c("#a6cee3")) +
-  geom_vline(xintercept = SA$meanPoolAge[3,], linetype = "dashed") +
-  annotate(geom = "text", x = 800, y = 10, 
-           label = paste0("Mean age = ", round(SA$meanPoolAge[3,],0), " yrs")) 
+oa_C <- fun_pred_obs_C(x = "oa") +
+  scale_x_continuous("Predicted SOC stocks [g/m2]",
+                     limits = c(1600,2125), expand = c(0,0)) +
+  scale_y_continuous("Observed SOC stocks [g/m2]",
+                     limits = c(500,5200), expand = c(0,0)) +
+  scale_color_manual(values = c("#b2df8a"))
 
-ggarrange(oie_age_cum_p, oa_age_cum_p, min_age_cum_p, nrow = 1)
-ggsave(file = paste0("./Output/HBEF_3ps_steady_long_PoolAgeDisCum_", lag_time, "_",
-                     Sys.Date(), ".jpeg"), width = 12, height = 5)
+min_C <- fun_pred_obs_C(x = "min") +
+  scale_x_continuous("Predicted SOC stocks [g/m2]",
+                     limits = c(2175,2475), expand = c(0,0)) +
+  scale_y_continuous("Observed SOC stocks [g/m2]",
+                     limits = c(1000,4000), expand = c(0,0)) +
+  scale_color_manual(values = c("#a6cee3"))
 
+ggarrange(oie_C, oa_C, min_C, nrow = 1)
+ggsave(file = paste0("./Output/HBEF_3ps_short_C_Obs_Pred_", lag_time, "_",
+                     Sys.Date(), ".jpeg"), width = 12, height = 6)
 
-# see Stoner et al 2021 and Gonzalez-Sosa et al. 2024
+### Transit time and C age ###
+
+## Calculate transit time and system age based on best parameter fits
+#https://github.com/MPIBGC-TEE/Lanna/blob/v1.0.0/code/modelFitsLanna.R
+# tau <- seq(0,500)
+# # A1 <- meanModel@mat@map(1970)
+# parsMCMC <- summary(tpsShortMcmcFits)
+# 
+# 
+# A1min <- -1*diag(parsMCMC[3,1:3])
+# A1min[2,1] <- abs(parsMCMC[3,4])*parsMCMC[3,1] 
+# A1min[3,2] <- abs(parsMCMC[3,5])*parsMCMC[3,2]
+# A1max <- -1*diag(parsMCMC[4,1:3])
+# A1max[2,1] <- parsMCMC[4,4]*parsMCMC[4,1] 
+# A1max[2,1] <- parsMCMC[4,5]*parsMCMC[4,2] 
+# 
+# 
+# 
+# SA1=systemAge(A=A1,u=c(1,0),a=tau)
+# TT1=transitTime(A=A1,u=c(1,0), a=tau, q=c(0.1,0.5,0.9))
+# TT1min<-transitTime(A=A1min,u=c(1,0),q=c(0.1,0.5,0.9))
+# TT1max<-transitTime(A=A1max,u=c(1,0),q=c(0.1,0.5,0.9))
+# 
+# SA2=systemAge(A=A2,u=c(1,0),a=tau)
+# TT2=transitTime(A=A2,u=c(1,0), a=tau, q=c(0.1,0.5,0.9))
+# TT2min<-transitTime(A=A2min,u=c(1,0),q=c(0.1,0.5,0.9))
+# TT2max<-transitTime(A=A2max,u=c(1,0),q=c(0.1,0.5,0.9))
+# 
+# 
+# # see Stoner et al 2021 and Gonzalez-Sosa et al. 2024
 # propagation_fun <- function(data, num_iter, input_vector){
 #   
 #   pb <- txtProgressBar(min = 0, max = num_iter, style = 3)
@@ -726,11 +704,11 @@ ggsave(file = paste0("./Output/HBEF_3ps_steady_long_PoolAgeDisCum_", lag_time, "
 #   
 #   
 #   for (i in 1:n_iter){
-#         subset_par <- data.frame(k1 = sample(data$k1, 1),
-#                                  k2 = sample(data$k2, 1),
-#                                  k3 = sample(data$k3, 1),
-#                                  alpha21 = sample(data$alpha21, 1),
-#                                  alpha31 = sample(data$alpha32, 1))
+#     subset_par <- data.frame(k1 = sample(data$k1, 1),
+#                              k2 = sample(data$k2, 1),
+#                              k3 = sample(data$k3, 1),
+#                              alpha21 = sample(data$alpha21, 1),
+#                              alpha31 = sample(data$alpha32, 1))
 #     
 #     #-------------- A matrix and inputs
 #     ks <- subset_par[1:3]
@@ -746,9 +724,9 @@ ggsave(file = paste0("./Output/HBEF_3ps_steady_long_PoolAgeDisCum_", lag_time, "
 #     u <- matrix((input_vector), ncol = 1)
 #     
 #     #---------------- Age and transit time ----------------------
-#     
-#     Sist_age <- systemAge(A = A, u = u)
-#     Trans_time <- transitTime(A = A, u = u)
+#     ages <- c(0,500)
+#     Sist_age <- systemAge(A = A, u = u, a = ages)
+#     Trans_time <- transitTime(A = A, u = u, a = ages)
 #     
 #     Iter_number[i] <- i
 #     System_age[i] <- as.numeric(Sist_age$meanSystemAge)
@@ -769,15 +747,13 @@ ggsave(file = paste0("./Output/HBEF_3ps_steady_long_PoolAgeDisCum_", lag_time, "
 #   return(age_results)
 # }
 # 
-# # tpsMcmcFits$pars <- tpsMcmcFits$pars[-(1:1000), ]
-# 
 # # exclude first 1000 rows: MCMC algorithms are sensitive to their starting point
-# pars_df <- as.data.frame(tpsMcmcFits$pars[-(1:1000), ])
+# pars_df <- as.data.frame(tpsShortMcmcFits$pars[-(1:1000), ])
 # 
 # age_transit_dist <- propagation_fun(pars_df, 10000, C0)
 # 
 # write_csv(age_transit_dist, 
-#           file = paste0("./Output/HBEF_3ps_steady_long_MeanAge_Transit_Distribution_", lag_time, "_",
+#           file = paste0("./Output/HBEF_3ps_short_Age_Transit_Distribution_", lag_time, "_",
 #                         Sys.Date(), ".csv"))
 # 
 # age_transit_dist_sum <- age_transit_dist %>% 
@@ -787,7 +763,7 @@ ggsave(file = paste0("./Output/HBEF_3ps_steady_long_PoolAgeDisCum_", lag_time, "
 #             sd_age = sd(age_yr),
 #             median_age = median(age_yr),
 #             mad_age = mad(age_yr))
-#   
+# 
 # age_transit_dist %>% 
 #   pivot_longer(!Iter_number, values_to = "age_yr", names_to = "Pools") %>% 
 #   filter(Pools != "System_age", Pools != "Transit_time") %>%
@@ -808,11 +784,9 @@ ggsave(file = paste0("./Output/HBEF_3ps_steady_long_PoolAgeDisCum_", lag_time, "
 #   scale_color_manual(values = c("#33a02c", "#b2df8a", "#a6cee3")) +
 #   scale_x_continuous("Age [yr]", expand = c(0,0))
 # 
-# ggsave(file = paste0("./Output/HBEF_3ps_steady_long_14C_MeanAge_Distribution_", 
+# ggsave(file = paste0("./Output/HBEF_3ps_short_Age_Distribution_", 
 #                      lag_time, "_", Sys.Date(), ".jpeg"), width = 10, height = 6) 
-#   
 # 
-#  
 # 
 # 
 # 
