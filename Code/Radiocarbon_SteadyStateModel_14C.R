@@ -9,7 +9,7 @@ library(forecast)
 library(FME)
 
 # Load HBEF data
-HBEF_data <- read_csv("./Data/HBEF_data_all_2024-09-20.csv") %>% 
+HBEF_data <- read_csv("./Data/HBEF_data_all_2024-11-07.csv") %>% 
   # not needed once field notes are entered
   dplyr::select(-c(Plot_1_Horizons:Notes))
 
@@ -22,16 +22,28 @@ HBEF_data$Horizon <- factor(HBEF_data$Horizon,
 HBEF_data %>% 
   filter(Plot != "all fine roots") %>% 
   group_by(Horizon) %>% 
-  reframe(mean_14C = mean(Delta14C, na.rm = TRUE))
+  reframe(mean_14C = mean(Delta14C, na.rm = TRUE),
+          mean_C = mean(`Measured_%_C`, na.rm = TRUE))
 
 HBEF_data %>% 
-  drop_na(Delta14C) %>% 
-  filter(Horizon == "Oa/A") %>% 
-  ggplot(aes(x = `Measured_%_C`, y = Delta14C)) +
-  geom_point(aes(color = Plot)) +
-  facet_wrap(vars(Horizon, Year)) +
-  # geom_smooth(method = "lm") +
-  theme_bw()
+  filter(Plot != "all fine roots") %>% 
+  group_by(Year, Horizon) %>% 
+  summarise(mean_C = mean(`Measured_%_C`, na.rm = TRUE),
+            sd_C = sd(`Measured_%_C`, na.rm = TRUE)) %>% 
+  ggplot(aes(x = Year, y = mean_C)) +
+  geom_point() +
+  geom_errorbar(aes(ymax = mean_C + sd_C, ymin = mean_C - sd_C)) +
+  facet_wrap(~Horizon) +
+  geom_smooth(method = "lm")
+
+# HBEF_data %>% 
+#   drop_na(Delta14C) %>% 
+#   filter(Horizon == "Oa/A") %>% 
+#   ggplot(aes(x = `Measured_%_C`, y = Delta14C)) +
+#   geom_point(aes(color = Plot)) +
+#   facet_wrap(vars(Horizon, Year)) +
+#   # geom_smooth(method = "lm") +
+#   theme_bw()
 
 # Load 14C data from Charley Driscoll
 LitterData <- read_csv("./Data/LitterData_Driscoll.csv")
@@ -94,7 +106,9 @@ NHZone2_2023 %>%
 
 # time interval for model
 # years <- seq(-53042, 2025, by = 0.5)
-years <- seq(-10000, 2025, by = 0.5)
+# years <- seq(-10000, 2025, by = 0.5)
+
+years <- seq(-1000, 2025, by = 0.5)
 
 # initial C stocks in each pool
 C0 <- c(1394, 1484, 3170)
@@ -183,6 +197,28 @@ init_pars <- c(k1 = 1/6, k2 = 1/14, k3 = 1/81,
 tpsModelFit <- FME::modFit(f = tpsCost, p = init_pars, method = "Marq", 
                            upper = c(3, rep(1,4)), lower = rep(0,5)) 
 
+#sum squared residuals
+tpsModelFit$ssr
+
+#mean squared residuals
+tpsModelFit$ms
+sqrt(tpsModelFit$ms)
+
+#AIC
+(2*length(tpsModelFit$par))-(2*log(tpsModelFit$ms))
+
+#Mean squared residuals per variable/horizon
+tpsModelFit$var_ms
+sqrt(tpsModelFit$var_ms)
+
+model_summary <- data.frame(ssr = tpsModelFit$ssr,
+                            msr = tpsModelFit$ms,
+                            aic = (2*length(tpsModelFit$par))-(2*log(tpsModelFit$ms)))
+
+write_csv(model_summary, 
+          file = paste0("./Output/ThreePoolSeriesModel_summary_stats_", lag_time, "_",
+                        Sys.Date(), ".csv"))
+
 tpsVar <- tpsModelFit$var_ms_unweighted
 
 tpsMcmcFits <- FME::modMCMC(f = tpsCost, p = tpsModelFit$par, niter = itr, ntrydr = 5,
@@ -196,9 +232,10 @@ tpsMcmcFits <- FME::modMCMC(f = tpsCost, p = tpsModelFit$par, niter = itr, ntryd
 tpsModelOutput <- ThreePSeriesModel_fun(pars = as.numeric(summary(tpsMcmcFits)[1,1:6]))
 
 # Save output
-save(tpsMcmcFits, tpsModelOutput, 
+save(tpsModelFit, tpsMcmcFits, tpsModelOutput, 
      file = paste0("./Output/ThreePoolSeriesModel_", lag_time, "_", Sys.Date(), ".Rdata"))
-write_csv(summary(tpsMcmcFits), 
+
+write.csv(summary(tpsMcmcFits), row.names = TRUE, quote = FALSE,
           file = paste0("./Output/ThreePoolSeriesModel_summary_", lag_time, "_",
                         Sys.Date(), ".csv"))
 
@@ -264,9 +301,9 @@ NHZone2_2023 %>%
                      expand = c(0,0)) +
   theme_classic(base_size = 16) +
   theme(axis.text = element_text(color = "black")) +
-  scale_color_manual("Modeled\nhorizon data", label = c("Oie", "Oa", "0-10 cm"),
+  scale_color_manual("Modeled", label = c("Oie", "Oa", "0-10 cm"),
                      values = c("#33a02c", "#b2df8a", "#a6cee3")) +
-  scale_fill_manual("Measured\nhorizon data", label = c("Oie", "Oa/A", "0-10 cm"),
+  scale_fill_manual("Measured", label = c("Oie", "Oa/A", "0-10 cm"),
                     values = c("#33a02c", "#b2df8a", "#a6cee3"))
 
 ggsave(file = paste0("./Output/HBEFall_SteadyStateModel_tpsModelFit_14C_", lag_time, "_",
@@ -337,9 +374,9 @@ sens_all %>%
                      expand = c(0,0)) +
   theme_classic(base_size = 16) +
   theme(axis.text = element_text(color = "black")) +
-  scale_color_manual("Modeled\nhorizon data", label = c("Oie", "Oa", "0-10 cm"),
+  scale_color_manual("Modeled", label = c("Oie", "Oa", "0-10 cm"),
                      values = c("#33a02c", "#b2df8a", "#a6cee3")) +
-  scale_fill_manual("Measured\nhorizon data", label = c("Oie", "Oa/A", "0-10 cm"),
+  scale_fill_manual("Measured", label = c("Oie", "Oa/A", "0-10 cm"),
                     values = c("#33a02c", "#b2df8a", "#a6cee3")) 
 
 ggsave(file = paste0("./Output/HBEFall_SteadyStateModel_tpsModelFit_14C_Sensitivity_", lag_time, "_",
@@ -431,7 +468,7 @@ age_transit_dist %>%
                         ordered = TRUE)) %>% 
   ggplot(aes(x = age_yr, color = Pools)) +
   geom_density(linewidth = 1) +
-  facet_wrap(~Pools, scales = "free_y") +
+  facet_wrap(~Pools, scales = "free") +
   geom_vline(aes(xintercept = mean_age), 
              data = age_transit_dist_sum %>% 
                filter(Pools != "System_age",
@@ -442,7 +479,7 @@ age_transit_dist %>%
   theme(axis.text = element_text(color = "black"),
         legend.position = "none") +
   scale_color_manual(values = c("#33a02c", "#b2df8a", "#a6cee3")) +
-  scale_x_continuous("Age [yr]", limits = c(0,650), expand = c(0,0))
+  scale_x_continuous("Age [yr]", expand = c(0,0))
 ggsave(file = paste0("./Output/HBEF_SteadyStateModel_tpsModelFit_14C_Age_Distribution_", 
                      lag_time, "_", Sys.Date(), ".jpeg"), width = 10, height = 6) 
   

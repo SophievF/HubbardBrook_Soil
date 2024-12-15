@@ -1,5 +1,5 @@
 ## Hubbard Brook archived soil samples project ##
-## Radiocarbon analysis - contraint model with 14C ##
+## Radiocarbon analysis - constraint model with 14C ##
 ## Sophie von Fromm ##
 ## 2024-08-01 ##
 
@@ -48,7 +48,7 @@ FpfromF <- function(X){ # X must be a data.frame with first column time and seco
 }
 
 FpNZ2 <- FpfromF(Hua2021$NHZone2[,c(1,4)]) #Absolute fraction modern F'
-qNZ2<- spline(FpNZ2, xout = y) #Spline interpolation of the NH_Zone 2 data set at a quarterly basis
+qNZ2 <- spline(FpNZ2, xout = y) #Spline interpolation of the NH_Zone 2 data set at a quarterly basis
 NZ2 <- ts(qNZ2$y, start = y0, freq = q) #Transformation into a time-series object
 
 mNZ2 <- ets(NZ2) #Fits an exponential smoothing state space model to the time series
@@ -148,7 +148,7 @@ tpsModelOutput <- TwoPSeriesModel_fun(pars = as.numeric(summary(tpsMcmcFits)[1,1
 save(tpsMcmcFits, tpsModelOutput, 
      file = paste0("./Output/TwoPoolSeriesModel_LitterOnly_", 
                    itr, "_", Sys.Date(), ".Rdata"))
-write_csv(summary(tpsMcmcFits), 
+write.csv(summary(tpsMcmcFits), row.names = TRUE, quote = FALSE, 
           file = paste0("./Output/TwoPoolSeriesModel_summary_LitterOnly_", itr, "_",
                         Sys.Date(), ".csv"))
 
