@@ -10,6 +10,7 @@ library(FME)
 library(doParallel)
 library(foreach)
 library(ggpubr)
+library(bayestestR)
 
 # Load HBEF data
 HBEF_data <- read_csv("./Data/HBEF_data_all_2024-11-07.csv") %>% 
@@ -399,7 +400,7 @@ dev.off()
 # ggsave(file = paste0("./Output/HBEF_3ps_steady_long_14C_", lag_time, "_",
 #                      Sys.Date(), ".jpeg"), width = 10, height = 6)
 # 
-# tpsModelOutput_df %>%  
+# tpsModelOutput_df %>%
 #   ggplot(aes(x = Year, y = SOC_Stock)) +
 #   geom_line(aes(color = Horizon), linewidth = 1) +
 #   # Add measured data points
@@ -425,7 +426,8 @@ dev.off()
 #                      Sys.Date(), ".jpeg"), width = 10, height = 6)
 
 #### Uncertainty analysis
-pars <- tpsMcmcFits$pars
+#Check if results are different if you remove the first 1000 pars fits
+pars <- tpsMcmcFits$pars[-(1:1000), ]
 
 num <- 1000
 
@@ -492,7 +494,7 @@ sens_all_14C$Horizon <- factor(sens_all_14C$Horizon,
 sens_all_C$Horizon <- factor(sens_all_C$Horizon,
                                levels = c("oie", "oa", "min"), ordered = TRUE)
 
-sens_all_14C %>% 
+sens_all_14C_p <- sens_all_14C %>% 
   ggplot(aes(x = Year)) +
   geom_line(aes(y = q50, color = Horizon), linewidth = 1) +
   geom_ribbon(aes(ymin = q05, ymax = q95, fill = Horizon), alpha = 0.4) +
@@ -519,7 +521,7 @@ sens_all_14C %>%
 ggsave(file = paste0("./Output/HBEF_3ps_steady_long_14C_Sensitivity_", lag_time, "_",
                      Sys.Date(), ".jpeg"), width = 10, height = 6) 
 
-sens_all_C %>% 
+sens_all_C_p <- sens_all_C %>% 
   ggplot(aes(x = Year)) +
   geom_line(aes(y = q50, color = Horizon), linewidth = 1) +
   geom_ribbon(aes(ymin = q05, ymax = q95, fill = Horizon), alpha = 0.4) +
@@ -543,21 +545,99 @@ sens_all_C %>%
   # geom_smooth(method = "lm", data = HBEF_data_14C_C_sum, 
   #             aes(y = C_mean), color = "black", alpha = 0.3,
   #             linetype = "dashed", linewidth = 0.5) +
-  facet_wrap(~Horizon) 
+  facet_wrap(~Horizon, ncol = 1) 
 ggsave(file = paste0("./Output/HBEF_3ps_steady_long_C_Sensitivity_", lag_time, "_",
                      Sys.Date(), ".jpeg"), width = 10, height = 6)
 
-#### Calculate transit time/ system age 
-## Based on best parameter fits
-# https://www.bgc-jena.mpg.de/TEE/basics/2015/12/30/Ages-Transit-Times/
+ggarrange(sens_all_14C_p, sens_all_C_p, common.legend = TRUE)
+ggsave(file = paste0("./Output/HBEF_3ps_steady_long_14C_C_Sensitivity_", lag_time, "_",
+                     Sys.Date(), ".jpeg"), width = 12, height = 6)
 
-bestpar <- tpsMcmcFits$bestpar
-k <- bestpar[c(1:3)]
-A <- diag(-k)
-A[2,1] <- k[1]*bestpar[4]
-A[3,2] <- k[2]*bestpar[5]
+#### Calculate transit time/ system age 
+## see Stoner et al 2021 and Gonzalez-Sosa et al. 2024
+propagation_fun <- function(data, num_iter, input_vector){
+
+  pb <- txtProgressBar(min = 0, max = num_iter, style = 3)
+
+  n_iter <- num_iter
+
+  iter <- numeric(n_iter)
+  Iter_number <- numeric(n_iter)
+  System_age <- numeric(n_iter)
+  oie_age <- numeric(n_iter)
+  oa_age <- numeric(n_iter)
+  min_age <- numeric(n_iter)
+  Transit_time <- numeric(n_iter)
+
+
+  for (i in 1:n_iter){
+        subset_par <- data.frame(k1 = sample(data$k1, 1),
+                                 k2 = sample(data$k2, 1),
+                                 k3 = sample(data$k3, 1),
+                                 alpha21 = sample(data$alpha21, 1),
+                                 alpha31 = sample(data$alpha32, 1))
+
+    #-------------- A matrix and inputs
+    ks <- subset_par[1:3]
+    A <- -1 * diag(ks)
+
+    ## Add transfer coefficients to A matrix:
+    alpha_2_1 <- subset_par[4]
+    alpha_3_2 <- subset_par[5]
+
+    A[2,1] <- as.numeric(alpha_2_1*subset_par[1])
+    A[3,2] <- as.numeric(alpha_3_2*subset_par[2])
+
+    u <- matrix((input_vector), ncol = 1)
+
+    #---------------- Age and transit time ----------------------
+
+    Sys_age <- systemAge(A = A, u = u)
+    Trans_time <- transitTime(A = A, u = u)
+
+    Iter_number[i] <- i
+    System_age[i] <- as.numeric(Sys_age$meanSystemAge)
+    oie_age[i] <- as.numeric(Sys_age$meanPoolAge[1])
+    oa_age[i] <- as.numeric(Sys_age$meanPoolAge[2])
+    min_age[i] <- as.numeric(Sys_age$meanPoolAge[3])
+    Transit_time[i] <- as.numeric(Trans_time$meanTransitTime)
+
+
+    age_results <- as.data.frame(cbind(
+      Iter_number, System_age, oie_age, oa_age, min_age, Transit_time
+    ))
+
+    setTxtProgressBar(pb, i)
+
+  }
+
+  return(age_results)
+}
+
+# exclude first 1000 rows: MCMC algorithms are sensitive to their starting point
+pars_df <- as.data.frame(tpsMcmcFits$pars[-(1:1000), ])
+
+age_transit_dist <- propagation_fun(data = pars_df, num_iter = 10000, 
+                                    input_vector = c(210,0,0))
+
+write_csv(age_transit_dist,
+          file = paste0("./Output/HBEF_3ps_steady_long_MeanAge_Transit_Distribution_", lag_time, "_",
+                        Sys.Date(), ".csv"))
+
+## Calculate system age and transit time based on median par fits
 u <- matrix(c(210,0,0))
-ua <- seq(0,2000)
+pars <- c(median(tpsMcmcFits$pars[-(1:1000),1]),
+          median(tpsMcmcFits$pars[-(1:1000),2]),
+          median(tpsMcmcFits$pars[-(1:1000),3]),
+          median(tpsMcmcFits$pars[-(1:1000),4]),
+          median(tpsMcmcFits$pars[-(1:1000),5]))
+
+k <- pars[1:3]
+A <- -1 * diag(k)
+A[2,1] <- k[1]*pars[4]
+A[3,2] <- k[2]*pars[5]
+
+ua <- seq(0,1600)
 
 # System Age
 SA <- systemAge(A = A, u = u, a = ua)
@@ -565,254 +645,152 @@ SA$meanSystemAge
 SA$meanPoolAge
 SA$quantilesSystemAge
 
-sum(SA$systemAgeDensity[c(101:2001)])/sum(SA$systemAgeDensity)*100
-
 # Transit age
-TT <- transitTime(A = A, u = u, a = seq(0,100))
+TT <- transitTime(A = A, u = u, a = ua)
 TT$meanTransitTime
 
-# SA$systemAgeDensity %>% 
-#   as.data.frame() %>% 
-#   dplyr::rename(age_dens = '.') %>% 
-#   mutate(age = ua) %>% 
-#   mutate(age_perc = (age_dens/sum(age_dens))*100,
-#          perc_sum = cumsum(age_perc)) %>% 
-#   # filter(perc_sum <= 51) %>% 
-#   # filter(perc_sum == max(perc_sum)) %>% 
-#   ggplot(aes(x = age, y = perc_sum)) +
-#   geom_path(linewidth = 1) +
-#   theme_bw(base_size = 16) +
-#   theme(axis.text = element_text(color = "black"),
-#         legend.position = "none") +
-#   scale_y_continuous("Cumulative distribution [%]", limits = c(0,100.1), expand = c(0,0)) +
-#   scale_x_continuous("Age [yr]", expand = c(0,0))
+sa_tt <- data.frame(
+  age = ua,
+  system_age = SA$systemAgeDensity,
+  oie = SA$poolAgeDensity[,1],
+  oa = SA$poolAgeDensity[,2],
+  min = SA$poolAgeDensity[,3],
+  transit_time = TT$transitTimeDensity
+)
 
-# Plot distribution for each pool
-pool_age_dens <- SA$poolAgeDensity %>%
-  as.data.frame() %>%
-  dplyr::rename(oie = V1,
-                oa = V2,
-                min = V3) %>%
-  mutate(age = ua) %>% 
-  pivot_longer(!age, values_to = "age_dens", names_to = "Horizon") 
+sum_age_tt_fun <- function(vector){
+  data.frame(mean_age = mean(vector),
+             mean_age_sd = sd(vector),
+             q1 = as.numeric(quantile(vector, probs = c(0.25))),
+             median = median(vector),
+             q3 = as.numeric(quantile(vector, probs = c(0.75))),
+             ci_low = as.numeric(ci(vector))[2],
+             ci_high = as.numeric(ci(vector))[3] 
+             )
+}
+
+SA_TT_sum <- data.frame(
+  rbind(
+    cbind(Variable = "system_age", sum_age_tt_fun(age_transit_dist$System_age)),
+    cbind(Variable = "oie", sum_age_tt_fun(age_transit_dist$oie_age)),
+    cbind(Variable = "oa", sum_age_tt_fun(age_transit_dist$oa_age)),
+    cbind(Variable = "min", sum_age_tt_fun(age_transit_dist$min_age)),
+    cbind(Variable = "transit_time", sum_age_tt_fun(age_transit_dist$Transit_time))
+  )
+)
+
+## Plot results
+pool_age_dens <- sa_tt %>% 
+  dplyr::select(age, oie, oa, min) %>% 
+  pivot_longer(!age, values_to = "age_dens", names_to = "Horizon")
 
 pool_age_dens$Horizon <- factor(pool_age_dens$Horizon, levels = c("oie", "oa", "min"))
 
-# Calculate how much C is cycling on different timescales
-pool_age_perc <- pool_age_dens %>% 
-  group_by(Horizon) %>% 
-  mutate(age_perc = (age_dens/sum(age_dens))*100,
-         perc_sum = cumsum(age_perc))
-
-pool_age_fun <- function(x){
+pool_age_fun <- function(x, ci_low, ci_high, mean_age){
   pool_age_dens %>%
-    filter(Horizon == x) %>% 
-    ggplot(aes(y = age_dens, color = Horizon, x = age, fill = Horizon)) +
-    geom_ribbon(data = pool_age_perc %>% 
-                  filter(Horizon == x) %>% 
-                  filter(perc_sum <= 50),
-                aes(ymin = 0, ymax = age_dens), 
-                color = NA, alpha = 0.3) +
+    filter(Horizon == x) %>%
+    ggplot(aes(y = age_dens, color = Horizon, x = age)) +
+    annotate("rect", xmin = ci_low, xmax = ci_high, ymin = -Inf, ymax = Inf,
+             alpha = 0.1) +
     geom_line(linewidth = 1) +
     theme_classic(base_size = 16) +
     theme(axis.text = element_text(color = "black"),
           legend.position = "none") +
     facet_wrap(~Horizon, scales = "free") +
-    scale_y_continuous("Density function", expand = c(0,0)) +
-    scale_x_continuous("Pool age [yr]", expand = c(0,0))
+    geom_vline(xintercept = mean_age, linetype = "dotdash")
 }
 
-pool_age_50 <- pool_age_perc %>% 
-  group_by(Horizon) %>% 
-  filter(perc_sum <= 50) %>% 
-  filter(perc_sum == max(perc_sum))
-
-oie_age_p <- pool_age_fun(x = "oie") +
+oie_age_p <- pool_age_fun(x = "oie", mean_age = SA_TT_sum$mean_age[2],
+                          ci_low = SA_TT_sum$ci_low[2], ci_high = SA_TT_sum$ci_high[2]) +
   scale_x_continuous("", expand = c(0,0)) +
   coord_cartesian(xlim = c(0,50)) +
   scale_color_manual(values = c("#33a02c")) +
-  scale_fill_manual(values = c("#33a02c")) +
-  geom_vline(xintercept = SA$meanPoolAge[1,], linetype = "dashed") +
-  annotate(geom = "text", x = 35, y = 0.13, 
-           label = paste0("Mean age = ", round(SA$meanPoolAge[1,],0), " yrs")) +
-  annotate(geom = "text", x = 35, y = 0.125, 
-           label = paste0("50% <= ", round(pool_age_50[1,1],0), " yrs"))
+  theme(plot.margin = margin(5,10,5,5, "pt")) +
+  annotate(geom = "text", x = 20, y = 0.12,
+           label = paste0("Mean age = ", round(SA_TT_sum$mean_age[2],0), " yrs")) +
+  scale_y_continuous("Density function", expand = c(0,0), breaks = seq(0,0.14,0.04),
+                     limits = c(0,0.14))
 
-oa_age_p <- pool_age_fun(x = "oa") +
-  scale_y_continuous("", expand = c(0,0)) +
+oa_age_p <- pool_age_fun(x = "oa", mean_age = SA_TT_sum$mean_age[3],
+                         ci_low = SA_TT_sum$ci_low[3], ci_high = SA_TT_sum$ci_high[3]) +
+  scale_x_continuous("Pool age [yr]", expand = c(0,0)) +
   coord_cartesian(xlim = c(0,650)) +
   scale_color_manual(values = c("#b2df8a")) +
-  scale_fill_manual(values = c("#b2df8a")) +
-  geom_vline(xintercept = SA$meanPoolAge[2,], linetype = "dashed") +
-  annotate(geom = "text", x = 450, y = 0.0075, 
-           label = paste0("Mean age = ", round(SA$meanPoolAge[2,],0), " yrs")) +
-  annotate(geom = "text", x = 450, y = 0.0072, 
-         label = paste0("50% <= ", round(pool_age_50[2,1],0), " yrs"))
+  theme(plot.margin = margin(5,10,5,5, "pt")) +
+  annotate(geom = "text", x = 300, y = 0.0085,
+           label = paste0("Mean age = ", round(SA_TT_sum$mean_age[3],0), " yrs")) +
+  scale_y_continuous("", expand = c(0,0), breaks = seq(0,0.01, 0.0025),
+                     limits = c(0,0.01))
 
-min_age_p <- pool_age_fun(x = "min") +
-  scale_y_continuous("", expand = c(0,0)) +
+min_age_p <- pool_age_fun(x = "min", mean_age = SA_TT_sum$mean_age[4],
+                          ci_low = SA_TT_sum$ci_low[4], ci_high = SA_TT_sum$ci_high[4]) +
   scale_x_continuous("", expand = c(0,0)) +
-  coord_cartesian(xlim = c(0,1800)) +
+  coord_cartesian(xlim = c(0,1600)) +
   scale_color_manual(values = c("#a6cee3")) +
-  scale_fill_manual(values = c("#a6cee3")) +
-  geom_vline(xintercept = SA$meanPoolAge[3,], linetype = "dashed") +
-  annotate(geom = "text", x = 1100, y = 0.0024, 
-           label = paste0("Mean age = ", round(SA$meanPoolAge[3,],0), " yrs")) +
-  annotate(geom = "text", x = 1100, y = 0.0023, 
-           label = paste0("50% <= ", round(pool_age_50[3,1],0), " yrs"))
+  theme(plot.margin = margin(5,15,5,0, "pt")) +
+  annotate(geom = "text", x = 800, y = 0.0025,
+           label = paste0("Mean age = ", round(SA_TT_sum$mean_age[4],0), " yrs")) +
+  scale_y_continuous("", expand = c(0,0), breaks = seq(0,0.003, 0.001),
+                     limits = c(0,0.003))
 
 ggarrange(oie_age_p, oa_age_p, min_age_p, nrow = 1)
 ggsave(file = paste0("./Output/HBEF_3ps_steady_long_PoolAgeDis_", lag_time, "_",
                      Sys.Date(), ".jpeg"), width = 12, height = 5)
 
-pool_age_cum_fun <- function(x){
-  pool_age_perc %>% 
-    filter(Horizon == x) %>% 
+# Calculate how much C is cycling on different timescales
+pool_age_perc <- pool_age_dens %>%
+  group_by(Horizon) %>%
+  mutate(age_perc = (age_dens/sum(age_dens))*100,
+         perc_sum = cumsum(age_perc))
+
+pool_age_cum_fun <- function(x, ci_low, ci_high, mean_age){
+  pool_age_perc %>%
+    filter(Horizon == x) %>%
     ggplot(aes(x = age, y = perc_sum, color = Horizon)) +
+    geom_vline(xintercept = mean_age, linetype = "dotdash") +
+    annotate("rect", xmin = ci_low, xmax = ci_high, ymin = -Inf, ymax = Inf,
+             alpha = 0.1) +
     geom_path(linewidth = 2) +
     theme_classic(base_size = 16) +
     theme(axis.text = element_text(color = "black"),
           legend.position = "none",
           panel.grid.major = element_line()) +
-    facet_wrap(~Horizon) +
-    scale_y_continuous("Cumulative distribution [%]", limits = c(0,101), expand = c(0,0)) +
-    scale_x_continuous("Age [yr]", expand = c(0,0))
+    facet_wrap(~Horizon)
 }
-  
-oie_age_cum_p <- pool_age_cum_fun(x = "oie") +
+
+oie_age_cum_p <- pool_age_cum_fun(x = "oie", mean_age = SA_TT_sum$mean_age[2],
+                                  ci_low = SA_TT_sum$ci_low[2], 
+                                  ci_high = SA_TT_sum$ci_high[2]) +
+  scale_y_continuous("Cumulative distribution [%]", limits = c(0,100), expand = c(0,0)) +
   scale_x_continuous("", expand = c(0,0)) +
   coord_cartesian(xlim = c(0,50)) +
   scale_color_manual(values = c("#33a02c")) +
-  geom_vline(xintercept = SA$meanPoolAge[1,], linetype = "dashed") +
-  annotate(geom = "text", x = 20, y = 10, 
-           label = paste0("Mean age = ", round(SA$meanPoolAge[1,],0), " yrs")) 
+  annotate(geom = "text", x = 20, y = 10,
+           label = paste0("Mean age = ", round(SA_TT_sum$mean_age[2],0), " yrs"))
 
-oa_age_cum_p <- pool_age_cum_fun(x = "oa") +
-  scale_y_continuous("", expand = c(0,0), limits = c(0,101)) +
+oa_age_cum_p <- pool_age_cum_fun(x = "oa", mean_age = SA_TT_sum$mean_age[3],
+                                 ci_low = SA_TT_sum$ci_low[3], 
+                                 ci_high = SA_TT_sum$ci_high[3]) +
+  scale_y_continuous("", expand = c(0,0), limits = c(0,100)) +
+  scale_x_continuous("Age [yr]", expand = c(0,0), breaks = seq(0,1600,100)) +
   coord_cartesian(xlim = c(0,650)) +
   scale_color_manual(values = c("#b2df8a")) +
-  geom_vline(xintercept = SA$meanPoolAge[2,], linetype = "dashed") +
-  annotate(geom = "text", x = 300, y = 10, 
-           label = paste0("Mean age = ", round(SA$meanPoolAge[2,],0), " yrs")) 
+  annotate(geom = "text", x = 300, y = 10,
+           label = paste0("Mean age = ", round(SA_TT_sum$mean_age[3],0), " yrs"))
 
-min_age_cum_p <- pool_age_cum_fun(x = "min") +
-  scale_y_continuous("", expand = c(0,0), limits = c(0,101)) +
-  scale_x_continuous("", expand = c(0,0)) +
-  coord_cartesian(xlim = c(0,1800)) +
+min_age_cum_p <- pool_age_cum_fun(x = "min", mean_age = SA_TT_sum$mean_age[4],
+                                  ci_low = SA_TT_sum$ci_low[4], 
+                                  ci_high = SA_TT_sum$ci_high[4]) +
+  scale_y_continuous("", expand = c(0,0), limits = c(0,100)) +
+  scale_x_continuous("", expand = c(0,0), breaks = seq(0,1600,250)) +
+  coord_cartesian(xlim = c(0,1600)) +
   scale_color_manual(values = c("#a6cee3")) +
-  geom_vline(xintercept = SA$meanPoolAge[3,], linetype = "dashed") +
-  annotate(geom = "text", x = 800, y = 10, 
-           label = paste0("Mean age = ", round(SA$meanPoolAge[3,],0), " yrs")) 
+  annotate(geom = "text", x = 800, y = 10,
+           label = paste0("Mean age = ", round(SA_TT_sum$mean_age[4],0), " yrs"))
 
 ggarrange(oie_age_cum_p, oa_age_cum_p, min_age_cum_p, nrow = 1)
 ggsave(file = paste0("./Output/HBEF_3ps_steady_long_PoolAgeDisCum_", lag_time, "_",
                      Sys.Date(), ".jpeg"), width = 12, height = 5)
 
 
-# see Stoner et al 2021 and Gonzalez-Sosa et al. 2024
-# propagation_fun <- function(data, num_iter, input_vector){
-#   
-#   pb <- txtProgressBar(min = 0, max = num_iter, style = 3)
-#   
-#   n_iter <- num_iter
-#   
-#   iter <- numeric(n_iter)
-#   Iter_number <- numeric(n_iter)
-#   System_age <- numeric(n_iter)
-#   oie_age <- numeric(n_iter)
-#   oa_age <- numeric(n_iter)
-#   min_age <- numeric(n_iter)
-#   Transit_time <- numeric(n_iter)
-#   
-#   
-#   for (i in 1:n_iter){
-#         subset_par <- data.frame(k1 = sample(data$k1, 1),
-#                                  k2 = sample(data$k2, 1),
-#                                  k3 = sample(data$k3, 1),
-#                                  alpha21 = sample(data$alpha21, 1),
-#                                  alpha31 = sample(data$alpha32, 1))
-#     
-#     #-------------- A matrix and inputs
-#     ks <- subset_par[1:3]
-#     A <- -1 * diag(ks) 
-#     
-#     ## Add transfer coefficients to A matrix:
-#     alpha_2_1 <- subset_par[4]
-#     alpha_3_2 <- subset_par[5]
-#     
-#     A[2,1] <- as.numeric(alpha_2_1*subset_par[1])
-#     A[3,2] <- as.numeric(alpha_3_2*subset_par[2])
-#     
-#     u <- matrix((input_vector), ncol = 1)
-#     
-#     #---------------- Age and transit time ----------------------
-#     
-#     Sist_age <- systemAge(A = A, u = u)
-#     Trans_time <- transitTime(A = A, u = u)
-#     
-#     Iter_number[i] <- i
-#     System_age[i] <- as.numeric(Sist_age$meanSystemAge)
-#     oie_age[i] <- as.numeric(Sist_age$meanPoolAge[1])
-#     oa_age[i] <- as.numeric(Sist_age$meanPoolAge[2])
-#     min_age[i] <- as.numeric(Sist_age$meanPoolAge[3])
-#     Transit_time[i] <- as.numeric(Trans_time$meanTransitTime)
-#     
-#     
-#     age_results <- as.data.frame(cbind(
-#       Iter_number, System_age, oie_age, oa_age, min_age, Transit_time
-#     ))
-#     
-#     setTxtProgressBar(pb, i)
-#     
-#   }
-#   
-#   return(age_results)
-# }
-# 
-# # tpsMcmcFits$pars <- tpsMcmcFits$pars[-(1:1000), ]
-# 
-# # exclude first 1000 rows: MCMC algorithms are sensitive to their starting point
-# pars_df <- as.data.frame(tpsMcmcFits$pars[-(1:1000), ])
-# 
-# age_transit_dist <- propagation_fun(pars_df, 10000, C0)
-# 
-# write_csv(age_transit_dist, 
-#           file = paste0("./Output/HBEF_3ps_steady_long_MeanAge_Transit_Distribution_", lag_time, "_",
-#                         Sys.Date(), ".csv"))
-# 
-# age_transit_dist_sum <- age_transit_dist %>% 
-#   pivot_longer(!Iter_number, values_to = "age_yr", names_to = "Pools") %>% 
-#   group_by(Pools) %>% 
-#   summarise(mean_age = mean(age_yr),
-#             sd_age = sd(age_yr),
-#             median_age = median(age_yr),
-#             mad_age = mad(age_yr))
-#   
-# age_transit_dist %>% 
-#   pivot_longer(!Iter_number, values_to = "age_yr", names_to = "Pools") %>% 
-#   filter(Pools != "System_age", Pools != "Transit_time") %>%
-#   mutate(Pools = factor(Pools, levels = c("oie_age", "oa_age", "min_age"),
-#                         ordered = TRUE)) %>% 
-#   ggplot(aes(x = age_yr, color = Pools)) +
-#   geom_density(linewidth = 1) +
-#   facet_wrap(~Pools, scales = "free") +
-#   geom_vline(aes(xintercept = mean_age), 
-#              data = age_transit_dist_sum %>% 
-#                filter(Pools != "System_age",
-#                       Pools != "Transit_time"),
-#              linetype = "dashed") +
-#   theme_bw() +
-#   theme_classic(base_size = 16) +
-#   theme(axis.text = element_text(color = "black"),
-#         legend.position = "none") +
-#   scale_color_manual(values = c("#33a02c", "#b2df8a", "#a6cee3")) +
-#   scale_x_continuous("Age [yr]", expand = c(0,0))
-# 
-# ggsave(file = paste0("./Output/HBEF_3ps_steady_long_14C_MeanAge_Distribution_", 
-#                      lag_time, "_", Sys.Date(), ".jpeg"), width = 10, height = 6) 
-#   
-# 
-#  
-# 
-# 
-# 
+
