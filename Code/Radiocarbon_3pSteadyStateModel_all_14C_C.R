@@ -285,7 +285,7 @@ init_pars <- c(k1 = 1/6, k2 = 1/14, k3 = 1/81,
 
 #double-check lower/upper again
 tpsModelFit <- FME::modFit(f = tpsCost, p = init_pars, method = "Marq", 
-               upper = c(3, rep(1,4)), lower = rep(0,5))
+                           upper = c(3, rep(1,4)), lower = rep(0,5))
 
 #sum squared residuals
 tpsModelFit$ssr
@@ -371,67 +371,11 @@ jpeg(paste0("./Output/HBEF_3ps_steady_long_14C_C_pairs_", lag_time, "_",
 pairs(tpsMcmcFits)
 dev.off()
 
-## Plot measured and modeled data together  
-# NHZone2_2023 %>%  
-#   filter(Year > 1945) %>% 
-#   ggplot(aes(x = Year, y = Delta14C)) +
-#   geom_line() +
-#   geom_line(data = tpsModelOutput_df,
-#             aes(color = Horizon), linewidth = 1) +
-#   # Add measured data points
-#   geom_errorbar(data = HBEF_data_14C_C_sum,
-#                 aes(y = Delta14C_mean, ymin = Delta14C_mean - Delta14C_sd,
-#                     ymax = Delta14C_mean + Delta14C_sd,
-#                     group = Horizon),
-#                 width = 0.3) +
-#   geom_point(data = HBEF_data_14C_C_sum, aes(y = Delta14C_mean, fill = Horizon),
-#              shape = 21, size = 2) +
-#   scale_x_continuous("Year", limits = c(1968,2024), expand = c(0,0),
-#                      breaks = seq(1969,2023,10)) +
-#   scale_y_continuous(expression(paste(Delta^14, "C [‰]")), limits = c(-175,1000),
-#                      expand = c(0,0)) +
-#   theme_classic(base_size = 16) +
-#   theme(axis.text = element_text(color = "black")) +
-#   scale_color_manual("Modeled", label = c("Oie", "Oa", "0-10 cm"),
-#                      values = c("#33a02c", "#b2df8a", "#a6cee3")) +
-#   scale_fill_manual("Measured", label = c("Oie", "Oa/A", "0-10 cm"),
-#                     values = c("#33a02c", "#b2df8a", "#a6cee3"))
-# 
-# ggsave(file = paste0("./Output/HBEF_3ps_steady_long_14C_", lag_time, "_",
-#                      Sys.Date(), ".jpeg"), width = 10, height = 6)
-# 
-# tpsModelOutput_df %>%
-#   ggplot(aes(x = Year, y = SOC_Stock)) +
-#   geom_line(aes(color = Horizon), linewidth = 1) +
-#   # Add measured data points
-#   geom_errorbar(data = HBEF_data_14C_C_sum,
-#                 aes(y = C_mean, ymin = C_mean - C_sd,
-#                     ymax = C_mean + C_sd,
-#                     group = Horizon),
-#                 width = 0.3) +
-#   geom_point(data = HBEF_data_14C_C_sum, aes(y = C_mean, fill = Horizon),
-#              shape = 21, size = 2) +
-#   scale_x_continuous("Year", limits = c(1968,2024), expand = c(0,0),
-#                      breaks = seq(1969,2023,10)) +
-#   scale_y_continuous("C stocks") +
-#   theme_classic(base_size = 16) +
-#   theme(axis.text = element_text(color = "black")) +
-#   scale_color_manual("Modeled\nhorizon data", label = c("Oie", "Oa", "0-10 cm"),
-#                      values = c("#33a02c", "#b2df8a", "#a6cee3")) +
-#   scale_fill_manual("Measured\nhorizon data", label = c("Oie", "Oa/A", "0-10 cm"),
-#                     values = c("#33a02c", "#b2df8a", "#a6cee3")) +
-#   facet_wrap(~Horizon)
-# 
-# ggsave(file = paste0("./Output/HBEF_3ps_steady_long_C_", lag_time, "_",
-#                      Sys.Date(), ".jpeg"), width = 10, height = 6)
-
 #### Uncertainty analysis
 #Check if results are different if you remove the first 1000 pars fits
 pars <- tpsMcmcFits$pars[-(1:1000), ]
 
 num <- 1000
-
-# sens_all <- summary(FME::sensRange(num = num, func = ThreePSeriesModel_fun, parInput = pars))
 
 sens_oie_14C <- summary(sensRange(num = num, func = ThreePSeriesModel_fun, parInput = pars, 
                                   sensvar = c("oie_14C"))) %>% 
@@ -551,6 +495,195 @@ ggsave(file = paste0("./Output/HBEF_3ps_steady_long_C_Sensitivity_", lag_time, "
 
 ggarrange(sens_all_14C_p, sens_all_C_p, common.legend = TRUE)
 ggsave(file = paste0("./Output/HBEF_3ps_steady_long_14C_C_Sensitivity_", lag_time, "_",
+                     Sys.Date(), ".jpeg"), width = 12, height = 6)
+
+#Plot predicted vs observed (mean + SD) for each Horizon and compute linear regression
+model_14C_pred_obs <- sens_all_14C %>%
+  right_join(HBEF_data_14C_C_sum)
+
+model_14C_pred_obs_res_oie <- model_14C_pred_obs %>% 
+  filter(Horizon == "oie") %>% 
+  #subtract the predicted value from the actual value (residual)
+  mutate(res = Mean - Delta14C_mean,
+         #Square each of the calculated residuals
+         sq_res = (res)^2)
+
+model_14C_pred_obs_res_oie %>% 
+  #Calculate the mean of the squared differences
+  summarise(msr = sum(sq_res)/length(model_14C_pred_obs_res_oie),
+            #take the square root
+            rmse = sqrt(msr))
+
+cor(y = model_14C_pred_obs_res_oie$Delta14C_mean,
+    x = model_14C_pred_obs_res_oie$Mean,
+    method = "pearson")
+
+model_14C_pred_obs_res_oa <- model_14C_pred_obs %>% 
+  filter(Horizon == "oa") %>% 
+  #subtract the predicted value from the actual value (residual)
+  mutate(res = Mean - Delta14C_mean,
+         #Square each of the calculated residuals
+         sq_res = (res)^2)
+
+model_14C_pred_obs_res_oa %>% 
+  #Calculate the mean of the squared differences
+  summarise(msr = sum(sq_res)/length(model_C_pred_obs_res_oa),
+            #take the square root
+            rmse = sqrt(msr))
+
+cor(y = model_14C_pred_obs_res_oa$Delta14C_mean,
+    x = model_14C_pred_obs_res_oa$Mean,
+    method = "pearson")
+
+model_14C_pred_obs_res_min <- model_14C_pred_obs %>% 
+  filter(Horizon == "min") %>% 
+  #subtract the predicted value from the actual value (residual)
+  mutate(res = Mean - Delta14C_mean,
+         #Square each of the calculated residuals
+         sq_res = (res)^2)
+
+model_14C_pred_obs_res_min %>% 
+  #Calculate the mean of the squared differences
+  summarise(msr = sum(sq_res)/length(model_C_pred_obs_res_min),
+            #take the square root
+            rmse = sqrt(msr))
+
+cor(y = model_14C_pred_obs_res_min$Delta14C_mean,
+    x = model_14C_pred_obs_res_min$Mean,
+    method = "pearson")
+
+fun_pred_obs_14C <- function(x){
+  model_14C_pred_obs %>%
+    filter(Horizon == x) %>% 
+    ggplot(aes(x = Mean, y = Delta14C_mean, color = Horizon)) +
+    geom_abline(intercept = 1, linetype = "dashed") +
+    geom_point() +
+    geom_errorbar(aes(ymin = Delta14C_mean - Delta14C_sd, 
+                      ymax = Delta14C_mean + Delta14C_sd)) +
+    geom_errorbar(aes(xmin = Mean - Sd, 
+                      xmax = Mean + Sd)) +
+    theme_classic(base_size = 16) +
+    theme(axis.text = element_text(color = "black"),
+          legend.position = "none") +
+    facet_wrap(~Horizon) 
+}
+
+oie_14C <- fun_pred_obs_14C(x = "oie") +
+  #Only plot the one that is significant
+  geom_smooth(data = model_14C_pred_obs %>%
+                filter(Horizon == "oie"),
+              method = "lm") +
+  scale_x_continuous(expression(paste("Predicted ", Delta^14, "C [‰]")),
+                     limits = c(0,475), expand = c(0,0)) +
+  scale_y_continuous(expression(paste("Observed ", Delta^14, "C [‰]")),
+                     limits = c(0,525), expand = c(0,0)) +
+  scale_color_manual(values = c("#33a02c"))
+
+oa_14C <- fun_pred_obs_14C(x = "oa") +
+  scale_x_continuous(expression(paste("Predicted ", Delta^14, "C [‰]")),
+                     limits = c(-20,155), expand = c(0,0)) +
+  scale_y_continuous(expression(paste("Observed ", Delta^14, "C [‰]")),
+                     limits = c(-20,230), expand = c(0,0)) +
+  scale_color_manual(values = c("#b2df8a"))
+
+min_14C <- fun_pred_obs_14C(x = "min") +
+  scale_x_continuous(expression(paste("Predicted ", Delta^14, "C [‰]")),
+                     limits = c(-35,-10), expand = c(0,0)) +
+  scale_y_continuous(expression(paste("Observed ", Delta^14, "C [‰]")),
+                     limits = c(-110,20), expand = c(0,0)) +
+  scale_color_manual(values = c("#a6cee3"))
+
+ggarrange(oie_14C, oa_14C, min_14C, nrow = 1)
+ggsave(file = paste0("./Output/HBEF_3ps_short_14C_Obs_Pred_", lag_time, "_",
+                     Sys.Date(), ".jpeg"), width = 12, height = 6)
+
+model_C_pred_obs <- sens_all_C %>%
+  right_join(HBEF_data_14C_C_sum) %>% 
+  drop_na(C_mean)
+
+#Cannot make estimates for SOC stocks as the standard deviation is 0 for predicted values
+
+# manually calculate residuals and RMSE
+model_C_pred_obs_res_oie <- model_C_pred_obs %>% 
+  filter(Horizon == "oie") %>% 
+  #subtract the predicted value from the actual value (residual)
+  mutate(res = Mean - C_mean,
+         #Square each of the calculated residuals
+         sq_res = (res)^2)
+
+model_C_pred_obs_res_oie %>% 
+  #Calculate the mean of the squared differences
+  summarise(msr = sum(sq_res)/length(model_C_pred_obs_res_oie),
+            #take the square root
+            rmse = sqrt(msr))
+
+model_C_pred_obs_res_oa <- model_C_pred_obs %>% 
+  filter(Horizon == "oa") %>% 
+  #subtract the predicted value from the actual value (residual)
+  mutate(res = Mean - C_mean,
+         #Square each of the calculated residuals
+         sq_res = (res)^2)
+
+model_C_pred_obs_res_oa %>% 
+  #Calculate the mean of the squared differences
+  summarise(msr = sum(sq_res)/length(model_C_pred_obs_res_oa),
+            #take the square root
+            rmse = sqrt(msr))
+
+model_C_pred_obs_res_min <- model_C_pred_obs %>% 
+  filter(Horizon == "min") %>% 
+  #subtract the predicted value from the actual value (residual)
+  mutate(res = Mean - C_mean,
+         #Square each of the calculated residuals
+         sq_res = (res)^2)
+
+model_C_pred_obs_res_min %>% 
+  #Calculate the mean of the squared differences
+  summarise(msr = sum(sq_res)/length(model_C_pred_obs_res_min),
+            #take the square root
+            rmse = sqrt(msr))
+
+fun_pred_obs_C <- function(x){
+  model_C_pred_obs %>%
+    filter(Horizon == x) %>% 
+    ggplot(aes(x = Mean, y = C_mean, color = Horizon)) +
+    geom_abline(intercept = 1, linetype = "dashed") +
+    geom_point() +
+    geom_errorbar(aes(ymin = C_mean - C_sd, 
+                      ymax = C_mean + C_sd)) +
+    geom_errorbar(aes(xmin = Mean - Sd, 
+                      xmax = Mean + Sd)) +
+    theme_classic(base_size = 16) +
+    theme(axis.text = element_text(color = "black"),
+          legend.position = "none") +
+    facet_wrap(~Horizon) 
+}
+
+oie_C <- fun_pred_obs_C(x = "oie") +
+  scale_x_continuous("Predicted SOC stocks [g/m2]",
+                     limits = c(1400,1735), expand = c(0,0)) +
+  scale_y_continuous("Observed SOC stocks [g/m2]",
+                     limits = c(550,3750), expand = c(0,0)) +
+  scale_color_manual(values = c("#33a02c"))
+# ggsave(file = paste0("./Output/HBEF_3ps_short_C_Obs_Pred_oie_", lag_time, "_",
+#                      Sys.Date(), ".jpeg"), width = 5, height = 6)
+
+oa_C <- fun_pred_obs_C(x = "oa") +
+  scale_x_continuous("Predicted SOC stocks [g/m2]",
+                     limits = c(1700,2075), expand = c(0,0)) +
+  scale_y_continuous("Observed SOC stocks [g/m2]",
+                     limits = c(500,5200), expand = c(0,0)) +
+  scale_color_manual(values = c("#b2df8a"))
+
+min_C <- fun_pred_obs_C(x = "min") +
+  scale_x_continuous("Predicted SOC stocks [g/m2]",
+                     limits = c(2200,2375), expand = c(0,0)) +
+  scale_y_continuous("Observed SOC stocks [g/m2]",
+                     limits = c(1100,4100), expand = c(0,0)) +
+  scale_color_manual(values = c("#a6cee3"))
+
+ggarrange(oie_C, oa_C, min_C, nrow = 1)
+ggsave(file = paste0("./Output/HBEF_3ps_short_C_Obs_Pred_", lag_time, "_",
                      Sys.Date(), ".jpeg"), width = 12, height = 6)
 
 #### Calculate transit time/ system age 
