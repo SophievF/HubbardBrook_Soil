@@ -527,7 +527,7 @@ model_14C_pred_obs_res_oa <- model_14C_pred_obs %>%
 
 model_14C_pred_obs_res_oa %>% 
   #Calculate the mean of the squared differences
-  summarise(msr = sum(sq_res)/length(model_C_pred_obs_res_oa),
+  summarise(msr = sum(sq_res)/length(model_14C_pred_obs_res_oa),
             #take the square root
             rmse = sqrt(msr))
 
@@ -544,7 +544,7 @@ model_14C_pred_obs_res_min <- model_14C_pred_obs %>%
 
 model_14C_pred_obs_res_min %>% 
   #Calculate the mean of the squared differences
-  summarise(msr = sum(sq_res)/length(model_C_pred_obs_res_min),
+  summarise(msr = sum(sq_res)/length(model_14C_pred_obs_res_min),
             #take the square root
             rmse = sqrt(msr))
 
@@ -594,14 +594,14 @@ min_14C <- fun_pred_obs_14C(x = "min") +
   scale_color_manual(values = c("#a6cee3"))
 
 ggarrange(oie_14C, oa_14C, min_14C, nrow = 1)
-ggsave(file = paste0("./Output/HBEF_3ps_short_14C_Obs_Pred_", lag_time, "_",
+ggsave(file = paste0("./Output/HBEF_3ps_steady_long_14C_Obs_Pred_", lag_time, "_",
                      Sys.Date(), ".jpeg"), width = 12, height = 6)
 
 model_C_pred_obs <- sens_all_C %>%
   right_join(HBEF_data_14C_C_sum) %>% 
   drop_na(C_mean)
 
-#Cannot make estimates for SOC stocks as the standard deviation is 0 for predicted values
+#Cannot make cor estimates for SOC stocks as the standard deviation is 0 for predicted values
 
 # manually calculate residuals and RMSE
 model_C_pred_obs_res_oie <- model_C_pred_obs %>% 
@@ -665,7 +665,7 @@ oie_C <- fun_pred_obs_C(x = "oie") +
   scale_y_continuous("Observed SOC stocks [g/m2]",
                      limits = c(550,3750), expand = c(0,0)) +
   scale_color_manual(values = c("#33a02c"))
-# ggsave(file = paste0("./Output/HBEF_3ps_short_C_Obs_Pred_oie_", lag_time, "_",
+# ggsave(file = paste0("./Output/HBEF_3ps_steady_long_C_Obs_Pred_oie_", lag_time, "_",
 #                      Sys.Date(), ".jpeg"), width = 5, height = 6)
 
 oa_C <- fun_pred_obs_C(x = "oa") +
@@ -683,7 +683,7 @@ min_C <- fun_pred_obs_C(x = "min") +
   scale_color_manual(values = c("#a6cee3"))
 
 ggarrange(oie_C, oa_C, min_C, nrow = 1)
-ggsave(file = paste0("./Output/HBEF_3ps_short_C_Obs_Pred_", lag_time, "_",
+ggsave(file = paste0("./Output/HBEF_3ps_steady_long_C_Obs_Pred_", lag_time, "_",
                      Sys.Date(), ".jpeg"), width = 12, height = 6)
 
 #### Calculate transit time/ system age 
