@@ -229,7 +229,11 @@ years <- seq(-53042, 2023, by = 0.5)
 # years <- seq(0, 2023, by = 0.5)
 
 # initial C stocks in each pool (based on existing C budget)
-C0 <- c(1394, 1484, 3170)
+# C0 <- c(1394, 1484, 3170)
+
+# initial C stocks based on average values
+C0 <- c(mean(oie_data_C[,2]),
+        mean(oa_data_C[,2]), mean(min_data_C[,2]))
 
 ## initial Delta14C in each pool 
 init14C <- c(0, 0, -23)
@@ -280,7 +284,12 @@ tpsCost <- function(pars){
   return(cost6)
 }
 
+# based on C stocks from Fahey (2005)
 init_pars <- c(k1 = 1/6, k2 = 1/14, k3 = 1/81, 
+               alpha21 = 100/(100 + 110), alpha32 = 39/(39 + 61))
+
+# based on C stocks from samples
+init_pars <- c(k1 = 1/7, k2 = 1/19, k3 = 1/59,
                alpha21 = 100/(100 + 110), alpha32 = 39/(39 + 61))
 
 #double-check lower/upper again
