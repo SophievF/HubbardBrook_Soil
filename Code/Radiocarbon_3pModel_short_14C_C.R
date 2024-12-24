@@ -46,38 +46,45 @@ HBEF_data %>%
   theme_bw()
 
 # Load 14C data from Charley Driscoll
-LitterData <- read_csv("./Data/LitterData_Driscoll.csv")
+# LitterData <- read_csv("./Data/LitterData_Driscoll.csv")
+# 
+# #fm * exp(lambda * (-obs_date_y + 1950)) - 1) * 1000
+# lambda <- 0.0001209681
+# 
+# litter_all <- LitterData %>% 
+#   filter(Watershed == 6) %>% 
+#   mutate(Delta14C = (F14C * exp(lambda * (-Year + 1950)) -1) * 1000) %>% 
+#   mutate(Elevation = case_when(
+#     Plot < 70 ~ "High",
+#     Plot > 152 ~ "Low",
+#     TRUE ~ "Mid"
+#   )) %>% 
+#   #match Horizon names
+#   mutate(Horizon = case_when(
+#     Horizon == "Oie" ~ "Oi/Oe",
+#     Horizon == "Oa" ~ "Oa/A"
+#   )) %>% 
+#   #Add NA's for SOC stocks so model will not be contrained by SOC stocsk 
+#   mutate(SOC_g_m2 = NA)
+# 
+# # Summarize and merge data by horizon; remove roots for now
+# HBEF_all <- HBEF_data %>% 
+#   filter(Plot != "all fine roots") %>% 
+#   filter(Year != 2020) %>% 
+#   mutate(DataSource = "Groffman") %>% 
+#   mutate(SOC_g_m2 = (`Measured_%_C` * mean_BD_g_cm3 * mean_thick_cm) * 100) %>% 
+#   dplyr::select(Year, Horizon, Delta14C, SOC_g_m2, DataSource, Elevation) %>% 
+#   rbind(litter_all %>% 
+#           dplyr::select(Year, Horizon, Delta14C, SOC_g_m2, Elevation) %>% 
+#           mutate(DataSource = "Driscoll")) %>% 
+#   dplyr::select(Year:Delta14C, SOC_g_m2, DataSource, Elevation)
 
-#fm * exp(lambda * (-obs_date_y + 1950)) - 1) * 1000
-lambda <- 0.0001209681
-
-litter_all <- LitterData %>% 
-  filter(Watershed == 6) %>% 
-  mutate(Delta14C = (F14C * exp(lambda * (-Year + 1950)) -1) * 1000) %>% 
-  mutate(Elevation = case_when(
-    Plot < 70 ~ "High",
-    Plot > 152 ~ "Low",
-    TRUE ~ "Mid"
-  )) %>% 
-  #match Horizon names
-  mutate(Horizon = case_when(
-    Horizon == "Oie" ~ "Oi/Oe",
-    Horizon == "Oa" ~ "Oa/A"
-  )) %>% 
-  #Add NA's for SOC stocks so model will not be contrained by SOC stocsk 
-  mutate(SOC_g_m2 = NA)
-
-# Summarize and merge data by horizon; remove roots for now
-HBEF_all <- HBEF_data %>% 
-  filter(Plot != "all fine roots") %>% 
-  filter(Year != 2020) %>% 
-  mutate(DataSource = "Groffman") %>% 
-  mutate(SOC_g_m2 = (`Measured_%_C` * mean_BD_g_cm3 * mean_thick_cm) * 100) %>% 
-  dplyr::select(Year, Horizon, Delta14C, SOC_g_m2, DataSource, Elevation) %>% 
-  rbind(litter_all %>% 
-          dplyr::select(Year, Horizon, Delta14C, SOC_g_m2, Elevation) %>% 
-          mutate(DataSource = "Driscoll")) %>% 
-  dplyr::select(Year:Delta14C, SOC_g_m2, DataSource, Elevation)
+HBEF_all <- HBEF_data %>%
+  filter(Plot != "all fine roots") %>%
+  filter(Year != 2020) %>%
+  mutate(DataSource = "Groffman") %>%
+  mutate(SOC_g_m2 = (`Measured_%_C` * mean_BD_g_cm3 * mean_thick_cm) * 100) %>%
+  dplyr::select(Year, Horizon, Delta14C, SOC_g_m2, DataSource, Elevation)
 
 min_data_14C <- HBEF_all %>% 
   filter(Horizon == "Mineral_0_10") %>% 
@@ -178,16 +185,17 @@ NHZone2_2023 %>%
 years <- seq(1969, 2023, by = 0.5)
 
 # initial C stocks in each pool (based 3-yr average)
-# C0 <- c(mean(oie_data_C[1:3,2]),  
+# C0 <- c(mean(oie_data_C[1:3,2]),
 #         mean(oa_data_C[1:3,2]), mean(min_data_C[1:3,2]))
 #Average of first three years (including data from Driscoll)
-C0 <- c(1409, 1615, 2143)
+# C0 <- c(1409, 1615, 2143)
 
 ## initial Delta14C in each pool (based on steady-state 3p model)
-load("./Output/ThreePoolSeriesModel_3_2024-09-21.Rdata")
-init_14C_1996 <- tpsModelOutput %>%
+load("./Output/HBEF_3ps_steady_long_14C_C_3_2024-12-13.Rdata")
+init_14C_1969 <- tpsModelOutput %>%
   dplyr::filter(time == 1969)
-init14C <- c(init_14C_1996[,2], init_14C_1996[,3], init_14C_1996[,4])
+init14C <- c(init_14C_1969[,2], init_14C_1969[,4], init_14C_1969[,6])
+C0 <- c(init_14C_1969[,3], init_14C_1969[,5], init_14C_1969[,7])
 rm(tpsModelOutput, tpsMcmcFits)
 
 # lag-time before C enters soils: based on communication with Josh
@@ -236,7 +244,8 @@ tpsCost <- function(pars){
   return(cost6)
 }
 
-init_pars <- c(k1 = 1/7, k2 = 1/16, k3 = 1/55, 
+#values based on stocks/fluxes; alternative use values from 3 pool model at steady state
+init_pars <- c(k1 = 1/8, k2 = 1/19, k3 = 1/74, 
                alpha21 = 100/(100 + 110), alpha32 = 39/(39 + 61))
 
 #double-check lower/upper again
