@@ -49,7 +49,7 @@ HBEF_data %>%
 # LitterData <- read_csv("./Data/LitterData_Driscoll.csv")
 # 
 # #fm * exp(lambda * (-obs_date_y + 1950)) - 1) * 1000
-# lambda <- 0.0001209681
+lambda <- 0.0001209681
 # 
 # litter_all <- LitterData %>% 
 #   filter(Watershed == 6) %>% 
@@ -182,7 +182,7 @@ NHZone2_2023 %>%
 # time interval for model
 # years <- seq(-53042, 2025, by = 0.5)
 # years <- seq(-10000, 2025, by = 0.5)
-years <- seq(1969, 2023, by = 0.5)
+years <- seq(1997, 2023, by = 0.5)
 
 # initial C stocks in each pool (based 3-yr average)
 # C0 <- c(mean(oie_data_C[1:3,2]),
@@ -192,10 +192,10 @@ years <- seq(1969, 2023, by = 0.5)
 
 ## initial Delta14C in each pool (based on steady-state 3p model)
 load("./Output/HBEF_3ps_steady_long_14C_C_3_2024-12-13.Rdata")
-init_14C_1969 <- tpsModelOutput %>%
-  dplyr::filter(time == 1969)
-init14C <- c(init_14C_1969[,2], init_14C_1969[,4], init_14C_1969[,6])
-C0 <- c(init_14C_1969[,3], init_14C_1969[,5], init_14C_1969[,7])
+init_14C_1997 <- tpsModelOutput %>%
+  dplyr::filter(time == 1997)
+init14C <- c(init_14C_1997[,2], init_14C_1997[,4], init_14C_1997[,6])
+C0 <- c(init_14C_1997[,3], init_14C_1997[,5], init_14C_1997[,7])
 rm(tpsModelOutput, tpsMcmcFits)
 
 # lag-time before C enters soils: based on communication with Josh
@@ -407,7 +407,7 @@ sens_all_14C_p <- sens_all_14C %>%
   geom_line(aes(y = q50, color = Horizon), linewidth = 1) +
   geom_ribbon(aes(ymin = q05, ymax = q95, fill = Horizon), alpha = 0.4) +
   geom_line(data = NHZone2_2023 %>% 
-              filter(Year > 1968), aes(y = Delta14C)) +
+              filter(Year > 1997), aes(y = Delta14C)) +
   # Add measured data points
   geom_errorbar(data = HBEF_data_14C_C_sum,
                 aes(y = Delta14C_mean, ymin = Delta14C_mean - Delta14C_sd,
@@ -416,7 +416,7 @@ sens_all_14C_p <- sens_all_14C %>%
                 width = 0.3) +
   geom_point(data = HBEF_data_14C_C_sum, aes(y = Delta14C_mean, fill = Horizon),
              shape = 21, size = 2) +
-  scale_x_continuous("Year", limits = c(1968,2024), expand = c(0,0),
+  scale_x_continuous("Year", limits = c(1997,2024), expand = c(0,0),
                      breaks = seq(1969,2023,10)) +
   scale_y_continuous(expression(paste(Delta^14, "C [‰]")), limits = c(-175,1000),
                      expand = c(0,0)) +
@@ -442,8 +442,8 @@ sens_all_C_p <- sens_all_C %>%
                 width = 0.3) +
   geom_point(data = HBEF_data_14C_C_sum, aes(y = C_mean, fill = Horizon),
              shape = 21, size = 2) +
-  scale_x_continuous("Year", limits = c(1968,2024), expand = c(0,0),
-                     breaks = seq(1969,2023,10)) +
+  scale_x_continuous("Year", limits = c(1997,2024), expand = c(0,0),
+                     breaks = seq(1997,2023,10)) +
   scale_y_continuous("SOC stocks") +
   theme_classic(base_size = 16) +
   theme(axis.text = element_text(color = "black")) +
