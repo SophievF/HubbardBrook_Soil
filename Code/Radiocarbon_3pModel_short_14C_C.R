@@ -191,12 +191,16 @@ years <- seq(1997, 2023, by = 0.5)
 # C0 <- c(1409, 1615, 2143)
 
 ## initial Delta14C in each pool (based on steady-state 3p model)
-load("./Output/HBEF_3ps_steady_long_14C_C_3_2024-12-13.Rdata")
-init_14C_1997 <- tpsModelOutput %>%
-  dplyr::filter(time == 1997)
-init14C <- c(init_14C_1997[,2], init_14C_1997[,4], init_14C_1997[,6])
-C0 <- c(init_14C_1997[,3], init_14C_1997[,5], init_14C_1997[,7])
-rm(tpsModelOutput, tpsMcmcFits)
+sens_14c <- read_csv("./Output/HBEF_3ps_steady_long_sens_14C_3_2024-12-14.csv") %>% 
+  filter(Year == 1997)
+init14C <- c(sens_14c[1,8], sens_14c[2,8], sens_14c[3,8])
+as.numeric(init14C)
+
+sens_c <- read_csv("./Output/HBEF_3ps_steady_long_sens_C_3_2024-12-14.csv") %>% 
+  filter(Year == 1997)
+C0 <- c(sens_c[1,8], sens_c[2,8], sens_c[3,8])
+as.numeric(C0)
+rm(sens_14c, sens_c)
 
 # lag-time before C enters soils: based on communication with Josh
 lag_time <- 3
@@ -245,7 +249,7 @@ tpsCost <- function(pars){
 }
 
 #values based on stocks/fluxes; alternative use values from 3 pool model at steady state
-init_pars <- c(k1 = 1/8, k2 = 1/19, k3 = 1/74, 
+init_pars <- c(k1 = 1/8, k2 = 1/19, k3 = 1/59, 
                alpha21 = 100/(100 + 110), alpha32 = 39/(39 + 61))
 
 #double-check lower/upper again
