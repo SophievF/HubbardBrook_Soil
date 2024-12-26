@@ -21,38 +21,45 @@ HBEF_data$Horizon <- factor(HBEF_data$Horizon,
                             ordered = TRUE)
 
 # Load 14C data from Charley Driscoll
-LitterData <- read_csv("./Data/LitterData_Driscoll.csv")
+# LitterData <- read_csv("./Data/LitterData_Driscoll.csv")
 
 #fm * exp(lambda * (-obs_date_y + 1950)) - 1) * 1000
 lambda <- 0.0001209681
 
-litter_all <- LitterData %>% 
-  filter(Watershed == 6) %>% 
-  mutate(Delta14C = (F14C * exp(lambda * (-Year + 1950)) -1) * 1000) %>% 
-  mutate(Elevation = case_when(
-    Plot < 70 ~ "High",
-    Plot > 152 ~ "Low",
-    TRUE ~ "Mid"
-  )) %>% 
-  #add dummy variable for SOC stocks
-  mutate(SOC_g_m2 = NA) %>% 
-  #match Horizon names
-  mutate(Horizon = case_when(
-    Horizon == "Oie" ~ "Oi/Oe",
-    Horizon == "Oa" ~ "Oa/A"
-  )) 
+# litter_all <- LitterData %>% 
+#   filter(Watershed == 6) %>% 
+#   mutate(Delta14C = (F14C * exp(lambda * (-Year + 1950)) -1) * 1000) %>% 
+#   mutate(Elevation = case_when(
+#     Plot < 70 ~ "High",
+#     Plot > 152 ~ "Low",
+#     TRUE ~ "Mid"
+#   )) %>% 
+#   #add dummy variable for SOC stocks
+#   mutate(SOC_g_m2 = NA) %>% 
+#   #match Horizon names
+#   mutate(Horizon = case_when(
+#     Horizon == "Oie" ~ "Oi/Oe",
+#     Horizon == "Oa" ~ "Oa/A"
+#   )) 
 
 # Summarize and merge data by horizon; remove roots for now
-HBEF_all <- HBEF_data %>% 
-  filter(Plot != "all fine roots") %>% 
-  filter(Year != 2020) %>% 
-  mutate(DataSource = "Groffman") %>% 
-  mutate(SOC_g_m2 = (`Measured_%_C` * mean_BD_g_cm3 * mean_thick_cm) * 100) %>% 
-  dplyr::select(Year, Horizon, Delta14C, SOC_g_m2, DataSource, Elevation) %>% 
-  rbind(litter_all %>% 
-          dplyr::select(Year, Horizon, Delta14C, SOC_g_m2, Elevation) %>% 
-          mutate(DataSource = "Driscoll")) %>% 
-  dplyr::select(Year:Delta14C, SOC_g_m2, DataSource, Elevation)
+# HBEF_all <- HBEF_data %>% 
+#   filter(Plot != "all fine roots") %>% 
+#   filter(Year != 2020) %>% 
+#   mutate(DataSource = "Groffman") %>% 
+#   mutate(SOC_g_m2 = (`Measured_%_C` * mean_BD_g_cm3 * mean_thick_cm) * 100) %>% 
+#   dplyr::select(Year, Horizon, Delta14C, SOC_g_m2, DataSource, Elevation) %>% 
+#   rbind(litter_all %>% 
+#           dplyr::select(Year, Horizon, Delta14C, SOC_g_m2, Elevation) %>% 
+#           mutate(DataSource = "Driscoll")) %>% 
+#   dplyr::select(Year:Delta14C, SOC_g_m2, DataSource, Elevation)
+
+HBEF_all <- HBEF_data %>%
+  filter(Plot != "all fine roots") %>%
+  filter(Year != 2020) %>%
+  mutate(DataSource = "Groffman") %>%
+  mutate(SOC_g_m2 = (`Measured_%_C` * mean_BD_g_cm3 * mean_thick_cm) * 100) %>%
+  dplyr::select(Year, Horizon, Delta14C, SOC_g_m2, DataSource, Elevation)
 
 min_data_14C <- HBEF_all %>% 
   filter(Horizon == "Mineral_0_10") %>% 
@@ -144,7 +151,7 @@ NHZone2_2023 <- data.frame(Year = c(NHZone2[-dim(NHZone2)[1],1],
 # time interval for model
 # years <- seq(-53042, 2025, by = 0.5)
 # years <- seq(-10000, 2025, by = 0.5)
-years <- seq(1969, 2023, by = 0.5)
+years <- seq(1997, 2023, by = 0.5)
 
 ## initial C stocks in each pool
 # Oa/A and min = average of first three years
@@ -152,18 +159,15 @@ years <- seq(1969, 2023, by = 0.5)
 # C0 <- c(mean(oie_data_C[1:3,2])*0.25, mean(oie_data_C[1:3,2])*0.75,  
 #         mean(oa_data_C[1:3,2]), mean(min_data_C[1:3,2]))
 #Average of first three years (including data from Driscoll)
-C0 <- c(1409*0.25, 1409*0.75, 1615, 2143)
-
-# lag-time before C enters soils: based on communication with Josh
-lag_time <- 3
+# C0 <- c(1409*0.25, 1409*0.75, 1615, 2143)
 
 ## initial Delta14C in each pool
 # Oa/A and min = average of first three years
 # Two pools for Oie (based on stock/flux one could calculate inti14C based on one-pool model)
 # For now: TT=2 ~ 450; TT= 7 ~ 250; 300 (init14C for Oie) = (0.25 * 450) + (0.75 * 250) 
-init14C <- ConstFc(values = c(450, 250,
-                              mean(oa_data_14C[1:3,2]), mean(min_data_14C[1:3,2])),
-                   format = "Delta14C")
+# init14C <- ConstFc(values = c(450, 250,
+#                               mean(oa_data_14C[1:3,2]), mean(min_data_14C[1:3,2])),
+#                    format = "Delta14C")
 
 # load("./Output/ThreePoolSeriesModel_3_2024-09-21.Rdata")
 # init_14C_1996 <- tpsModelOutput %>%
@@ -171,6 +175,21 @@ init14C <- ConstFc(values = c(450, 250,
 # init14C <- ConstFc(values = c(450, 250, init_14C_1996[,3], init_14C_1996[,4]),
 #                    format = "Delta14C")
 # rm(tpsModelOutput, tpsMcmcFits)
+
+#Since Oi is cycling faster as Oe it has lower intitial 14C values
+sens_14c <- read_csv("./Output/HBEF_3ps_steady_long_sens_14C_3_2024-12-14.csv") %>% 
+  filter(Year == 1997)
+init14C <- ConstFc(as.numeric(c(150, 250, sens_14c[2,8], sens_14c[3,8])),
+                   format = "Delta14C")
+
+sens_c <- read_csv("./Output/HBEF_3ps_steady_long_sens_C_3_2024-12-14.csv") %>% 
+  filter(Year == 1997)
+C0 <- c(sens_c[1,8]*0.25, sens_c[1,8]*0.75, sens_c[2,8], sens_c[3,8])
+C0 <- as.numeric(C0)
+rm(sens_14c, sens_c)
+
+# lag-time before C enters soils: based on communication with Josh
+lag_time <- 3
 
 # Number of model iterations
 itr <- 15000
@@ -214,9 +233,10 @@ FourPSeriesModel_fun <- function(pars){
                     min_C = res_C[,4]))
 }
 
-init_pars <- c(k1 = 1/2, k2 = 1/6, k3 = 1/18, k4 = 1/61, 
-               alpha21 = 190/(190 + 30), alpha32 = 90/(90 + 100),
-               alpha43 = 35/(35 + 55)) 
+#values based on stocks/fluxes; alternative use values from 3 pool model at steady state
+init_pars <- c(k1 = 1/2, k2 = 1/7, k3 = 1/19, k4 = 1/59, 
+               alpha21 = 180/(180 + 30), alpha32 = 100/(100 + 80),
+               alpha43 = 39/(39 + 61)) 
 
 fpsCost <- function(pars){
   funccall = FourPSeriesModel_fun(pars)
@@ -403,7 +423,7 @@ sens_all_14C_p <- sens_all_14C %>%
   geom_ribbon(aes(ymin = q05, ymax = q95, group = Horizon), alpha = 0.2) +
   geom_line(aes(y = q50, color = Horizon, linetype = Horizon), linewidth = 1) +
   geom_line(data = NHZone2_2023 %>% 
-              filter(Year > 1968), aes(y = Delta14C)) +
+              filter(Year > 1997), aes(y = Delta14C)) +
   # Add measured data points
   geom_errorbar(data = HBEF_data_14C_C_sum,
                 aes(y = Delta14C_mean, ymin = Delta14C_mean - Delta14C_sd,
@@ -412,7 +432,7 @@ sens_all_14C_p <- sens_all_14C %>%
                 width = 0.3) +
   geom_point(data = HBEF_data_14C_C_sum, aes(y = Delta14C_mean, fill = Horizon),
              shape = 21, size = 2) +
-  scale_x_continuous("Year", limits = c(1968,2024), expand = c(0,0),
+  scale_x_continuous("Year", limits = c(1997,2024), expand = c(0,0),
                      breaks = seq(1969,2023,10)) +
   scale_y_continuous(expression(paste(Delta^14, "C [‰]")), limits = c(-175,1000),
                      expand = c(0,0)) +
@@ -440,8 +460,8 @@ sens_all_C_p <- sens_all_C %>%
                 width = 0.3) +
   geom_point(data = HBEF_data_14C_C_sum, aes(y = C_mean, fill = Horizon),
              shape = 21, size = 2) +
-  scale_x_continuous("Year", limits = c(1968,2024), expand = c(0,0),
-                     breaks = seq(1969,2023,10)) +
+  scale_x_continuous("Year", limits = c(1997,2024), expand = c(0,0),
+                     breaks = seq(1997,2023,10)) +
   scale_y_continuous("SOC stocks") +
   theme_classic(base_size = 16) +
   theme(axis.text = element_text(color = "black"),
@@ -464,6 +484,37 @@ ggsave(file = paste0("./Output/HBEF_4ps_short_C_Sensitivity_",
 ggarrange(sens_all_14C_p, sens_all_C_p, common.legend = TRUE)
 ggsave(file = paste0("./Output/HBEF_4ps_short_14_C_Sensitivity_", lag_time, "_",
                      Sys.Date(), ".jpeg"), width = 12, height = 6)
+
+sens_all_C %>% 
+  filter(Horizon == "oie") %>% 
+  ggplot(aes(x = Year)) +
+  #add regression line based on measured values
+  geom_smooth(data = HBEF_data_14C_C_sum %>% 
+                filter(Horizon == "oie"), aes(y = C_mean),
+              method = "lm", color = "black", linetype = "dashed") +
+  geom_line(aes(y = q50, color = Horizon), linewidth = 1) +
+  geom_ribbon(aes(ymin = q05, ymax = q95, fill = Horizon), alpha = 0.4) +
+  # Add measured data points
+  geom_errorbar(data = HBEF_data_14C_C_sum %>% 
+                  filter(Horizon == "oie"),
+                aes(y = C_mean, ymin = C_mean - C_sd,
+                    ymax = C_mean + C_sd),
+                width = 0.3) +
+  geom_point(data = HBEF_data_14C_C_sum %>% 
+               filter(Horizon == "oie"), aes(y = C_mean, fill = Horizon),
+             shape = 21, size = 2) +
+  scale_x_continuous("Year", expand = c(0,0), limits = c(1997,2024)) +
+  scale_y_continuous("SOC stocks [g C/m2]", limits = c(750,1750), expand = c(0,0)) +
+  theme_classic(base_size = 16) +
+  theme(axis.text = element_text(color = "black"),
+        legend.position = "none") +
+  scale_color_manual("Modeled", label = c("Oie", "Oa", "0-10 cm"),
+                     values = c("#33a02c", "#b2df8a", "#a6cee3")) +
+  scale_fill_manual("Measured", label = c("Oie", "Oa/A", "0-10 cm"),
+                    values = c("#33a02c", "#b2df8a", "#a6cee3")) +
+  facet_wrap(~Horizon) 
+ggsave(file = paste0("./Output/HBEF_4ps_short_14_C_Sensitivity_oie_", lag_time, "_",
+                     Sys.Date(), ".jpeg"), width = 7, height = 5)
 
 #Plot predicted vs observed (mean + SD) for each Horizon and compute residuals
 model_14C_pred_obs <- sens_all_14C %>%
@@ -552,12 +603,12 @@ oa_14C <- fun_pred_obs_14C(x = "oa") +
   scale_x_continuous(expression(paste("Predicted ", Delta^14, "C [‰]")),
                      limits = c(89,105), expand = c(0,0)) +
   scale_y_continuous(expression(paste("Observed ", Delta^14, "C [‰]")),
-                     limits = c(-20,230), expand = c(0,0)) +
+                     limits = c(-20,150), expand = c(0,0)) +
   scale_color_manual(values = c("#b2df8a"))
 
 min_14C <- fun_pred_obs_14C(x = "min") +
   scale_x_continuous(expression(paste("Predicted ", Delta^14, "C [‰]")),
-                     limits = c(-28,-20), expand = c(0,0)) +
+                     limits = c(-29,-14), expand = c(0,0)) +
   scale_y_continuous(expression(paste("Observed ", Delta^14, "C [‰]")),
                      limits = c(-110,25), expand = c(0,0)) +
   scale_color_manual(values = c("#a6cee3"))
@@ -639,28 +690,24 @@ fun_pred_obs_C <- function(x){
 }
 
 oie_C <- fun_pred_obs_C(x = "oie") +
-  #Only plot the one that is significant
-  # geom_smooth(data = model_C_pred_obs %>%
-  #               filter(Horizon == "oie"),
-  #             method = "lm") +
   scale_x_continuous("Predicted SOC stocks [g/m2]",
-                     limits = c(1250,1535), expand = c(0,0)) +
+                     limits = c(1220,1585), expand = c(0,0)) +
   scale_y_continuous("Observed SOC stocks [g/m2]",
                      limits = c(750,1750), expand = c(0,0)) +
   scale_color_manual(values = c("#33a02c"))
-# ggsave(file = paste0("./Output/HBEF_4ps_C_Obs_Pred_oie_", lag_time, "_",
-#                      Sys.Date(), ".jpeg"), width = 5, height = 6)
+ggsave(file = paste0("./Output/HBEF_4ps_C_Obs_Pred_oie_", lag_time, "_",
+                     Sys.Date(), ".jpeg"), width = 5, height = 6)
 
 oa_C <- fun_pred_obs_C(x = "oa") +
   scale_x_continuous("Predicted SOC stocks [g/m2]",
-                     limits = c(1350,1610), expand = c(0,0)) +
+                     limits = c(1490,1890), expand = c(0,0)) +
   scale_y_continuous("Observed SOC stocks [g/m2]",
                      limits = c(750,3250), expand = c(0,0)) +
   scale_color_manual(values = c("#b2df8a"))
 
 min_C <- fun_pred_obs_C(x = "min") +
   scale_x_continuous("Predicted SOC stocks [g/m2]",
-                     limits = c(2175,2340), expand = c(0,0)) +
+                     limits = c(2175,2440), expand = c(0,0)) +
   scale_y_continuous("Observed SOC stocks [g/m2]",
                      limits = c(1000,4000), expand = c(0,0)) +
   scale_color_manual(values = c("#a6cee3"))
