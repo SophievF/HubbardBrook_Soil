@@ -194,12 +194,12 @@ years <- seq(1997, 2023, by = 0.5)
 sens_14c <- read_csv("./Output/HBEF_3ps_steady_long_sens_14C_3_2024-12-14.csv") %>% 
   filter(Year == 1997)
 init14C <- c(sens_14c[1,8], sens_14c[2,8], sens_14c[3,8])
-as.numeric(init14C)
+init14C <- as.numeric(init14C)
 
 sens_c <- read_csv("./Output/HBEF_3ps_steady_long_sens_C_3_2024-12-14.csv") %>% 
   filter(Year == 1997)
 C0 <- c(sens_c[1,8], sens_c[2,8], sens_c[3,8])
-as.numeric(C0)
+C0 <- as.numeric(C0)
 rm(sens_14c, sens_c)
 
 # lag-time before C enters soils: based on communication with Josh
@@ -464,6 +464,37 @@ ggarrange(sens_all_14C_p, sens_all_C_p, common.legend = TRUE)
 ggsave(file = paste0("./Output/HBEF_3ps_short_14C_C_Sensitivity_", lag_time, "_",
                      Sys.Date(), ".jpeg"), width = 12, height = 6)
 
+sens_all_C %>% 
+  filter(Horizon == "oie") %>% 
+  ggplot(aes(x = Year)) +
+  #add regression line based on measured values
+  geom_smooth(data = HBEF_data_14C_C_sum %>% 
+                filter(Horizon == "oie"), aes(y = C_mean),
+              method = "lm", color = "black", linetype = "dashed") +
+  geom_line(aes(y = q50, color = Horizon), linewidth = 1) +
+  geom_ribbon(aes(ymin = q05, ymax = q95, fill = Horizon), alpha = 0.4) +
+  # Add measured data points
+  geom_errorbar(data = HBEF_data_14C_C_sum %>% 
+                  filter(Horizon == "oie"),
+                aes(y = C_mean, ymin = C_mean - C_sd,
+                    ymax = C_mean + C_sd),
+                width = 0.3) +
+  geom_point(data = HBEF_data_14C_C_sum %>% 
+               filter(Horizon == "oie"), aes(y = C_mean, fill = Horizon),
+             shape = 21, size = 2) +
+  scale_x_continuous("Year", expand = c(0,0), limits = c(1997,2024)) +
+  scale_y_continuous("SOC stocks [g C/m2]", limits = c(750,1750), expand = c(0,0)) +
+  theme_classic(base_size = 16) +
+  theme(axis.text = element_text(color = "black"),
+        legend.position = "none") +
+  scale_color_manual("Modeled", label = c("Oie", "Oa", "0-10 cm"),
+                     values = c("#33a02c", "#b2df8a", "#a6cee3")) +
+  scale_fill_manual("Measured", label = c("Oie", "Oa/A", "0-10 cm"),
+                    values = c("#33a02c", "#b2df8a", "#a6cee3")) +
+  facet_wrap(~Horizon) 
+ggsave(file = paste0("./Output/HBEF_3ps_short_14C_C_Sensitivity_oie_", lag_time, "_",
+                     Sys.Date(), ".jpeg"), width = 7, height = 5)
+
 #Plot predicted vs observed (mean + SD) for each Horizon and compute linear regression
 model_14C_pred_obs <- sens_all_14C %>%
   right_join(HBEF_data_14C_C_sum)
@@ -638,12 +669,12 @@ fun_pred_obs_C <- function(x){
 
 oie_C <- fun_pred_obs_C(x = "oie") +
   scale_x_continuous("Predicted SOC stocks [g/m2]",
-                     limits = c(1350,1465), expand = c(0,0)) +
+                     limits = c(1280,1580), expand = c(0,0)) +
   scale_y_continuous("Observed SOC stocks [g/m2]",
                      limits = c(750,1750), expand = c(0,0)) +
   scale_color_manual(values = c("#33a02c"))
-# ggsave(file = paste0("./Output/HBEF_3ps_short_C_Obs_Pred_oie_", lag_time, "_",
-#                      Sys.Date(), ".jpeg"), width = 5, height = 6)
+ggsave(file = paste0("./Output/HBEF_3ps_short_C_Obs_Pred_oie_", lag_time, "_",
+                     Sys.Date(), ".jpeg"), width = 5, height = 6)
 
 oa_C <- fun_pred_obs_C(x = "oa") +
   scale_x_continuous("Predicted SOC stocks [g/m2]",
