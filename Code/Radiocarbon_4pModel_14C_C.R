@@ -178,7 +178,7 @@ years <- seq(1997, 2023, by = 0.5)
 
 sens_14c <- read_csv("./Output/HBEF_3ps_steady_long_sens_14C_3_2024-12-14.csv") %>% 
   filter(Year == 1997)
-init14C <- ConstFc(as.numeric(c(300, 150, sens_14c[2,8], sens_14c[3,8])),
+init14C <- ConstFc(as.numeric(c(350, 150, sens_14c[2,8], sens_14c[3,8])),
                    format = "Delta14C")
 
 sens_c <- read_csv("./Output/HBEF_3ps_steady_long_sens_C_3_2024-12-14.csv") %>% 
