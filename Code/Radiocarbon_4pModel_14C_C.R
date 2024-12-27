@@ -178,7 +178,7 @@ years <- seq(1997, 2023, by = 0.5)
 
 sens_14c <- read_csv("./Output/HBEF_3ps_steady_long_sens_14C_3_2024-12-14.csv") %>% 
   filter(Year == 1997)
-init14C <- ConstFc(as.numeric(c(250, 150, sens_14c[2,8], sens_14c[3,8])),
+init14C <- ConstFc(as.numeric(c(250, 200, sens_14c[2,8], sens_14c[3,8])),
                    format = "Delta14C")
 
 sens_c <- read_csv("./Output/HBEF_3ps_steady_long_sens_C_3_2024-12-14.csv") %>% 
@@ -690,7 +690,7 @@ fun_pred_obs_C <- function(x){
 
 oie_C <- fun_pred_obs_C(x = "oie") +
   scale_x_continuous("Predicted SOC stocks [g/m2]",
-                     limits = c(1220,1585), expand = c(0,0)) +
+                     limits = c(1170,1610), expand = c(0,0)) +
   scale_y_continuous("Observed SOC stocks [g/m2]",
                      limits = c(750,1750), expand = c(0,0)) +
   scale_color_manual(values = c("#33a02c"))
@@ -706,7 +706,7 @@ oa_C <- fun_pred_obs_C(x = "oa") +
 
 min_C <- fun_pred_obs_C(x = "min") +
   scale_x_continuous("Predicted SOC stocks [g/m2]",
-                     limits = c(2175,2440), expand = c(0,0)) +
+                     limits = c(2185,2430), expand = c(0,0)) +
   scale_y_continuous("Observed SOC stocks [g/m2]",
                      limits = c(1000,4000), expand = c(0,0)) +
   scale_color_manual(values = c("#a6cee3"))
