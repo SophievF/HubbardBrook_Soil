@@ -176,7 +176,7 @@ tpsCost <- function(pars){
 }
 
 #### NO NEED TO RUN THE FOLLOWING CODE (OBJECTS HAVE BEEN SAVED) #####
-## Un-comment the code if you whish to run it ##
+## Un-comment the code if you wish to run it ##
 
 ## Fitting the model
 # tpsModelFit <- FME::modFit(f = tpsCost, p = init_pars, method = "Marq", 
