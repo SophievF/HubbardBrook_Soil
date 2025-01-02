@@ -128,7 +128,6 @@ init_pars <- c(k1 = 1/7, k2 = 1/19, k3 = 1/59,
                alpha21 = 100/(100 + 110), alpha32 = 39/(39 + 61))
 
 ## Set-up model (three pools in series)
-# initial values are based on current C budget, assuming three pools (no roots)
 ThreePSeriesModel_fun <- function(pars){
   mod = SoilR::ThreepSeriesModel14(
     # time interval for model to find solutions
