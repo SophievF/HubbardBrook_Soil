@@ -204,6 +204,7 @@ tpsCost <- function(pars){
 #                         Sys.Date(), ".csv"))
 
 ## Perform Markov Chain Monte Carlo simulation
+# tpsVar <- tpsModelFit$var_ms_unweighted
 # tpsMcmcFits <- FME::modMCMC(f = tpsCost, p = tpsModelFit$par, niter = itr, ntrydr = 5,
 #                             updatecov = 50, var0 = tpsVar, upper = c(3, rep(1,4)),
 #                             lower = rep(0,5)) #Create a new object to record fit stats
