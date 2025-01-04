@@ -15,12 +15,11 @@ HBEF_all <- read_csv("./Data/HBEF_ModelingDatasets_all_2025-01-02.csv") %>%
   filter(DataSource == "Dataset2")
 
 HBEF_all$Horizon <- factor(HBEF_all$Horizon,
-                           levels = c("Oi/Oe", "Oa/A", "Mineral"),
-                           ordered = TRUE)
+                           levels = c("Oi/Oe", "Oa/A", "Mineral"))
 
 ## Prepare each horizon for model
 min_data_14C <- HBEF_all %>% 
-  filter(Horizon == "Mineral_0_10") %>% 
+  filter(Horizon == "Mineral") %>% 
   rename(time = Year) %>% 
   group_by(time) %>% 
   summarise(min_14C = mean(Delta14C, na.rm = TRUE),
@@ -28,7 +27,7 @@ min_data_14C <- HBEF_all %>%
   data.frame()
 
 min_data_C <- HBEF_all %>% 
-  filter(Horizon == "Mineral_0_10") %>% 
+  filter(Horizon == "Mineral") %>% 
   rename(time = Year) %>% 
   group_by(time) %>% 
   summarise(min_C = mean(SOC_g_m2, na.rm = TRUE),
@@ -346,8 +345,7 @@ fpsModelOutput_df <- fpsModelOutput %>%
     Horizon == "min" ~ "Mineral"))
 
 fpsModelOutput_df$Horizon <- factor(fpsModelOutput_df$Horizon,
-                                    levels = c("Oi", "Oe", "Oi/Oe", "Oa/A", "Mineral"),
-                                    ordered = TRUE)
+                                    levels = c("Oi", "Oe", "Oi/Oe", "Oa/A", "Mineral"))
 
 # Check best parameter values
 fpsMcmcFits$bestpar
@@ -358,7 +356,6 @@ summary(fpsMcmcFits)
 ## Prepare data for plotting
 # Summarise HBEF data for plotting and merging with model results
 HBEF_data_14C_C_sum <- HBEF_all %>% 
-  filter(Year != 2020) %>% 
   group_by(Year, Horizon) %>% 
   summarise(Delta14C_mean = mean(Delta14C, na.rm = TRUE),
             Delta14C_sd = sd(Delta14C, na.rm = TRUE),
@@ -369,7 +366,7 @@ sens_all_14C$Horizon <- factor(sens_all_14C$Horizon,
                                levels = c("Oi", "Oe", "Oi/Oe", "Oa/A", "Mineral"))
 
 sens_all_C$Horizon <- factor(sens_all_C$Horizon,
-                               levels = c("Oi", "Oe", "Oi/Oe", "Oa/A", "Mineral"))
+                             levels = c("Oi", "Oe", "Oi/Oe", "Oa/A", "Mineral"))
 
 ## Plot 14C results
 sens_all_14C_p <- sens_all_14C %>% 
@@ -418,8 +415,8 @@ sens_all_C_p <- sens_all_C %>%
   scale_x_continuous("Year", limits = c(1997,2024), expand = c(0,0),
                      breaks = seq(1969,2023,10)) +
   scale_y_continuous(expression(paste("SOC stocks [g C m"^-2,"]")),
-                     limits = c(500,5000), expand = c(0,0),
-                     breaks = seq(500,5000,1500)) +
+                     limits = c(0,5000), expand = c(0,0),
+                     breaks = seq(0,5000,1500)) +
   theme_classic(base_size = 16) +
   theme(axis.text = element_text(color = "black"),
         legend.position = "none") +
@@ -441,18 +438,18 @@ sens_all_C %>%
   ggplot(aes(x = Year)) +
   #add regression line based on measured values
   geom_smooth(data = HBEF_data_14C_C_sum %>% 
-                filter(Horizon == "oie"), aes(y = C_mean),
+                filter(Horizon == "Oi/Oe"), aes(y = C_mean),
               method = "lm", color = "black", linetype = "dashed") +
   geom_line(aes(y = q50, color = Horizon), linewidth = 1) +
   geom_ribbon(aes(ymin = q05, ymax = q95, fill = Horizon), alpha = 0.4) +
   # Add measured data points
   geom_errorbar(data = HBEF_data_14C_C_sum %>% 
-                  filter(Horizon == "oie"),
+                  filter(Horizon == "Oi/Oe"),
                 aes(y = C_mean, ymin = C_mean - C_sd,
                     ymax = C_mean + C_sd),
                 width = 0.3) +
   geom_point(data = HBEF_data_14C_C_sum %>% 
-               filter(Horizon == "oie"), aes(y = C_mean, fill = Horizon),
+               filter(Horizon == "Oi/Oe"), aes(y = C_mean, fill = Horizon),
              shape = 21, size = 2) +
   scale_x_continuous("Year", expand = c(0,0), limits = c(1997.9,2023.1)) +
   scale_y_continuous(expression(paste("SOC stocks [g C m"^-2,"]")), 
@@ -466,13 +463,14 @@ sens_all_C %>%
 ggsave(file = paste0("./Output/HBEF_4ps_short_14_C_Sensitivity_oie_", lag_time, "_",
                      Sys.Date(), ".jpeg"), width = 7, height = 5)
 
-#Plot predicted vs observed (mean + SD) for each Horizon and compute residuals
+### Plot predicted vs observed (mean + SD) for each Horizon and calculate RMSE
+## 14C Data
 model_14C_pred_obs <- sens_all_14C %>%
-  filter(Horizon == "oie"| Horizon == "oa"| Horizon == "min") %>% 
+  filter(Horizon == "Oi/Oe"| Horizon == "Oa/A"| Horizon == "Mineral") %>% 
   right_join(HBEF_data_14C_C_sum)
 
 model_14C_pred_obs_res_oie <- model_14C_pred_obs %>% 
-  filter(Horizon == "oie") %>% 
+  filter(Horizon == "Oi/Oe") %>% 
   #subtract the predicted value from the actual value (residual)
   mutate(res = Mean - Delta14C_mean,
          #Square each of the calculated residuals
@@ -489,7 +487,7 @@ cor(y = model_14C_pred_obs_res_oie$Delta14C_mean,
     method = "pearson")
 
 model_14C_pred_obs_res_oa <- model_14C_pred_obs %>% 
-  filter(Horizon == "oa") %>% 
+  filter(Horizon == "Oa/A") %>% 
   #subtract the predicted value from the actual value (residual)
   mutate(res = Mean - Delta14C_mean,
          #Square each of the calculated residuals
@@ -506,7 +504,7 @@ cor(y = model_14C_pred_obs_res_oa$Delta14C_mean,
     method = "pearson")
 
 model_14C_pred_obs_res_min <- model_14C_pred_obs %>% 
-  filter(Horizon == "min") %>% 
+  filter(Horizon == "Mineral") %>% 
   #subtract the predicted value from the actual value (residual)
   mutate(res = Mean - Delta14C_mean,
          #Square each of the calculated residuals
@@ -522,6 +520,7 @@ cor(y = model_14C_pred_obs_res_min$Delta14C_mean,
     x = model_14C_pred_obs_res_min$Mean,
     method = "pearson")
 
+# Function to plot data
 fun_pred_obs_14C <- function(x){
   model_14C_pred_obs %>%
     filter(Horizon == x) %>% 
@@ -538,42 +537,40 @@ fun_pred_obs_14C <- function(x){
     facet_wrap(~Horizon) 
 }
 
-oie_14C <- fun_pred_obs_14C(x = "oie") +
-  #Only plot the one that is significant
-  geom_smooth(data = model_14C_pred_obs %>%
-                filter(Horizon == "oie"),
-              method = "lm") +
+# Plot data
+oie_14C <- fun_pred_obs_14C(x = "Oi/Oe") +
   scale_x_continuous(expression(paste("Predicted ", Delta^14, "C [‰]")),
-                     limits = c(0,410), expand = c(0,0)) +
+                     limits = c(0,225), expand = c(0,0)) +
   scale_y_continuous(expression(paste("Observed ", Delta^14, "C [‰]")),
-                     limits = c(0,525), expand = c(0,0)) +
+                     limits = c(0,225), expand = c(0,0)) +
   scale_color_manual(values = c("#33a02c"))
 
-oa_14C <- fun_pred_obs_14C(x = "oa") +
+oa_14C <- fun_pred_obs_14C(x = "Oa/A") +
   scale_x_continuous(expression(paste("Predicted ", Delta^14, "C [‰]")),
-                     limits = c(89,105), expand = c(0,0)) +
+                     limits = c(75,90), expand = c(0,0)) +
   scale_y_continuous(expression(paste("Observed ", Delta^14, "C [‰]")),
-                     limits = c(-20,150), expand = c(0,0)) +
+                     limits = c(0,130), expand = c(0,0)) +
   scale_color_manual(values = c("#b2df8a"))
 
-min_14C <- fun_pred_obs_14C(x = "min") +
+min_14C <- fun_pred_obs_14C(x = "Mineral") +
   scale_x_continuous(expression(paste("Predicted ", Delta^14, "C [‰]")),
-                     limits = c(-29,-14), expand = c(0,0)) +
+                     limits = c(-28,-14), expand = c(0,0)) +
   scale_y_continuous(expression(paste("Observed ", Delta^14, "C [‰]")),
-                     limits = c(-110,25), expand = c(0,0)) +
+                     limits = c(-110,20), expand = c(0,0)) +
   scale_color_manual(values = c("#a6cee3"))
 
 ggarrange(oie_14C, oa_14C, min_14C, nrow = 1)
 ggsave(file = paste0("./Output/HBEF_4ps_short_14C_Obs_Pred_", lag_time, "_",
                      Sys.Date(), ".jpeg"), width = 12, height = 6)
 
+## SOC data
 model_C_pred_obs <- sens_all_C %>%
   right_join(HBEF_data_14C_C_sum) %>% 
-  drop_na(C_mean)
+  drop_na()
 
-# manually calculate residuals and RMSE
+# calculate residuals and RMSE
 model_C_pred_obs_res_oie <- model_C_pred_obs %>% 
-  filter(Horizon == "oie") %>% 
+  filter(Horizon == "Oi/Oe") %>% 
   #subtract the predicted value from the actual value (residual)
   mutate(res = Mean - C_mean,
          #Square each of the calculated residuals
@@ -590,7 +587,7 @@ cor(y = model_C_pred_obs_res_oie$C_mean,
     method = "pearson")
 
 model_C_pred_obs_res_oa <- model_C_pred_obs %>% 
-  filter(Horizon == "oa") %>% 
+  filter(Horizon == "Oa/A") %>% 
   #subtract the predicted value from the actual value (residual)
   mutate(res = Mean - C_mean,
          #Square each of the calculated residuals
@@ -607,7 +604,7 @@ cor(y = model_C_pred_obs_res_oa$C_mean,
     method = "pearson")
 
 model_C_pred_obs_res_min <- model_C_pred_obs %>% 
-  filter(Horizon == "min") %>% 
+  filter(Horizon == "Mineral") %>% 
   #subtract the predicted value from the actual value (residual)
   mutate(res = Mean - C_mean,
          #Square each of the calculated residuals
@@ -623,6 +620,7 @@ cor(y = model_C_pred_obs_res_min$C_mean,
     x = model_C_pred_obs_res_min$Mean,
     method = "pearson")
 
+# Function to plot data
 fun_pred_obs_C <- function(x){
   model_C_pred_obs %>%
     filter(Horizon == x) %>% 
@@ -639,7 +637,8 @@ fun_pred_obs_C <- function(x){
     facet_wrap(~Horizon) 
 }
 
-oie_C <- fun_pred_obs_C(x = "oie") +
+# Plot data
+oie_C <- fun_pred_obs_C(x = "Oi/Oe") +
   scale_x_continuous("Predicted SOC stocks [g/m2]",
                      limits = c(1170,1610), expand = c(0,0)) +
   scale_y_continuous("Observed SOC stocks [g/m2]",
@@ -648,14 +647,14 @@ oie_C <- fun_pred_obs_C(x = "oie") +
 ggsave(file = paste0("./Output/HBEF_4ps_C_Obs_Pred_oie_", lag_time, "_",
                      Sys.Date(), ".jpeg"), width = 5, height = 6)
 
-oa_C <- fun_pred_obs_C(x = "oa") +
+oa_C <- fun_pred_obs_C(x = "Oa/A") +
   scale_x_continuous("Predicted SOC stocks [g/m2]",
-                     limits = c(1490,1890), expand = c(0,0)) +
+                     limits = c(1490,1905), expand = c(0,0)) +
   scale_y_continuous("Observed SOC stocks [g/m2]",
                      limits = c(750,3250), expand = c(0,0)) +
   scale_color_manual(values = c("#b2df8a"))
 
-min_C <- fun_pred_obs_C(x = "min") +
+min_C <- fun_pred_obs_C(x = "Mineral") +
   scale_x_continuous("Predicted SOC stocks [g/m2]",
                      limits = c(2185,2430), expand = c(0,0)) +
   scale_y_continuous("Observed SOC stocks [g/m2]",
