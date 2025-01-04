@@ -9,58 +9,16 @@ library(forecast)
 library(FME)
 library(ggpubr)
 
-###Four-pool model (2 for Oie, 1 for Oa/A and min each) constrained with 14C and SOC
-
 # Load HBEF data
-HBEF_data <- read_csv("./Data/HBEF_data_all_2024-11-07.csv") 
+HBEF_all <- read_csv("./Data/HBEF_ModelingDatasets_all_2025-01-02.csv") %>% 
+  #only select dataset 2 (1998 to 2023)
+  filter(DataSource == "Dataset2")
 
-head(HBEF_data)
+HBEF_all$Horizon <- factor(HBEF_all$Horizon,
+                           levels = c("Oi/Oe", "Oa/A", "Mineral"),
+                           ordered = TRUE)
 
-HBEF_data$Horizon <- factor(HBEF_data$Horizon,
-                            levels = c("Oi/Oe", "Oa/A", "Mineral_0_10"),
-                            ordered = TRUE)
-
-# Load 14C data from Charley Driscoll
-# LitterData <- read_csv("./Data/LitterData_Driscoll.csv")
-
-#fm * exp(lambda * (-obs_date_y + 1950)) - 1) * 1000
-lambda <- 0.0001209681
-
-# litter_all <- LitterData %>% 
-#   filter(Watershed == 6) %>% 
-#   mutate(Delta14C = (F14C * exp(lambda * (-Year + 1950)) -1) * 1000) %>% 
-#   mutate(Elevation = case_when(
-#     Plot < 70 ~ "High",
-#     Plot > 152 ~ "Low",
-#     TRUE ~ "Mid"
-#   )) %>% 
-#   #add dummy variable for SOC stocks
-#   mutate(SOC_g_m2 = NA) %>% 
-#   #match Horizon names
-#   mutate(Horizon = case_when(
-#     Horizon == "Oie" ~ "Oi/Oe",
-#     Horizon == "Oa" ~ "Oa/A"
-#   )) 
-
-# Summarize and merge data by horizon; remove roots for now
-# HBEF_all <- HBEF_data %>% 
-#   filter(Plot != "all fine roots") %>% 
-#   filter(Year != 2020) %>% 
-#   mutate(DataSource = "Groffman") %>% 
-#   mutate(SOC_g_m2 = (`Measured_%_C` * mean_BD_g_cm3 * mean_thick_cm) * 100) %>% 
-#   dplyr::select(Year, Horizon, Delta14C, SOC_g_m2, DataSource, Elevation) %>% 
-#   rbind(litter_all %>% 
-#           dplyr::select(Year, Horizon, Delta14C, SOC_g_m2, Elevation) %>% 
-#           mutate(DataSource = "Driscoll")) %>% 
-#   dplyr::select(Year:Delta14C, SOC_g_m2, DataSource, Elevation)
-
-HBEF_all <- HBEF_data %>%
-  filter(Plot != "all fine roots") %>%
-  filter(Year != 2020) %>%
-  mutate(DataSource = "Groffman") %>%
-  mutate(SOC_g_m2 = (`Measured_%_C` * mean_BD_g_cm3 * mean_thick_cm) * 100) %>%
-  dplyr::select(Year, Horizon, Delta14C, SOC_g_m2, DataSource, Elevation)
-
+## Prepare each horizon for model
 min_data_14C <- HBEF_all %>% 
   filter(Horizon == "Mineral_0_10") %>% 
   rename(time = Year) %>% 
@@ -100,9 +58,11 @@ oie_data_14C <- HBEF_all %>%
   group_by(time) %>% 
   summarise(oie_14C = mean(Delta14C),
             sd = sd(Delta14C)) %>%
-  # Replace NA for 1998 sd with ~26 which is the mean sd for all years in the Oie
-  replace(is.na(.), 26.66504) %>% 
   data.frame()
+
+# Replace NA for 1998 sd with the mean sd for all years in the Oie from dataset 2
+oie_data_14C$sd <- replace(oie_data_14C$sd, is.na(oie_data_14C$sd),
+                           mean(oie_data_14C$sd, na.rm = TRUE))
 
 oie_data_C <- HBEF_all %>% 
   filter(Horizon == "Oi/Oe") %>% 
@@ -111,16 +71,22 @@ oie_data_C <- HBEF_all %>%
   drop_na(SOC_g_m2) %>% 
   summarise(oie_C = mean(SOC_g_m2),
             sd = sd(SOC_g_m2)) %>%
-  # Replace NA for 1998 sd with ~334 which is the mean sd for all years in the Oie
-  mutate_at(vars(sd), ~replace_na(., 334)) %>%
   data.frame()
 
-## set-up model
-# atmospheric 14C
+# Replace NA for 1998 sd with the mean sd for all years in the Oie from dataset 2
+oie_data_C$sd <- replace(oie_data_C$sd, is.na(oie_data_C$sd),
+                         mean(oie_data_C$sd, na.rm = TRUE))
+
+#### Model set-up ####
+
+# Define lambda
+lambda <- 0.0001209681
+
+## Create atmospheric 14C curve
 NHZone2 <- bind.C14curves(prebomb = IntCal20, postbomb = Hua2021$NHZone2,
                           time.scale = "AD")
 
-# atmospheric 14C forecast
+# Make atmospheric 14C forecast (Hua 2021 only goes until 2019
 y0 <- 1975 #initial year used for detecting trend in time series
 q <- 4 #quarterly time-scale
 y <- seq(y0, 2019.375, by = 1/q)
@@ -148,41 +114,19 @@ NHZone2_2023 <- data.frame(Year = c(NHZone2[-dim(NHZone2)[1],1],
                            Delta14C = c(NHZone2[-dim(NHZone2)[1],2], 
                                         as.numeric((fNZ2$mean)-1)*1000))
 
-# time interval for model
-# years <- seq(-53042, 2025, by = 0.5)
-# years <- seq(-10000, 2025, by = 0.5)
+## Define initial values for model 
+# Define time interval for model
 years <- seq(1997, 2023, by = 0.5)
 
-## initial C stocks in each pool
-# Oa/A and min = average of first three years
-# Two pools for Oie: average of first three years; Oi:Oe ~ 1:4 based on data from Chris Johnson in 1978
-# C0 <- c(mean(oie_data_C[1:3,2])*0.25, mean(oie_data_C[1:3,2])*0.75,  
-#         mean(oa_data_C[1:3,2]), mean(min_data_C[1:3,2]))
-#Average of first three years (including data from Driscoll)
-# C0 <- c(1409*0.25, 1409*0.75, 1615, 2143)
-
-## initial Delta14C in each pool
-# Oa/A and min = average of first three years
-# Two pools for Oie (based on stock/flux one could calculate inti14C based on one-pool model)
-# For now: TT=2 ~ 450; TT= 7 ~ 250; 300 (init14C for Oie) = (0.25 * 450) + (0.75 * 250) 
-# init14C <- ConstFc(values = c(450, 250,
-#                               mean(oa_data_14C[1:3,2]), mean(min_data_14C[1:3,2])),
-#                    format = "Delta14C")
-
-# load("./Output/ThreePoolSeriesModel_3_2024-09-21.Rdata")
-# init_14C_1996 <- tpsModelOutput %>%
-#   dplyr::filter(time == 1969)
-# init14C <- ConstFc(values = c(450, 250, init_14C_1996[,3], init_14C_1996[,4]),
-#                    format = "Delta14C")
-# rm(tpsModelOutput, tpsMcmcFits)
-
-sens_14c <- read_csv("./Output/HBEF_3ps_steady_long_sens_14C_3_2024-12-14.csv") %>% 
+## initial Delta14C in each pool (based on steady-state 3p model)
+sens_14c <- read_csv("./Output/HBEF_3ps_steady_long_sens_14C_3_2024-12-30.csv") %>% 
   filter(Year == 1997)
 init14C <- ConstFc(as.numeric(c(250, 150, sens_14c[2,8], sens_14c[3,8])),
                    format = "Delta14C")
 
-sens_c <- read_csv("./Output/HBEF_3ps_steady_long_sens_C_3_2024-12-14.csv") %>% 
+sens_c <- read_csv("./Output/HBEF_3ps_steady_long_sens_C_3_2024-12-31.csv") %>% 
   filter(Year == 1997)
+#Split between Oi and Oe based on data from Chris Johnson
 C0 <- c(sens_c[1,8]*0.25, sens_c[1,8]*0.75, sens_c[2,8], sens_c[3,8])
 C0 <- as.numeric(C0)
 rm(sens_14c, sens_c)
@@ -193,12 +137,14 @@ lag_time <- 3
 # Number of model iterations
 itr <- 15000
 
-# C inputs
-# In <- data.frame(year = years, Inputs = rep(210, length(years)))
-# In <- rep(210, length(years))
+# Initial k and a values (k = stocks/flux; modified from Fahey et al 2005)
+init_pars <- c(k1 = 1/2, k2 = 1/7, k3 = 1/19, k4 = 1/59, 
+               alpha21 = 180/(180 + 30), alpha32 = 100/(100 + 80),
+               alpha43 = 39/(39 + 61)) 
 
-## Set-up 14C pool (four pools in series)
+## Set-up model (four pools in series)
 FourPSeriesModel_fun <- function(pars){
+  # Define and construct matrix A
   ks <- pars[1:4]
   A <- -1 * diag(ks)
   A[2,1] <- pars[5]*pars[1]
@@ -206,19 +152,26 @@ FourPSeriesModel_fun <- function(pars){
   A[4,3] <- pars[7]*pars[3]
   
   mod = Model_14(
+    # time interval for model to find solutions
     t = years,
+    # matrix that contains k and a values
     A = A, 
     ivList = C0,
-    #Need to define inputs into each pool separately
+    # Need to define inputs into each pool separately; only Oi recieves inputs
     inputFluxes = BoundInFluxes(map = function(t){matrix(c(210,0,0,0), 
                                                        ncol = 1, nrow = 4)}),
+    # Initial 14C values
     initialValF = init14C,
+    # atmospheric 14C for each time point, including lag-time
     inputFc = BoundFc(map = NHZone2_2023,  format = "Delta14C", lag = lag_time)
   )
+  # get 14C for each pool and each time point
   res_14C = getF14(mod)
+  # get C for each pool and each time point
   res_C = getC(mod)
+  # return dataframe with years and 14C and C values for each pool
   return(data.frame(time = years,
-                    #Calculate bulk value for Oie (C-weighted)
+                    # Calculate bulk value for Oie (C-weighted)
                     oie_14C = (res_14C[,1]*(res_C[,1]/rowSums(res_C[,1:2]))) + 
                       (res_14C[,2]*(res_C[,2]/rowSums(res_C[,1:2]))),
                     oie_C = rowSums(res_C[,1:2]),
@@ -232,11 +185,7 @@ FourPSeriesModel_fun <- function(pars){
                     min_C = res_C[,4]))
 }
 
-#values based on stocks/fluxes; alternative use values from 3 pool model at steady state
-init_pars <- c(k1 = 1/2, k2 = 1/7, k3 = 1/19, k4 = 1/59, 
-               alpha21 = 180/(180 + 30), alpha32 = 100/(100 + 80),
-               alpha43 = 39/(39 + 61)) 
-
+# Cost function to constrain model with observational data
 fpsCost <- function(pars){
   funccall = FourPSeriesModel_fun(pars)
   cost1 = modCost(model = funccall, obs = oie_data_14C, err = "sd")
@@ -248,20 +197,24 @@ fpsCost <- function(pars){
   return(cost6)
 }
 
-#double-check lower/upper again
+#### NO NEED TO RUN THE FOLLOWING CODE (OBJECTS HAVE BEEN SAVED) #####
+## Un-comment the code if you wish to run it ##
+
+## Fitting the model
 fpsModelFit <- FME::modFit(f = fpsCost, p = init_pars, method = "Marq", 
                            upper = c(3, rep(1,6)), lower = rep(0,7)) 
 
-#sum squared residuals
+## Model evaluation
+# sum squared residuals
 fpsModelFit$ssr
 
-#mean squared residuals
+# mean squared residuals
 fpsModelFit$ms
 
-#AIC
+# AIC
 (2*length(fpsModelFit$par))-(2*log(fpsModelFit$ms))
 
-#Mean squared residuals per variable/horizon
+# Mean squared residuals per variable/horizon
 sqrt(fpsModelFit$var_ms)
 
 model_summary <- data.frame(ssr = fpsModelFit$ssr,
@@ -272,59 +225,21 @@ write.csv(model_summary, row.names = TRUE, quote = FALSE,
           file = paste0("./Output/HBEF_4ps_short_14C_C_summary_stats_", 
                         Sys.Date(), ".csv"))
 
+## Perform Markov Chain Monte Carlo simulation
 fpsVar <- fpsModelFit$var_ms_unweighted
 
-#double-check lower/upper again
 fpsMcmcFits <- FME::modMCMC(f = fpsCost, p = fpsModelFit$par, niter = itr, ntrydr = 5,
                             updatecov = 50, var0 = fpsVar, upper = c(3, rep(1,6)),
                             lower = rep(0,7)) #Create a new object to record fit stats
 
+# Fit model with mean parameter values
 fpsModelOutput <- FourPSeriesModel_fun(pars = as.numeric(summary(fpsMcmcFits)[1,1:7]))
 
-# Save output
-save(fpsModelFit, fpsMcmcFits, fpsModelOutput, 
-     file = paste0("./Output/HBEF_4ps_short_14C_C", Sys.Date(), ".Rdata"))
-write_csv(summary(fpsMcmcFits), 
+write.csv(summary(fpsMcmcFits), 
           file = paste0("./Output/HBEF_4ps_short_14C_C_summary_", 
                         Sys.Date(), ".csv"))
 
-# Create long dataframe
-fpsModelOutput_df <- fpsModelOutput %>% 
-  # filter(time > 1945) %>% 
-  pivot_longer(!time,
-               cols_vary = "slowest",
-               names_to = c("Horizon", ".value"),
-               names_pattern = "(.*)_(.*)") %>% 
-  rename(Delta14C = `14C`,
-         SOC_Stock = C,
-         Year = time)
-
-fpsModelOutput_df$Horizon <- factor(fpsModelOutput_df$Horizon,
-                                    levels = c("oi", "oe", "oie", "oa", "min"),
-                                    ordered = TRUE)
-
-# Summarise HBEF data
-HBEF_data_14C_C_sum <- HBEF_all %>% 
-  filter(Year != 2020) %>% 
-  group_by(Year, Horizon) %>% 
-  summarise(Delta14C_mean = mean(Delta14C, na.rm = TRUE),
-            Delta14C_sd = sd(Delta14C, na.rm = TRUE),
-            C_mean = mean(SOC_g_m2, na.rm = TRUE),
-            C_sd = sd(SOC_g_m2, na.rm = TRUE)) %>% 
-  mutate(Horizon = case_when(
-    Horizon == "Oi/Oe" ~ "oie",
-    Horizon == "Oa/A" ~ "oa",
-    Horizon == "Mineral_0_10" ~ "min"
-  ))
-
-HBEF_data_14C_C_sum$Horizon <- factor(HBEF_data_14C_C_sum$Horizon,
-                                      levels = c("oie", "oa", "min"))
-
-fpsMcmcFits$bestpar
-
-summary(fpsMcmcFits)
-
-#Check for convergence: if model is converged, there should be no visible drift
+# Check for convergence: if model is converged, there should be no visible drift
 jpeg(paste0("./Output/HBEF_4ps_short_14C_C_converg_", 
             Sys.Date(), ".jpeg"), width = 1550, height = 1000)
 plot(fpsMcmcFits)
@@ -335,31 +250,36 @@ jpeg(paste0("./Output/HBEF_4ps_short_14C_C_pairs_",
 pairs(fpsMcmcFits)
 dev.off()
 
-#### Uncertainty analysis
-pars <- fpsMcmcFits$pars
+#### Uncertainty analysis ####
+# exclude first 1000 rows: MCMC algorithms are sensitive to their starting point
+pars <- fpsMcmcFits$pars[-(1:1000), ]
 
+# Number of times the model will be run
 num <- 1000
 
+### Estimate uncertainties for each horizon
+## Radiocarbon
 sens_oi_14C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
                                   sensvar = "oi_14C")) %>% 
-  mutate(Horizon = "oi")
+  mutate(Horizon = "Oi")
 
 sens_oe_14C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
                                  sensvar = c("oe_14C"))) %>% 
-  mutate(Horizon = "oe")
+  mutate(Horizon = "Oe")
 
 sens_oie_14C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
                                   sensvar = c("oie_14C"))) %>% 
-  mutate(Horizon = "oie")
+  mutate(Horizon = "Oi/Oe")
 
 sens_oa_14C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
                              sensvar = c("oa_14C"))) %>% 
-  mutate(Horizon = "oa")
+  mutate(Horizon = "Oa/A")
 
 sens_min_14C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
                               sensvar = c("min_14C"))) %>% 
-  mutate(Horizon = "min")
+  mutate(Horizon = "Mineral")
 
+# Combine results for each horizon into one data frame and save as csv file
 sens_all_14C <- rbind(sens_oi_14C, sens_oe_14C, sens_oie_14C, sens_oa_14C, sens_min_14C) %>% 
   tibble() %>% 
   dplyr::rename(Year = x) %>% 
@@ -369,26 +289,28 @@ write_csv(sens_all_14C,
           file = paste0("./Output/HBEF_4ps_short_SensitivityAnalysis_14C_", 
                         Sys.Date(), ".csv"))
 
+## Carbon
 sens_oi_C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
                                 sensvar = c("oi_C"))) %>% 
-  mutate(Horizon = "oi")
+  mutate(Horizon = "Oi")
 
 sens_oe_C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
                                sensvar = c("oe_C"))) %>% 
-  mutate(Horizon = "oe")
+  mutate(Horizon = "Oe")
 
 sens_oie_C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
                                   sensvar = c("oie_C"))) %>% 
-  mutate(Horizon = "oie")
+  mutate(Horizon = "Oi/Oe")
 
 sens_oa_C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
                                  sensvar = c("oa_C"))) %>% 
-  mutate(Horizon = "oa")
+  mutate(Horizon = "Oa/A")
 
 sens_min_C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
                                   sensvar = c("min_C"))) %>% 
-  mutate(Horizon = "min")
+  mutate(Horizon = "Mineral")
 
+# Combine results for each horizon into one data frame and save as csv file
 sens_all_C <- rbind(sens_oi_C, sens_oe_C, sens_oie_C, sens_oa_C, sens_min_C) %>% 
   tibble() %>% 
   dplyr::rename(Year = x) %>% 
@@ -398,25 +320,58 @@ write_csv(sens_all_C,
           file = paste0("./Output/HBEF_4ps_short_SensitivityAnalysis_C_",
                         Sys.Date(), ".csv"))
 
-atm_mod <- data.frame(Year = NHZone2_2023$Year,
-                      Mean = NA,
-                      Sd = NA,
-                      Min = NA,
-                      Max = NA,
-                      q05 = NA,
-                      q25 = NA,
-                      q50 = NHZone2_2023$Delta14C,
-                      q75 = NA,
-                      q95 = NA,
-                      Horizon = "Atmosphere") %>% 
-  dplyr::filter(Year > 1968)
+### Save all model outputs
+save(fpsModelFit, fpsMcmcFits, fpsModelOutput, sens_all_C, sens_all_14C,
+     file = paste0("./Output/HBEF_4ps_short_14C_C_", Sys.Date(), ".Rdata"))
+
+##### Plot and evaluate model results ######
+# Load model results (from code above)
+# load("./Output/HBEF_4ps_short_14C_C_3_2025-01-04.RData")
+
+# Create long dataframe
+fpsModelOutput_df <- fpsModelOutput %>% 
+  # filter(time > 1945) %>% 
+  pivot_longer(!time,
+               cols_vary = "slowest",
+               names_to = c("Horizon", ".value"),
+               names_pattern = "(.*)_(.*)") %>% 
+  rename(Delta14C = `14C`,
+         SOC_Stock = C,
+         Year = time) %>% 
+  mutate(Horizon = case_when(
+    Horizon == "oi" ~ "Oi",
+    Horizon == "oe" ~ "Oe",
+    Horizon == "oie" ~ "Oi/Oe",
+    Horizon == "oa" ~ "Oa/A",
+    Horizon == "min" ~ "Mineral"))
+
+fpsModelOutput_df$Horizon <- factor(fpsModelOutput_df$Horizon,
+                                    levels = c("Oi", "Oe", "Oi/Oe", "Oa/A", "Mineral"),
+                                    ordered = TRUE)
+
+# Check best parameter values
+fpsMcmcFits$bestpar
+
+# Check summary statistics for estimated parameter values
+summary(fpsMcmcFits)
+
+## Prepare data for plotting
+# Summarise HBEF data for plotting and merging with model results
+HBEF_data_14C_C_sum <- HBEF_all %>% 
+  filter(Year != 2020) %>% 
+  group_by(Year, Horizon) %>% 
+  summarise(Delta14C_mean = mean(Delta14C, na.rm = TRUE),
+            Delta14C_sd = sd(Delta14C, na.rm = TRUE),
+            C_mean = mean(SOC_g_m2, na.rm = TRUE),
+            C_sd = sd(SOC_g_m2, na.rm = TRUE)) 
 
 sens_all_14C$Horizon <- factor(sens_all_14C$Horizon,
-                               levels = c("oi", "oe", "oie", "oa", "min"))
+                               levels = c("Oi", "Oe", "Oi/Oe", "Oa/A", "Mineral"))
 
 sens_all_C$Horizon <- factor(sens_all_C$Horizon,
-                               levels = c("oi", "oe", "oie", "oa", "min"))
+                               levels = c("Oi", "Oe", "Oi/Oe", "Oa/A", "Mineral"))
 
+## Plot 14C results
 sens_all_14C_p <- sens_all_14C %>% 
   ggplot(aes(x = Year)) +
   geom_ribbon(aes(ymin = q05, ymax = q95, group = Horizon), alpha = 0.2) +
@@ -437,16 +392,17 @@ sens_all_14C_p <- sens_all_14C %>%
                      expand = c(0,0)) +
   theme_classic(base_size = 16) +
   theme(axis.text = element_text(color = "black")) +
-  scale_linetype_manual("Modeled", label = c("Oi", "Oe", "Oie", "Oa", "0-10 cm"),
+  scale_linetype_manual("Modeled", label = c("Oi", "Oe", "Oi/Oe", "Oa/A", "Mineral"),
                         values = c(2, 3, 1, 1, 1)) +
-  scale_color_manual("Modeled", label = c("Oi", "Oe", "Oie", "Oa", "0-10 cm"),
+  scale_color_manual("Modeled", label = c("Oi", "Oe", "Oi/Oe", "Oa/A", "Mineral"),
                      values = c("#33a02c", "#33a02c", "#33a02c", "#b2df8a", "#a6cee3")) +
-  scale_fill_manual("Measured", label = c("Oie", "Oa", "0-10 cm"),
+  scale_fill_manual("Measured", label = c("Oi/Oe", "Oa/A", "Mineral"),
                     values = c("#33a02c", "#b2df8a", "#a6cee3")) 
 
 ggsave(file = paste0("./Output/HBEF_4ps_short_14C_Sensitivity_",
                      Sys.Date(), ".jpeg"), width = 10, height = 6) 
 
+## Plot SOC results
 sens_all_C_p <- sens_all_C %>% 
   ggplot(aes(x = Year)) +
   geom_ribbon(aes(ymin = q05, ymax = q95, group = Horizon), alpha = 0.2) +
@@ -460,22 +416,17 @@ sens_all_C_p <- sens_all_C %>%
   geom_point(data = HBEF_data_14C_C_sum, aes(y = C_mean, fill = Horizon),
              shape = 21, size = 2) +
   scale_x_continuous("Year", limits = c(1997,2024), expand = c(0,0),
-                     breaks = seq(1997,2023,10)) +
-  scale_y_continuous("SOC stocks") +
+                     breaks = seq(1969,2023,10)) +
+  scale_y_continuous(expression(paste("SOC stocks [g C m"^-2,"]")),
+                     limits = c(500,5000), expand = c(0,0),
+                     breaks = seq(500,5000,1500)) +
   theme_classic(base_size = 16) +
   theme(axis.text = element_text(color = "black"),
         legend.position = "none") +
-  scale_linetype_manual("Modeled", label = c("Oi", "Oe", "Oie", "Oa", "0-10 cm"),
-                        values = c(2, 3, 1, 1, 1)) +
-  scale_color_manual("Modeled", label = c("Oi", "Oe", "Oie", "Oa", "0-10 cm"),
-                     values = c("#33a02c", "#33a02c", "#33a02c", "#b2df8a", "#a6cee3")) +
-  scale_fill_manual("Measured", label = c("Oie", "Oa/A", "0-10 cm"),
-                    values = c("#33a02c", "#b2df8a", "#a6cee3")) +
-  facet_wrap(~Horizon) +
-  geom_smooth(method = "lm", data = HBEF_data_14C_C_sum %>% 
-                filter(Horizon == "oie"),
-              aes(y = C_mean), color = "black", alpha = 0.3,
-              linetype = "dashed", linewidth = 0.5)
+  scale_linetype_manual("Modeled", values = c(2, 3, 1, 1, 1)) +
+  scale_color_manual("Modeled", values = c("#33a02c", "#33a02c", "#33a02c", "#b2df8a", "#a6cee3")) +
+  scale_fill_manual("Measured", values = c("#33a02c", "#b2df8a", "#a6cee3")) +
+  facet_wrap(~Horizon)
 
 ggsave(file = paste0("./Output/HBEF_4ps_short_C_Sensitivity_",
                      Sys.Date(), ".jpeg"), width = 10, height = 6)
@@ -484,8 +435,9 @@ ggarrange(sens_all_14C_p, sens_all_C_p, common.legend = TRUE)
 ggsave(file = paste0("./Output/HBEF_4ps_short_14_C_Sensitivity_", lag_time, "_",
                      Sys.Date(), ".jpeg"), width = 12, height = 6)
 
+## Plot SOC Oie results only
 sens_all_C %>% 
-  filter(Horizon == "oie") %>% 
+  filter(Horizon == "Oi/Oe") %>% 
   ggplot(aes(x = Year)) +
   #add regression line based on measured values
   geom_smooth(data = HBEF_data_14C_C_sum %>% 
@@ -502,15 +454,14 @@ sens_all_C %>%
   geom_point(data = HBEF_data_14C_C_sum %>% 
                filter(Horizon == "oie"), aes(y = C_mean, fill = Horizon),
              shape = 21, size = 2) +
-  scale_x_continuous("Year", expand = c(0,0), limits = c(1997,2024)) +
-  scale_y_continuous("SOC stocks [g C/m2]", limits = c(750,1750), expand = c(0,0)) +
+  scale_x_continuous("Year", expand = c(0,0), limits = c(1997.9,2023.1)) +
+  scale_y_continuous(expression(paste("SOC stocks [g C m"^-2,"]")), 
+                     limits = c(750,1750), expand = c(0,0)) +
   theme_classic(base_size = 16) +
   theme(axis.text = element_text(color = "black"),
         legend.position = "none") +
-  scale_color_manual("Modeled", label = c("Oie", "Oa", "0-10 cm"),
-                     values = c("#33a02c", "#b2df8a", "#a6cee3")) +
-  scale_fill_manual("Measured", label = c("Oie", "Oa/A", "0-10 cm"),
-                    values = c("#33a02c", "#b2df8a", "#a6cee3")) +
+  scale_color_manual("Modeled", values = c("#33a02c", "#b2df8a", "#a6cee3")) +
+  scale_fill_manual("Measured", values = c("#33a02c", "#b2df8a", "#a6cee3")) +
   facet_wrap(~Horizon) 
 ggsave(file = paste0("./Output/HBEF_4ps_short_14_C_Sensitivity_oie_", lag_time, "_",
                      Sys.Date(), ".jpeg"), width = 7, height = 5)

@@ -125,13 +125,13 @@ NHZone2_2023 %>%
 years <- seq(1997, 2023, by = 0.5)
 
 ## initial Delta14C in each pool (based on steady-state 3p model)
-sens_14c <- read_csv("./Output/HBEF_3ps_steady_long_sens_14C_3_2024-12-14.csv") %>% 
+sens_14c <- read_csv("./Output/HBEF_3ps_steady_long_sens_14C_3_2024-12-30.csv") %>% 
   filter(Year == 1997)
 init14C <- c(sens_14c[1,8], sens_14c[2,8], sens_14c[3,8])
 init14C <- as.numeric(init14C)
 
 ## initial SOC in each pool (based on steady-state 3p model)
-sens_c <- read_csv("./Output/HBEF_3ps_steady_long_sens_C_3_2024-12-14.csv") %>% 
+sens_c <- read_csv("./Output/HBEF_3ps_steady_long_sens_C_3_2024-12-31.csv") %>% 
   filter(Year == 1997)
 C0 <- c(sens_c[1,8], sens_c[2,8], sens_c[3,8])
 C0 <- as.numeric(C0)
@@ -240,8 +240,6 @@ write.csv(summary(tpsShortMcmcFits),
           file = paste0("./Output/HBEF_3ps_short_14C_C_summary_", lag_time, "_",
                         Sys.Date(), ".csv"))
 
-
-
 # Check for convergence: if model is converged, there should be no visible drift
 jpeg(paste0("./Output/HBEF_3ps_short_14C_C_converg_", lag_time, "_",
             Sys.Date(), ".jpeg"), width = 1550, height = 1000)
@@ -313,7 +311,7 @@ save(tpsModelShortFit, tpsShortMcmcFits, tpsModelShortOutput, sens_all_C, sens_a
 
 ##### Plot and evaluate model results ######
 # Load model results (from code above)
-# load("./Output/HBEF_3ps_steady_long_14C_C_3_2025-01-03.RData")
+# load("./Output/HBEF_3ps_short_14C_C_3_2025-01-04.RData")
 
 # Create long dataframe
 tpsModelOutput_df <- tpsModelShortOutput %>% 
@@ -534,14 +532,14 @@ oie_14C <- fun_pred_obs_14C(x = "Oi/Oe") +
 
 oa_14C <- fun_pred_obs_14C(x = "Oa/A") +
   scale_x_continuous(expression(paste("Predicted ", Delta^14, "C [‰]")),
-                     limits = c(80,115), expand = c(0,0)) +
+                     limits = c(75,90), expand = c(0,0)) +
   scale_y_continuous(expression(paste("Observed ", Delta^14, "C [‰]")),
                      limits = c(0,130), expand = c(0,0)) +
   scale_color_manual(values = c("#b2df8a"))
 
 min_14C <- fun_pred_obs_14C(x = "Mineral") +
   scale_x_continuous(expression(paste("Predicted ", Delta^14, "C [‰]")),
-                     limits = c(-30,-12), expand = c(0,0)) +
+                     limits = c(-28,-14), expand = c(0,0)) +
   scale_y_continuous(expression(paste("Observed ", Delta^14, "C [‰]")),
                      limits = c(-110,20), expand = c(0,0)) +
   scale_color_manual(values = c("#a6cee3"))
