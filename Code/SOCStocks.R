@@ -1,5 +1,5 @@
 ## Hubbard Brook archived soil samples project ##
-## SOC stocks ##
+## SOC stocks for dataset 2 ##
 ## Sophie von Fromm ##
 ## 2024-11-15 ##
 
@@ -13,38 +13,12 @@ HBEF_data$Horizon <- factor(HBEF_data$Horizon,
                             levels = c("Oi/Oe", "Oa/A", "Mineral_0_10"),
                             ordered = TRUE)
 
-LitterData <- read_csv("./Data/LitterData_Driscoll.csv")
-
-#fm * exp(lambda * (-obs_date_y + 1950)) - 1) * 1000
-lambda <- 0.0001209681
-
-litter_all <- LitterData %>% 
-  filter(Watershed == 6) %>% 
-  mutate(Delta14C = (F14C * exp(lambda * (-Year + 1950)) -1) * 1000) %>% 
-  mutate(Elevation = case_when(
-    Plot < 70 ~ "High",
-    Plot > 152 ~ "Low",
-    TRUE ~ "Mid"
-  )) %>% 
-  #add dummy variable for SOC stocks
-  mutate(SOC_g_m2 = NA) %>% 
-  #match Horizon names
-  mutate(Horizon = case_when(
-    Horizon == "Oie" ~ "Oi/Oe",
-    Horizon == "Oa" ~ "Oa/A"
-  )) 
-
 # Summarize and merge data by horizon; remove roots for now
 HBEF_all <- HBEF_data %>% 
   filter(Plot != "all fine roots") %>% 
   filter(Year != 2020) %>% 
-  mutate(DataSource = "Groffman") %>% 
   mutate(SOC_g_m2 = (`Measured_%_C` * mean_BD_g_cm3 * mean_thick_cm) * 100) %>% 
-  dplyr::select(Year, Horizon, Delta14C, SOC_g_m2, DataSource, Elevation) %>% 
-  rbind(litter_all %>% 
-          dplyr::select(Year, Horizon, Delta14C, SOC_g_m2, Elevation) %>% 
-          mutate(DataSource = "Driscoll")) %>% 
-  dplyr::select(Year:Delta14C, SOC_g_m2, DataSource, Elevation) %>% 
+  dplyr::select(Year, Horizon, Delta14C, SOC_g_m2, Elevation) %>% 
   mutate(Breakpoint = case_when(
     Year < 2015 ~ "pre-breakpoint",
     TRUE ~ "post-breakpoint"
@@ -52,7 +26,6 @@ HBEF_all <- HBEF_data %>%
 
 #Groffman data only
 HBEF_all %>% 
-  filter(DataSource == "Groffman") %>%
   filter(Horizon == "Oi/Oe") %>% 
   group_by(Year) %>%
   summarise(mean_SOC_g_m2 = mean(SOC_g_m2),
