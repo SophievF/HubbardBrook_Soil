@@ -7,8 +7,6 @@ library(tidyverse)
 library(SoilR)
 library(forecast)
 library(FME)
-library(doParallel)
-library(foreach)
 library(ggpubr)
 library(bayestestR)
 
@@ -20,46 +18,63 @@ HBEF_all$Horizon <- factor(HBEF_all$Horizon,
                             ordered = TRUE)
 
 ## Prepare each horizon for model
-# Function for 14C data
-horizon_data_14C_fun <- function(x){
-  HBEF_all %>% 
-    filter(Horizon == x) %>% 
-    rename(time = Year) %>% 
-    group_by(time) %>% 
-    summarise(min_14C = mean(Delta14C, na.rm = TRUE),
-              sd = sd(Delta14C, na.rm = TRUE)) %>%
-    data.frame()
-}
+min_data_14C <- HBEF_all %>% 
+  filter(Horizon == "Mineral") %>% 
+  rename(time = Year) %>% 
+  group_by(time) %>% 
+  summarise(min_14C = mean(Delta14C, na.rm = TRUE),
+            sd = sd(Delta14C, na.rm = TRUE)) %>%
+  data.frame()
 
-# Function for C data
-horizon_data_C_fun <- function(x){
-  HBEF_all %>% 
-    filter(Horizon == x) %>% 
-    rename(time = Year) %>% 
-    group_by(time) %>% 
-    summarise(min_C = mean(SOC_g_m2, na.rm = TRUE),
-              sd = sd(SOC_g_m2, na.rm = TRUE)) %>%
-    data.frame()
-}
+min_data_C <- HBEF_all %>% 
+  filter(Horizon == "Mineral") %>% 
+  rename(time = Year) %>% 
+  group_by(time) %>% 
+  summarise(min_C = mean(SOC_g_m2, na.rm = TRUE),
+            sd = sd(SOC_g_m2, na.rm = TRUE)) %>%
+  data.frame()
 
-# mineral data
-min_data_14C <- horizon_data_14C_fun(x = "Mineral")
-min_data_C <- horizon_data_C_fun(x = "Mineral")
+oa_data_14C <- HBEF_all %>% 
+  filter(Horizon == "Oa/A") %>% 
+  rename(time = Year) %>% 
+  group_by(time) %>% 
+  summarise(oa_14C = mean(Delta14C),
+            sd = sd(Delta14C)) %>% 
+  data.frame()
 
-# oa data
-oa_data_14C <- horizon_data_14C_fun(x = "Oa/A")
-oa_data_C <- horizon_data_C_fun(x = "Oa/A")
+oa_data_C <- HBEF_all %>% 
+  filter(Horizon == "Oa/A") %>% 
+  rename(time = Year) %>% 
+  group_by(time) %>% 
+  drop_na(SOC_g_m2) %>% 
+  summarise(oa_C = mean(SOC_g_m2),
+            sd = sd(SOC_g_m2)) %>% 
+  data.frame()
 
-## oie data
-oie_data_14C <- horizon_data_14C_fun(x = "Oi/Oe")
-# Replace NA for 1998 sd with the mean sd for all years in the Oie from dataset 1
+oie_data_14C <- HBEF_all %>% 
+  filter(Horizon == "Oi/Oe") %>% 
+  rename(time = Year) %>% 
+  group_by(time) %>% 
+  summarise(oie_14C = mean(Delta14C),
+            sd = sd(Delta14C)) %>%
+  data.frame()
+
+# Replace NA for 1998 sd with the mean sd for all years in the Oie from dataset 2
 oie_data_14C$sd <- replace(oie_data_14C$sd, is.na(oie_data_14C$sd),
                            mean(oie_data_14C$sd[c(6:14)]))
 
-oie_data_C <- horizon_data_C_fun(x = "Oi/Oe")
-# Replace NA for 1998 sd with the mean sd for all years in the Oie from dataset 1
+oie_data_C <- HBEF_all %>% 
+  filter(Horizon == "Oi/Oe") %>% 
+  rename(time = Year) %>% 
+  group_by(time) %>% 
+  drop_na(SOC_g_m2) %>% 
+  summarise(oie_C = mean(SOC_g_m2),
+            sd = sd(SOC_g_m2)) %>%
+  data.frame()
+
+# Replace NA for 1998 sd with the mean sd for all years in the Oie from dataset 2
 oie_data_C$sd <- replace(oie_data_C$sd, is.na(oie_data_C$sd),
-                           mean(oie_data_C$sd[c(6:14)]))
+                         mean(oie_data_C$sd[c(6:14)]))
 
 #### Model set-up ####
 
@@ -217,15 +232,9 @@ tpsCost <- function(pars){
 #                         Sys.Date(), ".csv"))
 
 # Check for convergence: if model is converged, there should be no visible drift
-# jpeg(paste0("./Output/HBEF_3ps_steady_long_14C_C_converg_", lag_time, "_",
-#             Sys.Date(), ".jpeg"), width = 1550, height = 1000)
 # plot(tpsMcmcFits)
-# dev.off()
 # 
-# jpeg(paste0("./Output/HBEF_3ps_steady_long_14C_C_pairs_", lag_time, "_",
-#             Sys.Date(), ".jpeg"), width = 1550, height = 1000)
 # pairs(tpsMcmcFits)
-# dev.off()
 
 #### Uncertainty analysis
 # exclude first 1000 rows: MCMC algorithms are sensitive to their starting point
@@ -311,7 +320,25 @@ tpsModelOutput_df$Horizon <- factor(tpsModelOutput_df$Horizon,
 tpsMcmcFits$bestpar
 
 # Check summary statistics for estimated parameter values
-summary(tpsMcmcFits)[,1:5]
+summary(tpsMcmcFits, quantile.type = c(0.005,0.5,0.95))[,1:5]
+
+tpsMcmcFits$pars %>% 
+  as.data.frame() %>% nrow()
+  summarise(median_k1 = median(k1),
+            q05_k1 = quantile(k1, 0.05),
+            q95_k1 = quantile(k1, 0.95),
+            median_a21 = median(alpha21),
+            q05_a21 = quantile(alpha21, 0.05),
+            q95_a21 = quantile(alpha21, 0.95),
+            median_k2 = median(k2),
+            q05_k2 = quantile(k2, 0.05),
+            q95_k2 = quantile(k2, 0.95),
+            median_k3 = median(k3),
+            q05_k3 = quantile(k3, 0.05),
+            q95_k3 = quantile(k3, 0.95),
+            median_a32 = median(alpha32),
+            q05_a32 = quantile(alpha32, 0.05),
+            q95_a32 = quantile(alpha32, 0.95))
 
 ## Prepare data for plotting
 # Summarise HBEF data for plotting and merging with model results
@@ -370,8 +397,6 @@ sens_all_14C_p <- sens_all_14C %>%
                      values = c("#33a02c", "#b2df8a", "#a6cee3")) +
   scale_fill_manual("Measured", label = c("Oi/Oe", "Oa/A", "Mineral"),
                     values = c("#33a02c", "#b2df8a", "#a6cee3")) 
-ggsave(file = paste0("./Output/HBEF_3ps_steady_long_14C_Sensitivity_", lag_time, "_",
-                     Sys.Date(), ".jpeg"), width = 10, height = 6) 
 
 sens_all_C_p <- sens_all_C %>% 
   ggplot(aes(x = Year)) +
@@ -397,11 +422,10 @@ sens_all_C_p <- sens_all_C %>%
   scale_fill_manual("Measured", label = c("Oi/Oe", "Oa/A", "Mineral"),
                     values = c("#33a02c", "#b2df8a", "#a6cee3")) +
   facet_wrap(~Horizon, ncol = 1) 
-ggsave(file = paste0("./Output/HBEF_3ps_steady_long_C_Sensitivity_", lag_time, "_",
-                     Sys.Date(), ".jpeg"), width = 6, height = 7)
 
-ggarrange(sens_all_14C_p, sens_all_C_p, common.legend = TRUE, widths = c(1.5,1))
-ggsave(file = paste0("./Output/HBEF_3ps_steady_long_14C_C_Sensitivity_", lag_time, "_",
+ggarrange(sens_all_14C_p, sens_all_C_p, common.legend = TRUE, widths = c(1.5,1),
+          labels = c("a)", "b)"))
+ggsave(file = paste0("./Output/HBEF_Figure2_",
                      Sys.Date(), ".jpeg"), width = 12, height = 6)
 
 ### Plot predicted vs observed (mean + SD) for each Horizon and calculate RMSE
@@ -488,19 +512,17 @@ oie_14C <- fun_pred_obs_14C(x = "Oi/Oe") +
 oa_14C <- fun_pred_obs_14C(x = "Oa/A") +
   scale_x_continuous(expression(paste("Predicted ", Delta^14, "C [‰]")),
                      limits = c(-20,110), expand = c(0,0)) +
-  scale_y_continuous(expression(paste("Observed ", Delta^14, "C [‰]")),
-                     limits = c(-20,230), expand = c(0,0)) +
+  scale_y_continuous("", limits = c(-20,230), expand = c(0,0)) +
   scale_color_manual(values = c("#b2df8a"))
 
 min_14C <- fun_pred_obs_14C(x = "Mineral") +
   scale_x_continuous(expression(paste("Predicted ", Delta^14, "C [‰]")),
                      limits = c(-30,-11), expand = c(0,0)) +
-  scale_y_continuous(expression(paste("Observed ", Delta^14, "C [‰]")),
-                     limits = c(-110,20), expand = c(0,0)) +
+  scale_y_continuous("", limits = c(-110,20), expand = c(0,0)) +
   scale_color_manual(values = c("#a6cee3"))
 
-ggarrange(oie_14C, oa_14C, min_14C, nrow = 1)
-ggsave(file = paste0("./Output/HBEF_3ps_steady_long_14C_Obs_Pred_", lag_time, "_",
+ggarrange(oie_14C, oa_14C, min_14C, nrow = 1, labels = c("a)", "b)", "c)"))
+ggsave(file = paste0("./Output/HBEF_FigureS3_",
                      Sys.Date(), ".jpeg"), width = 12, height = 6)
 ## SOC data
 model_C_pred_obs <- sens_all_C %>%
@@ -575,19 +597,17 @@ oie_C <- fun_pred_obs_C(x = "Oi/Oe") +
 oa_C <- fun_pred_obs_C(x = "Oa/A") +
   scale_x_continuous(expression(paste("Predicted SOC stocks [g C m"^-2,"]")),
                      limits = c(1700,2035), expand = c(0,0)) +
-  scale_y_continuous(expression(paste("Observed SOC stocks [g C m"^-2,"]")),
-                     limits = c(500,5200), expand = c(0,0)) +
+  scale_y_continuous("", limits = c(500,5200), expand = c(0,0)) +
   scale_color_manual(values = c("#b2df8a"))
 
 min_C <- fun_pred_obs_C(x = "Mineral") +
   scale_x_continuous(expression(paste("Predicted SOC stocks [g C m"^-2,"]")),
                      limits = c(2200,2365), expand = c(0,0)) +
-  scale_y_continuous(expression(paste("Observed SOC stocks [g C m"^-2,"]")),
-                     limits = c(1100,4100), expand = c(0,0)) +
+  scale_y_continuous("", limits = c(1100,4100), expand = c(0,0)) +
   scale_color_manual(values = c("#a6cee3"))
 
-ggarrange(oie_C, oa_C, min_C, nrow = 1)
-ggsave(file = paste0("./Output/HBEF_3ps_steady_long_C_Obs_Pred_", lag_time, "_",
+ggarrange(oie_C, oa_C, min_C, nrow = 1, labels = c("a)", "b)", "c)"))
+ggsave(file = paste0("./Output/HBEF_FigureS4_",
                      Sys.Date(), ".jpeg"), width = 12, height = 6)
 
 #### Calculate transit time/ system age 
@@ -699,9 +719,9 @@ sa_tt <- data.frame(
 sum_age_tt_fun <- function(vector){
   data.frame(mean_age = mean(vector),
              mean_age_sd = sd(vector),
-             q1 = as.numeric(quantile(vector, probs = c(0.25))),
+             q1 = as.numeric(quantile(vector, probs = c(0.05))),
              median = median(vector),
-             q3 = as.numeric(quantile(vector, probs = c(0.75))),
+             q3 = as.numeric(quantile(vector, probs = c(0.95))),
              ci_low = as.numeric(ci(vector))[2],
              ci_high = as.numeric(ci(vector))[3] 
              )
@@ -778,8 +798,8 @@ min_age_p <- pool_age_fun(x = "Mineral", mean_age = SA_TT_sum$mean_age[4],
   scale_y_continuous("", expand = c(0,0), breaks = seq(0,0.003, 0.001),
                      limits = c(0,0.003))
 
-ggarrange(oie_age_p, oa_age_p, min_age_p, nrow = 1)
-ggsave(file = paste0("./Output/HBEF_3ps_steady_long_PoolAgeDis_", lag_time, "_",
+ggarrange(oie_age_p, oa_age_p, min_age_p, nrow = 1, labels = c("a)", "b)", "c)"))
+ggsave(file = paste0("./Output/HBEF_FigureS5_",
                      Sys.Date(), ".jpeg"), width = 12, height = 5)
 
 # Calculate and plot how much C is cycling on different timescales
@@ -833,9 +853,43 @@ min_age_cum_p <- pool_age_cum_fun(x = "Mineral", mean_age = SA_TT_sum$mean_age[4
   annotate(geom = "text", x = 800, y = 10,
            label = paste0("Mean age = ", round(SA_TT_sum$mean_age[4],0), " yrs"))
 
-ggarrange(oie_age_cum_p, oa_age_cum_p, min_age_cum_p, nrow = 1)
-ggsave(file = paste0("./Output/HBEF_3ps_steady_long_PoolAgeDisCum_", lag_time, "_",
+ggarrange(oie_age_cum_p, oa_age_cum_p, min_age_cum_p, nrow = 1,
+          labels = c("a)", "b)", "c)"))
+ggsave(file = paste0("./Output/HBEF_Figure3_",
                      Sys.Date(), ".jpeg"), width = 12, height = 5)
 
+## Calculate fluxes and stocks for all pools and transfer rates (Figure 4)
 
+# Parameter estimates for each model run
+pf_3ps <- tpsMcmcFits$pars %>% 
+  as.data.frame() %>% 
+  # add estimated C stocks for each pool
+  mutate(C1 = mean(sens_all_C$q50[sens_all_C$Horizon == "oie"]),
+         C2 = mean(sens_all_C$q50[sens_all_C$Horizon == "oa"]),
+         C3 = mean(sens_all_C$q50[sens_all_C$Horizon == "min"])) %>% 
+  mutate(
+    #Output flux from pool 1
+    out1 = (1 - alpha21) * k1 * C1,
+    #transfer rate from pool 1 to pool 2
+    trans1 = alpha21 * k1 * C1,
+    out2 = (1- alpha32) * k2 * C2,
+    trans2 = alpha32 * k2 * C2,
+    out3 = k3 * C3
+  )
 
+pf_3ps %>% 
+  summarise(median_out1 = round(median(out1), 0),
+            lci_out1 = round(quantile(out1, 0.05), 0),
+            uci_out1 = round(quantile(out1, 0.95), 0),
+            median_trans1 = round(median(trans1), 0),
+            lci_trans1 = round(quantile(trans1, 0.05), 0),
+            uci_trans1 = round(quantile(trans1, 0.95), 0),
+            median_out2 = round(median(out2), 0),
+            lci_out2 = round(quantile(out2, 0.05), 0),
+            uci_out2 = round(quantile(out2, 0.95), 0),
+            median_trans2 = round(median(trans2), 0),
+            lci_trans2 = round(quantile(trans2, 0.05), 0),
+            uci_trans2 = round(quantile(trans2, 0.95), 0),
+            median_out3 = round(median(out3), 0),
+            lci_out3 = round(quantile(out3, 0.05), 0),
+            uci_out3 = round(quantile(out3, 0.95), 0))
