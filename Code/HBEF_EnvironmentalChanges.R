@@ -4,6 +4,7 @@
 ## 2024-11-15 ##
 
 library(tidyverse)
+library(ggpubr)
 
 ### Precipitation ####
 map_data <- read_csv("./Data/dailyWatershedPrecip1956-2024.csv")
@@ -136,9 +137,10 @@ pH_data %>%
 lm_pH$coefficients[2]*8
 
 ### Plot all data together ####
-ggarrange(map_p, temp_p, pH_p, nrow = 1)
-ggsave("./Output/HBEF_EnvironmentalChange_MAP_MAT_pH.jpeg",
-       width = 10, height = 5)
+ggarrange(map_p, temp_p, pH_p, nrow = 1,
+          labels = c("a)", "b)", "c)"))
+ggsave(paste0("./Output/HBEF_Figure1_", Sys.Date(),
+              ".jpeg"), width = 11, height = 5)
 
 ## pH by Horizon shows similar trends
 # pH_data_grp <- soil_data %>% 
