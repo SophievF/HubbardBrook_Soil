@@ -32,10 +32,11 @@ soil_resp_sum %>%
   theme(axis.text = element_text(color = "black"),
         legend.position = "none") +
   geom_smooth(aes(color = Breakpoint), method = "lm") +
-  scale_y_continuous("Soil respiration [gC/m2 yr]", expand = c(0,0)) +
+  scale_y_continuous(expression(paste("Soil respiration [g C m"^-2,"yr]")), 
+                     expand = c(0,0)) +
   scale_x_continuous("Year", expand = c(0,0), breaks = seq(2005,2020,5))
-ggsave("./Output/SoilRespirationBreakPoint_low_2002_2022.jpeg",
-       width = 8, height = 6)
+ggsave(paste0("./Output/HBEF_FigureS6_", Sys.Date(), ".jpeg"),
+       width = 12, height = 6)
 
 lm_post_break <- lm(mean_gC_m2_yr ~ Year, 
    data = soil_resp_sum %>% 
@@ -44,16 +45,3 @@ summary(lm_post_break)
 
 summary(soil_resp_sum$mean_gC_m2_yr)
 
-soil_resp_sum %>% 
-  ggplot(aes(x = Year, y = mean_gC_m2_yr)) +
-  geom_point(shape = 21, size = 3) +
-  geom_errorbar(aes(ymin =  mean_gC_m2_yr - sd_gC_m2_yr,
-                    ymax =  mean_gC_m2_yr + sd_gC_m2_yr)) +
-  theme_bw() +
-  geom_smooth() +
-  scale_y_continuous("Soil respiration [gC/m2 yr]", expand = c(0,0)) +
-  scale_x_continuous("Year", expand = c(0,0), breaks = seq(2002,2022,5)) +
-  coord_cartesian(ylim = c(0,460))
-
-ggsave("./Output/SoilRespiration_low_2002_2022.jpeg",
-       width = 8, height = 6)         
