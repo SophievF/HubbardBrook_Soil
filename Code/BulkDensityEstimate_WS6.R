@@ -151,8 +151,6 @@ soil_BD %>%
   facet_wrap(~Elevation_grp) +
   theme_bw(base_size = 14) +
   geom_smooth(method = "lm")
-ggsave(file = paste0("./Output/HBEF_BD_estimates_WS6_all_samples_", Sys.Date(),
-                     ".jpeg"), width = 12, height = 6)
 
 soil_BD %>% 
   group_by(Year, Horizon, Elevation_grp) %>% 
@@ -165,8 +163,6 @@ soil_BD %>%
                     ymax = mean_BD_g_cm3 + sd_BD_g_cm3)) +
   facet_wrap(~Elevation_grp) +
   theme_bw(base_size = 14)
-ggsave(file = paste0("./Output/HBEF_BD_estimates_WS6_averaged_", Sys.Date(),
-                     ".jpeg"), width = 12, height = 6)
 
 soil_BD %>% 
   ggplot(aes(x = Horizon, y = BD_g_cm3, color = Elevation_grp)) +
