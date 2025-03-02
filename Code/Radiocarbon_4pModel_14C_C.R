@@ -200,132 +200,126 @@ fpsCost <- function(pars){
 ## Un-comment the code if you wish to run it ##
 
 ## Fitting the model
-fpsModelFit <- FME::modFit(f = fpsCost, p = init_pars, method = "Marq", 
-                           upper = c(3, rep(1,6)), lower = rep(0,7)) 
+# fpsModelFit <- FME::modFit(f = fpsCost, p = init_pars, method = "Marq", 
+#                            upper = c(3, rep(1,6)), lower = rep(0,7)) 
 
 ## Model evaluation
 # sum squared residuals
-fpsModelFit$ssr
+# fpsModelFit$ssr
 
 # mean squared residuals
-fpsModelFit$ms
+# fpsModelFit$ms
 
 # AIC
-(2*length(fpsModelFit$par))-(2*log(fpsModelFit$ms))
+# (2*length(fpsModelFit$par))-(2*log(fpsModelFit$ms))
 
 # Mean squared residuals per variable/horizon
-sqrt(fpsModelFit$var_ms)
+# sqrt(fpsModelFit$var_ms)
 
-model_summary <- data.frame(ssr = fpsModelFit$ssr,
-                            msr = fpsModelFit$ms,
-                            aic = (2*length(fpsModelFit$par))-(2*log(fpsModelFit$ms)))
+# model_summary <- data.frame(ssr = fpsModelFit$ssr,
+#                             msr = fpsModelFit$ms,
+#                             aic = (2*length(fpsModelFit$par))-(2*log(fpsModelFit$ms)))
 
-write.csv(model_summary, row.names = TRUE, quote = FALSE,
-          file = paste0("./Output/HBEF_4ps_short_14C_C_summary_stats_", 
-                        Sys.Date(), ".csv"))
+# write.csv(model_summary, row.names = TRUE, quote = FALSE,
+#           file = paste0("./Output/HBEF_4ps_short_14C_C_summary_stats_", 
+#                         Sys.Date(), ".csv"))
 
 ## Perform Markov Chain Monte Carlo simulation
-fpsVar <- fpsModelFit$var_ms_unweighted
+# fpsVar <- fpsModelFit$var_ms_unweighted
 
-fpsMcmcFits <- FME::modMCMC(f = fpsCost, p = fpsModelFit$par, niter = itr, ntrydr = 5,
-                            updatecov = 50, var0 = fpsVar, upper = c(3, rep(1,6)),
-                            lower = rep(0,7)) #Create a new object to record fit stats
+# fpsMcmcFits <- FME::modMCMC(f = fpsCost, p = fpsModelFit$par, niter = itr, ntrydr = 5,
+#                             updatecov = 50, var0 = fpsVar, upper = c(3, rep(1,6)),
+#                             lower = rep(0,7)) #Create a new object to record fit stats
 
 # Fit model with mean parameter values
-fpsModelOutput <- FourPSeriesModel_fun(pars = as.numeric(summary(fpsMcmcFits)[1,1:7]))
+# fpsModelOutput <- FourPSeriesModel_fun(pars = as.numeric(summary(fpsMcmcFits)[1,1:7]))
 
-write.csv(summary(fpsMcmcFits), 
-          file = paste0("./Output/HBEF_4ps_short_14C_C_summary_", 
-                        Sys.Date(), ".csv"))
+# write.csv(summary(fpsMcmcFits), 
+#           file = paste0("./Output/HBEF_4ps_short_14C_C_summary_", 
+#                         Sys.Date(), ".csv"))
 
 # Check for convergence: if model is converged, there should be no visible drift
-jpeg(paste0("./Output/HBEF_4ps_short_14C_C_converg_", 
-            Sys.Date(), ".jpeg"), width = 1550, height = 1000)
-plot(fpsMcmcFits)
-dev.off()
+# plot(fpsMcmcFits)
 
-jpeg(paste0("./Output/HBEF_4ps_short_14C_C_pairs_", 
-            Sys.Date(), ".jpeg"), width = 1550, height = 1000)
-pairs(fpsMcmcFits)
-dev.off()
+# pairs(fpsMcmcFits)
 
 #### Uncertainty analysis ####
 # exclude first 1000 rows: MCMC algorithms are sensitive to their starting point
-pars <- fpsMcmcFits$pars[-(1:1000), ]
+# pars <- fpsMcmcFits$pars[-(1:1000), ]
 
 # Number of times the model will be run
-num <- 1000
+# num <- 1000
 
 ### Estimate uncertainties for each horizon
 ## Radiocarbon
-sens_oi_14C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
-                                  sensvar = "oi_14C")) %>% 
-  mutate(Horizon = "Oi")
+# sens_oi_14C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
+#                                   sensvar = "oi_14C")) %>% 
+#   mutate(Horizon = "Oi")
 
-sens_oe_14C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
-                                 sensvar = c("oe_14C"))) %>% 
-  mutate(Horizon = "Oe")
+# sens_oe_14C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
+#                                  sensvar = c("oe_14C"))) %>% 
+#   mutate(Horizon = "Oe")
 
-sens_oie_14C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
-                                  sensvar = c("oie_14C"))) %>% 
-  mutate(Horizon = "Oi/Oe")
+# sens_oie_14C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
+#                                   sensvar = c("oie_14C"))) %>% 
+#   mutate(Horizon = "Oi/Oe")
 
-sens_oa_14C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
-                             sensvar = c("oa_14C"))) %>% 
-  mutate(Horizon = "Oa/A")
+# sens_oa_14C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
+#                              sensvar = c("oa_14C"))) %>% 
+#   mutate(Horizon = "Oa/A")
 
-sens_min_14C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
-                              sensvar = c("min_14C"))) %>% 
-  mutate(Horizon = "Mineral")
+# sens_min_14C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
+#                               sensvar = c("min_14C"))) %>% 
+#   mutate(Horizon = "Mineral")
 
 # Combine results for each horizon into one data frame and save as csv file
-sens_all_14C <- rbind(sens_oi_14C, sens_oe_14C, sens_oie_14C, sens_oa_14C, sens_min_14C) %>% 
-  tibble() %>% 
-  dplyr::rename(Year = x) %>% 
-  filter(Year > 1968)
+# sens_all_14C <- rbind(sens_oi_14C, sens_oe_14C, sens_oie_14C, sens_oa_14C, sens_min_14C) %>% 
+#   tibble() %>% 
+#   dplyr::rename(Year = x) %>% 
+#   filter(Year > 1968)
 
-write_csv(sens_all_14C, 
-          file = paste0("./Output/HBEF_4ps_short_SensitivityAnalysis_14C_", 
-                        Sys.Date(), ".csv"))
+# write_csv(sens_all_14C, 
+#           file = paste0("./Output/HBEF_4ps_short_SensitivityAnalysis_14C_", 
+#                         Sys.Date(), ".csv"))
 
 ## Carbon
-sens_oi_C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
-                                sensvar = c("oi_C"))) %>% 
-  mutate(Horizon = "Oi")
+# sens_oi_C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
+#                                 sensvar = c("oi_C"))) %>% 
+#   mutate(Horizon = "Oi")
 
-sens_oe_C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
-                               sensvar = c("oe_C"))) %>% 
-  mutate(Horizon = "Oe")
+# sens_oe_C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
+#                                sensvar = c("oe_C"))) %>% 
+#   mutate(Horizon = "Oe")
 
-sens_oie_C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
-                                  sensvar = c("oie_C"))) %>% 
-  mutate(Horizon = "Oi/Oe")
+# sens_oie_C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
+#                                   sensvar = c("oie_C"))) %>% 
+#   mutate(Horizon = "Oi/Oe")
 
-sens_oa_C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
-                                 sensvar = c("oa_C"))) %>% 
-  mutate(Horizon = "Oa/A")
+# sens_oa_C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
+#                                  sensvar = c("oa_C"))) %>% 
+#   mutate(Horizon = "Oa/A")
 
-sens_min_C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
-                                  sensvar = c("min_C"))) %>% 
-  mutate(Horizon = "Mineral")
+# sens_min_C <- summary(sensRange(num = num, func = FourPSeriesModel_fun, parInput = pars, 
+#                                   sensvar = c("min_C"))) %>% 
+#   mutate(Horizon = "Mineral")
 
 # Combine results for each horizon into one data frame and save as csv file
-sens_all_C <- rbind(sens_oi_C, sens_oe_C, sens_oie_C, sens_oa_C, sens_min_C) %>% 
-  tibble() %>% 
-  dplyr::rename(Year = x) %>% 
-  filter(Year > 1968)
+# sens_all_C <- rbind(sens_oi_C, sens_oe_C, sens_oie_C, sens_oa_C, sens_min_C) %>% 
+#   tibble() %>% 
+#   dplyr::rename(Year = x) %>% 
+#   filter(Year > 1968)
 
-write_csv(sens_all_C, 
-          file = paste0("./Output/HBEF_4ps_short_SensitivityAnalysis_C_",
-                        Sys.Date(), ".csv"))
+# write_csv(sens_all_C, 
+#           file = paste0("./Output/HBEF_4ps_short_SensitivityAnalysis_C_",
+#                         Sys.Date(), ".csv"))
 
 ### Save all model outputs
-save(fpsModelFit, fpsMcmcFits, fpsModelOutput, sens_all_C, sens_all_14C,
-     file = paste0("./Output/HBEF_4ps_short_14C_C_", Sys.Date(), ".Rdata"))
+# save(fpsModelFit, fpsMcmcFits, fpsModelOutput, sens_all_C, sens_all_14C,
+#      file = paste0("./Output/HBEF_4ps_short_14C_C_", Sys.Date(), ".Rdata"))
 
 ##### Plot and evaluate model results ######
 # Load model results (from code above)
-# load("./Output/HBEF_4ps_short_14C_C_3_2025-01-04.RData")
+load("./Output/HBEF_4ps_short_14C_C_2025-01-04.RData")
 
 # Create long dataframe
 fpsModelOutput_df <- fpsModelOutput %>% 
@@ -396,9 +390,6 @@ sens_all_14C_p <- sens_all_14C %>%
   scale_fill_manual("Measured", label = c("Oi/Oe", "Oa/A", "Mineral"),
                     values = c("#33a02c", "#b2df8a", "#a6cee3")) 
 
-ggsave(file = paste0("./Output/HBEF_4ps_short_14C_Sensitivity_",
-                     Sys.Date(), ".jpeg"), width = 10, height = 6) 
-
 ## Plot SOC results
 sens_all_C_p <- sens_all_C %>% 
   ggplot(aes(x = Year)) +
@@ -425,11 +416,9 @@ sens_all_C_p <- sens_all_C %>%
   scale_fill_manual("Measured", values = c("#33a02c", "#b2df8a", "#a6cee3")) +
   facet_wrap(~Horizon)
 
-ggsave(file = paste0("./Output/HBEF_4ps_short_C_Sensitivity_",
-                     Sys.Date(), ".jpeg"), width = 10, height = 6)
-
-ggarrange(sens_all_14C_p, sens_all_C_p, common.legend = TRUE)
-ggsave(file = paste0("./Output/HBEF_4ps_short_14_C_Sensitivity_", lag_time, "_",
+ggarrange(sens_all_14C_p, sens_all_C_p, common.legend = TRUE,
+          labels = c("a)", "b)"))
+ggsave(file = paste0("./Output/HBEF_FigureS12_",
                      Sys.Date(), ".jpeg"), width = 12, height = 6)
 
 ## Plot SOC Oie results only
@@ -460,7 +449,7 @@ sens_all_C %>%
   scale_color_manual("Modeled", values = c("#33a02c", "#b2df8a", "#a6cee3")) +
   scale_fill_manual("Measured", values = c("#33a02c", "#b2df8a", "#a6cee3")) +
   facet_wrap(~Horizon) 
-ggsave(file = paste0("./Output/HBEF_4ps_short_14_C_Sensitivity_oie_", lag_time, "_",
+ggsave(file = paste0("./Output/HBEF_Figure5c_",
                      Sys.Date(), ".jpeg"), width = 7, height = 5)
 
 ### Plot predicted vs observed (mean + SD) for each Horizon and calculate RMSE
@@ -548,25 +537,22 @@ oie_14C <- fun_pred_obs_14C(x = "Oi/Oe") +
 oa_14C <- fun_pred_obs_14C(x = "Oa/A") +
   scale_x_continuous(expression(paste("Predicted ", Delta^14, "C [‰]")),
                      limits = c(75,90), expand = c(0,0)) +
-  scale_y_continuous(expression(paste("Observed ", Delta^14, "C [‰]")),
-                     limits = c(0,130), expand = c(0,0)) +
+  scale_y_continuous("", limits = c(0,130), expand = c(0,0)) +
   scale_color_manual(values = c("#b2df8a"))
 
 min_14C <- fun_pred_obs_14C(x = "Mineral") +
   scale_x_continuous(expression(paste("Predicted ", Delta^14, "C [‰]")),
                      limits = c(-28,-14), expand = c(0,0)) +
-  scale_y_continuous(expression(paste("Observed ", Delta^14, "C [‰]")),
-                     limits = c(-110,20), expand = c(0,0)) +
+  scale_y_continuous("", limits = c(-110,20), expand = c(0,0)) +
   scale_color_manual(values = c("#a6cee3"))
 
-ggarrange(oie_14C, oa_14C, min_14C, nrow = 1)
-ggsave(file = paste0("./Output/HBEF_4ps_short_14C_Obs_Pred_", lag_time, "_",
+ggarrange(oie_14C, oa_14C, min_14C, nrow = 1, labels = c("a)", "b)", "c)"))
+ggsave(file = paste0("./Output/HBEF_FigureS13_",
                      Sys.Date(), ".jpeg"), width = 12, height = 6)
 
 ## SOC data
 model_C_pred_obs <- sens_all_C %>%
-  right_join(HBEF_data_14C_C_sum) %>% 
-  drop_na()
+  right_join(HBEF_data_14C_C_sum) 
 
 # calculate residuals and RMSE
 model_C_pred_obs_res_oie <- model_C_pred_obs %>% 
@@ -639,28 +625,26 @@ fun_pred_obs_C <- function(x){
 
 # Plot data
 oie_C <- fun_pred_obs_C(x = "Oi/Oe") +
-  scale_x_continuous("Predicted SOC stocks [g/m2]",
-                     limits = c(1170,1610), expand = c(0,0)) +
-  scale_y_continuous("Observed SOC stocks [g/m2]",
+  scale_x_continuous(expression(paste("Predicted SOC stocks [g C m"^-2,"]")),
+                     limits = c(1170,1620), expand = c(0,0)) +
+  scale_y_continuous(expression(paste("Observed SOC stocks [g C m"^-2,"]")),
                      limits = c(750,1750), expand = c(0,0)) +
   scale_color_manual(values = c("#33a02c"))
-ggsave(file = paste0("./Output/HBEF_4ps_C_Obs_Pred_oie_", lag_time, "_",
+ggsave(file = paste0("./Output/HBEF_Figure5d_",
                      Sys.Date(), ".jpeg"), width = 5, height = 6)
 
 oa_C <- fun_pred_obs_C(x = "Oa/A") +
-  scale_x_continuous("Predicted SOC stocks [g/m2]",
-                     limits = c(1490,1905), expand = c(0,0)) +
-  scale_y_continuous("Observed SOC stocks [g/m2]",
-                     limits = c(750,3250), expand = c(0,0)) +
+  scale_x_continuous(expression(paste("Predicted SOC stocks [g C m"^-2,"]")),
+                     limits = c(1490,1915), expand = c(0,0)) +
+  scale_y_continuous("", limits = c(750,3250), expand = c(0,0)) +
   scale_color_manual(values = c("#b2df8a"))
 
 min_C <- fun_pred_obs_C(x = "Mineral") +
-  scale_x_continuous("Predicted SOC stocks [g/m2]",
+  scale_x_continuous(expression(paste("Predicted SOC stocks [g C m"^-2,"]")),
                      limits = c(2185,2430), expand = c(0,0)) +
-  scale_y_continuous("Observed SOC stocks [g/m2]",
-                     limits = c(1000,4000), expand = c(0,0)) +
+  scale_y_continuous("", limits = c(1000,4000), expand = c(0,0)) +
   scale_color_manual(values = c("#a6cee3"))
 
-ggarrange(oie_C, oa_C, min_C, nrow = 1)
-ggsave(file = paste0("./Output/HBEF_4ps_short_C_Obs_Pred_", lag_time, "_",
+ggarrange(oie_C, oa_C, min_C, nrow = 1, labels = c("a)", "b)", "c)"))
+ggsave(file = paste0("./Output/HBEF_FigureS14_",
                      Sys.Date(), ".jpeg"), width = 12, height = 6)
