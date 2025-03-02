@@ -41,8 +41,6 @@ HBEF_all %>%
   scale_y_continuous("Mean SOC stock [gC/m2]", expand = c(0,0),
                      limits = c(0,2000)) +
   scale_x_continuous(expand = c(0,0), limits = c(1997,2024))
-ggsave("./Output/HBEF_SOC_stocks_Oie_Groffman.jpeg",
-       width = 8, height = 6)
 
 #Calculate decline in SOC stocks in Oie
 lm_oie_C <- lm(mean_SOC_g_m2 ~ Year,

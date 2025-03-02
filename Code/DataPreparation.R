@@ -57,8 +57,8 @@ soil_info <- read_csv("./Data/MassChemistryOrganicHorizonMineralSoil_WS6_1976_pr
   dplyr::select(-Watershed)
 
 litter_all <- soil_info %>%
-  #calculate SOC stocks (from kg/m2 to g/m2) and from OM to C
-  mutate(SOC_g_m2 = OM_OM * 1000 * 0.58) %>%
+  #calculate SOC stocks (from kg/m2 to g/m2) and from OM to C; assuimg 58% is C
+  mutate(SOC_g_m2 = (OM_OM * 1000) * 0.58) %>%
   mutate(Horizon = case_when(
     Horizon == "Oie" ~ "Oi/Oe",
     Horizon == "Oa" ~ "Oa/A"
@@ -66,7 +66,7 @@ litter_all <- soil_info %>%
   dplyr::select(Year, Plot, Horizon, SOC_g_m2) %>%
   right_join(litter_data)
 
-#gap-fill missing 1969 data from 1978 and closest Plot
+#gap-fill missing 1969 data from 1978 and closest Plot; data from Johnson (2024; not shown)
 litter_all[31,4] <- 1235.4 #Plot 2
 litter_all[32,4] <- 986 #Plot 129
 litter_all[33,4] <- 2383.8 #Plot 114
@@ -74,16 +74,16 @@ litter_all[34,4] <- 777.2 #Plot 2
 litter_all[35,4] <- 904.8 #Plot 129
 litter_all[36,4] <- 1508 #Plot 114
 
-# Summarize and merge data by horizon; remove roots for now
+# Summarize and merge data by horizon; remove roots 
 HBEF_all <- HBEF_data %>% 
   filter(Plot != "all fine roots") %>% 
   filter(Year != 2020) %>% 
-  mutate(DataSource = "Dataset1") %>% 
+  mutate(DataSource = "Dataset2") %>% 
   mutate(SOC_g_m2 = (`Measured_%_C` * mean_BD_g_cm3 * mean_thick_cm) * 100) %>% 
   dplyr::select(Year, Horizon, Delta14C, SOC_g_m2, DataSource, Elevation) %>% 
   rbind(litter_all %>% 
           dplyr::select(Year, Horizon, Delta14C, SOC_g_m2, Elevation) %>% 
-          mutate(DataSource = "Dataset2")) %>% 
+          mutate(DataSource = "Dataset1")) %>% 
   dplyr::select(Year:Delta14C, SOC_g_m2, DataSource, Elevation)
 
 write_csv(HBEF_all,
