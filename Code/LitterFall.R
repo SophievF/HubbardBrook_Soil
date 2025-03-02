@@ -42,7 +42,5 @@ litter_fall_sum %>%
   scale_y_continuous("Litter fall [gC/m2 yr]", expand = c(0,0)) +
   scale_x_continuous("Year", expand = c(0,0), breaks = seq(1992,2022,5)) +
   coord_cartesian(ylim = c(0,460))
-ggsave("./Output/LitterFall_low_1992_2022.jpeg",
-       width = 8, height = 6)
   
   
