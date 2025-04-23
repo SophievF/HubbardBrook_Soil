@@ -52,7 +52,7 @@ temp <- temp_data %>%
   #only select station 1 (most representative for sampling locations)
   filter(STA == "STA1") %>% 
   group_by(Year) %>% 
-  filter(Year > 1955 & Year < 2024) %>% 
+  filter(Year >= 1964 & Year < 2024) %>% 
   mutate(AVE = mean(AVE)) %>% 
   mutate(breakpoint = case_when(
     Year <= 1980 ~ "pre",
