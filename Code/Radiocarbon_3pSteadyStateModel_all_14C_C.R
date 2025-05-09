@@ -323,7 +323,7 @@ tpsMcmcFits$bestpar
 summary(tpsMcmcFits, quantile.type = c(0.005,0.5,0.95))[,1:5]
 
 tpsMcmcFits$pars %>% 
-  as.data.frame() %>% nrow()
+  as.data.frame() %>%
   summarise(median_k1 = median(k1),
             q05_k1 = quantile(k1, 0.05),
             q95_k1 = quantile(k1, 0.95),
@@ -392,7 +392,10 @@ sens_all_14C_p <- sens_all_14C %>%
   scale_y_continuous(expression(paste(Delta^14, "C [‰]")), limits = c(-175,1000),
                      expand = c(0,0)) +
   theme_classic(base_size = 16) +
-  theme(axis.text = element_text(color = "black")) +
+  theme(axis.text = element_text(color = "black"),
+        panel.background = element_rect(fill = "transparent"),
+        plot.background = element_rect(fill = "transparent", color = NA),
+        legend.background = element_rect(fill = "transparent", color = NA)) +
   scale_color_manual("Modeled", label = c("Oi/Oe", "Oa/A", "Mineral"),
                      values = c("#33a02c", "#b2df8a", "#a6cee3")) +
   scale_fill_manual("Measured", label = c("Oi/Oe", "Oa/A", "Mineral"),
@@ -416,7 +419,11 @@ sens_all_C_p <- sens_all_C %>%
                      limits = c(500,5000), expand = c(0,0),
                      breaks = seq(500,5000,1500)) +
   theme_classic(base_size = 16) +
-  theme(axis.text = element_text(color = "black")) +
+  theme(axis.text = element_text(color = "black"),
+        panel.background = element_rect(fill = "transparent"),
+        plot.background = element_rect(fill = "transparent", color = NA),
+        legend.background = element_rect(fill = "transparent", color = NA),
+        strip.background = element_rect(fill = "transparent")) +
   scale_color_manual("Modeled", label = c("Oi/Oe", "Oa/A", "Mineral"),
                      values = c("#33a02c", "#b2df8a", "#a6cee3")) +
   scale_fill_manual("Measured", label = c("Oi/Oe", "Oa/A", "Mineral"),
@@ -819,7 +826,10 @@ pool_age_cum_fun <- function(x, ci_low, ci_high, mean_age){
     theme_classic(base_size = 16) +
     theme(axis.text = element_text(color = "black"),
           legend.position = "none",
-          panel.grid.major = element_line()) +
+          panel.grid.major = element_line(),
+          panel.background = element_rect(fill = "transparent"),
+          plot.background = element_rect(fill = "transparent", color = NA),
+          strip.background = element_rect(fill = "transparent")) +
     facet_wrap(~Horizon)
 }
 
